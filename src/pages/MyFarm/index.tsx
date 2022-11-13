@@ -1,5 +1,8 @@
 import { ReactComponent as Home } from '@/assets/home.svg';
 import { ReactComponent as Logout } from '@/assets/logout.svg';
+import { ReactComponent as Alarmlist } from '@/assets/alarmlist.svg';
+import { ReactComponent as User } from '@/assets/user.svg';
+import { ReactComponent as Cart } from '@/assets/cart.svg';
 import { MoneyInfo, LinkVegiInfo, Heading } from './components';
 
 export default function MyFarm() {
@@ -27,7 +30,15 @@ export default function MyFarm() {
           </li>
         </ul>
       </main>
-      <nav></nav>
+      <nav>
+        <ul>
+          <li>
+            <Alarmlist />
+            <User />
+            <Cart />
+          </li>
+        </ul>
+      </nav>
     </>
   );
 }
