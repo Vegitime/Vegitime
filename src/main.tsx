@@ -1,10 +1,13 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createGlobalStyle } from 'styled-components';
+import { BrowserRouter } from 'react-router-dom';
+import { StartPage } from './pages/index';
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
-  html, body, div, span, applet, object, iframe,
+ import StartPage from './pages/StartPage';
+ html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
@@ -64,7 +67,11 @@ a {
 }
 `;
 
-const App = () => <></>;
+const App = () => (
+  <>
+    <StartPage></StartPage>
+  </>
+);
 
 const rootNode = document.getElementById('root');
 
@@ -72,7 +79,9 @@ if (!rootNode) throw new Error('루트 엘리먼트가 존재하지 않습니다
 
 createRoot(rootNode).render(
   <StrictMode>
-    <GlobalStyle />
-    <App />
+    <BrowserRouter>
+      <GlobalStyle />
+      <App />
+    </BrowserRouter>
   </StrictMode>
 );
