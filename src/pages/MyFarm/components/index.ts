@@ -1,3 +1,5 @@
 import MoneyInfo from './MoneyInfo';
+import LinkVegiInfo from './LinkVegiInfo';
+import Heading from './Heading';
 
-export { MoneyInfo };
+export { MoneyInfo, LinkVegiInfo, Heading };
