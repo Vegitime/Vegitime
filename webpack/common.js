@@ -18,9 +18,7 @@ const commonConfig = {
   entry: {
     main: {
       import: resolve('src/main.tsx'),
-      dependOn: 'vendors',
     },
-    vendors: ['react', 'react-dom'],
   },
   output: {
     path: resolve('build'),
