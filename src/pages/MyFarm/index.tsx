@@ -1,21 +1,54 @@
-import { ReactComponent as Home } from '@/assets/home.svg';
-import { ReactComponent as Logout } from '@/assets/logout.svg';
-import { ReactComponent as Alarmlist } from '@/assets/alarmlist.svg';
-import { ReactComponent as User } from '@/assets/user.svg';
-import { ReactComponent as Cart } from '@/assets/cart.svg';
-import { MoneyInfo, LinkVegiInfo, Heading } from './components';
+import { Header, LinkVegiInfo, Title, Navigation } from './components';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  position: relative;
+  min-height: 100vh;
+  padding: 2rem 1rem 1rem;
+  background: #eaf5f7;
+`;
+
+const StyledMain = styled.main`
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  margin-bottom: 5rem;
+`;
+
+const StyledUl = styled.ul`
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  li {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    width: calc(50% - 0.5rem);
+    box-sizing: border-box;
+    padding: 1rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.5);
+  }
+  a {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    width: 100%;
+    text-decoration: none;
+    color: black;
+  }
+`;
 
 export default function MyFarm() {
   return (
-    <>
-      <header>
-        <Home />
-        <MoneyInfo />
-        <Logout />
-      </header>
-      <main>
-        <Heading text="My Farm" />
-        <ul>
+    <Container>
+      <Header />
+      <StyledMain>
+        <Title text="My Farm" />
+        <StyledUl>
           <li>
             <LinkVegiInfo vegetble="eggplant" level={3} />
           </li>
@@ -28,17 +61,9 @@ export default function MyFarm() {
           <li>
             <LinkVegiInfo vegetble="eggplant" level={5} />
           </li>
-        </ul>
-      </main>
-      <nav>
-        <ul>
-          <li>
-            <Alarmlist />
-            <User />
-            <Cart />
-          </li>
-        </ul>
-      </nav>
-    </>
+        </StyledUl>
+      </StyledMain>
+      <Navigation />
+    </Container>
   );
 }

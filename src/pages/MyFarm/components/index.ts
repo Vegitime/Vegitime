@@ -1,5 +1,7 @@
 import MoneyInfo from './MoneyInfo';
 import LinkVegiInfo from './LinkVegiInfo';
-import Heading from './Heading';
+import Title from './Title';
+import Header from './Header';
+import Navigation from './Navigation';
 
-export { MoneyInfo, LinkVegiInfo, Heading };
+export { MoneyInfo, LinkVegiInfo, Title, Header, Navigation };
