@@ -1,6 +1,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/osx,windows,node,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=osx,windows,node,visualstudiocode
 
+build
+
 ### Node ###
 # Logs
 logs
@@ -148,7 +150,8 @@ dist
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
