@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter } from 'react-router-dom';
-import { StartPage } from './pages/index';
+import { SignIn } from './pages/index';
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -64,11 +64,20 @@ a {
   text-decoration: none;
   color: inherit; // 부모에게서 가져와서 링크 색이 변하지 않음
 }
+.sr-only, legend{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+}
 `;
 
 const App = () => (
   <>
-    <StartPage></StartPage>
+    <SignIn></SignIn>
   </>
 );
 
