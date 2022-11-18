@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const Img = styled.img`
   width: 100%;
+  min-width: 390px;
   position: absolute;
   left: 0;
   bottom: 0;
