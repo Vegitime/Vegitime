@@ -32,7 +32,7 @@ const SignInErrorMessage = styled.div`
   width: 100%;
   position: absolute;
   bottom: 120px;
-  text-align: center;
+  margin-left: 30px;
   font-size: 16px;
   color: #F13E1F;
 `
