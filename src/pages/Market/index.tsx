@@ -1,6 +1,12 @@
-import { Header, ButtonVegiInfo, Title, Navigation } from './components';
+import {
+  Header,
+  ButtonVegiInfo,
+  Title,
+  Navigation,
+  ModalDialog,
+} from './components';
 import styled from 'styled-components';
-import { flexContainer } from '../../styles';
+import { flexContainer } from 'styles';
 
 const Container = styled.div`
   position: relative;
@@ -45,6 +51,7 @@ export default function Market() {
             <ButtonVegiInfo vegetble="eggplant" />
           </li>
         </StyledUl>
+        <ModalDialog />
       </StyledMain>
       <Navigation />
     </Container>

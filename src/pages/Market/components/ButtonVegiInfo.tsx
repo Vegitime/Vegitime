@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { MoneyInfo } from './index';
-import { flexContainer } from '../../../styles';
-import { getAsset } from '../../../utils';
+import { flexContainer } from 'styles';
+import { getAsset } from 'utils';
 
 const StyledButton = styled.button`
   ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center' })}
@@ -13,6 +13,7 @@ const StyledButton = styled.button`
   cursor: pointer;
   font-size: var(--text-xs);
   > img {
+    height: 6.25rem;
     margin-bottom: var(--spacing-base);
   }
   div {
@@ -24,6 +25,7 @@ interface Ivegetable {
   src: string;
   name: string;
   price: number;
+  specialty: string;
 }
 interface Ivegetables {
   [key: string]: Ivegetable;
@@ -36,19 +38,22 @@ interface IVegiInfo {
 
 const vegetables: Ivegetables = {
   eggplant: {
-    src: `${getAsset('eggplant.png')}`,
+    src: `${getAsset('eggplant.svg')}`,
     name: '가지',
     price: 1000,
+    specialty: '여러가지',
   },
   onion: {
-    src: `${getAsset('onion.png')}`,
+    src: `${getAsset('onion.svg')}`,
     name: '양파',
     price: 1000,
+    specialty: '야아앙파',
   },
   carrot: {
-    src: `${getAsset('carrot.png')}`,
+    src: `${getAsset('carrot.svg')}`,
     name: '당근',
     price: 1000,
+    specialty: '긍정인형',
   },
 };
 

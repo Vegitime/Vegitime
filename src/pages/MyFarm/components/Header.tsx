@@ -1,27 +1,28 @@
-import { ReactComponent as Home } from '@/assets/home.svg';
-import { ReactComponent as Logout } from '@/assets/logout.svg';
 import { MoneyInfo } from './index';
 import styled from 'styled-components';
+import { flexContainer } from 'styles';
+import { getAsset } from 'utils';
 
 const StyledHeader = styled.header`
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
+  ${flexContainer({ d: 'row', w: 'nowrap', jc: 'space-between' })}
+  margin: 0 var(--spacing-sm);
 `;
 
 const StyledDiv = styled.div`
-  display: flex;
-  flex-flow: row nowrap;
-  gap: 1rem;
+  ${flexContainer({ d: 'row', w: 'nowrap', g: 'var(--spacing-base)' })}
 `;
 
 export default function Header() {
   return (
     <StyledHeader>
-      <Home />
+      <img src={getAsset('home.png')} alt="메인 페이지 이동" />
       <StyledDiv>
-        <MoneyInfo />
-        <Logout />
+        <MoneyInfo
+          fontSize="var(--text-sm)"
+          gap="var(--spacing-sm)"
+          size="2.25rem"
+        />
+        <img src={getAsset('logout.png')} alt="로그아웃" />
       </StyledDiv>
     </StyledHeader>
   );

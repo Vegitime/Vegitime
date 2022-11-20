@@ -1,4 +1,21 @@
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { flexContainer } from 'styles';
+import { getAsset } from 'utils';
+
+const StyledLink = styled(Link)`
+  ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center' })}
+  width: 100%;
+  padding: 0;
+  font-size: var(--text-xs);
+  > img {
+    height: 6.25rem;
+    margin-bottom: var(--spacing-base);
+  }
+  div {
+    line-height: var(--spacing-lg);
+  }
+`;
 
 interface Ivegetable {
   [key: string]: string;
@@ -17,15 +34,15 @@ interface IVegiInfo {
 
 const vegetables: Ivegetables = {
   eggplant: {
-    src: '/assets/eggplant.png',
+    src: `${getAsset('eggplant.svg')}`,
     name: '가지',
   },
   onion: {
-    src: '/assets/onion.png',
+    src: `${getAsset('onion.svg')}`,
     name: '양파',
   },
   carrot: {
-    src: '/assets/carrot.png',
+    src: `${getAsset('carrot.svg')}`,
     name: '당근',
   },
 };
@@ -36,12 +53,12 @@ export default function LinkVegiInfo({
 }: IVegiInfo) {
   const { src, name } = vegetables[vegetble];
   return (
-    <Link to="..">
+    <StyledLink to="..">
       <img src={src} alt={name} />
       <div>Level. {level}</div>
       <div>
         {name} {name}
       </div>
-    </Link>
+    </StyledLink>
   );
 }

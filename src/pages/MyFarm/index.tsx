@@ -1,44 +1,27 @@
 import { Header, LinkVegiInfo, Title, Navigation } from './components';
 import styled from 'styled-components';
+import { flexContainer } from 'styles';
 
 const Container = styled.div`
   position: relative;
   min-height: 100vh;
-  padding: 2rem 1rem 1rem;
-  background: #eaf5f7;
+  padding: var(--spacing-xxl) var(--spacing-md) var(--spacing-md);
 `;
 
 const StyledMain = styled.main`
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  margin-bottom: 5rem;
+  ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center' })};
+  margin-bottom: 15.625rem;
 `;
 
 const StyledUl = styled.ul`
-  display: flex;
-  flex-flow: row wrap;
-  gap: 1rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  ${flexContainer({ d: 'row', w: 'wrap', g: 'var(--spacing-md)' })}
+  width: 100%;
   li {
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    width: calc(50% - 0.5rem);
-    box-sizing: border-box;
-    padding: 1rem;
-    border-radius: 1rem;
-    background: rgba(255, 255, 255, 0.5);
-  }
-  a {
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    width: 100%;
-    text-decoration: none;
-    color: black;
+    ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center' })}
+    width: calc(50% - var(--spacing-md) / 2);
+    padding: var(--spacing-base);
+    border-radius: var(--spacing-md);
+    background: hsla(0, 0%, 100%, 0.5);
   }
 `;
 

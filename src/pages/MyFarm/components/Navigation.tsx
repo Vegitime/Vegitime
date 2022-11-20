@@ -1,26 +1,17 @@
 import styled from 'styled-components';
-import { ReactComponent as Alarmlist } from '@/assets/alarmlist.svg';
-import { ReactComponent as User } from '@/assets/user.svg';
-import { ReactComponent as Cart } from '@/assets/cart.svg';
+import { absolute, flexContainer } from 'styles';
+import { getAsset } from 'utils';
 
 const StyledNav = styled.nav`
-  box-sizing: border-box;
-  width: calc(100vw - 1rem);
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 1rem;
+  width: 100vw;
+  ${absolute({ b: 0, l: 0 })};
+  background: hsla(0, 0%, 100%, 0.2);
+  border-radius: var(--spacing-md) var(--spacing-md) 0 0;
 `;
 
 const StyledUl = styled.ul`
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  list-style: none;
-  padding: 0;
-  margin: 0.5rem 1rem;
+  ${flexContainer({ d: 'row', w: 'nowrap', jc: 'space-between' })};
+  margin: var(--spacing-lg) var(--spacing-xl);
 `;
 
 export default function Navigation() {
@@ -28,13 +19,13 @@ export default function Navigation() {
     <StyledNav>
       <StyledUl>
         <li>
-          <Alarmlist />
+          <img src={getAsset('alarmlist.png')} alt="알람 리스트" />
         </li>
         <li>
-          <User />
+          <img src={getAsset('user.png')} alt="내 정보" />
         </li>
         <li>
-          <Cart />
+          <img src={getAsset('cart.png')} alt="야채 시장" />
         </li>
       </StyledUl>
     </StyledNav>

@@ -1,8 +1,6 @@
 import styled from 'styled-components';
-import { getAsset } from '../../../utils';
-import { flexContainer } from '../../../styles';
-// import { getAsset } from 'utils';
-// import { ReactComponent as Money } from '@/assets/money.svg';
+import { getAsset } from 'utils';
+import { flexContainer } from 'styles';
 
 interface IMoneyInfo {
   money: number;

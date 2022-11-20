@@ -1,9 +1,7 @@
-//import { ReactComponent as Home } from '@/assets/home.svg';
-//import { ReactComponent as Logout } from '@/assets/logout.svg';
 import { MoneyInfo } from './index';
 import styled from 'styled-components';
-import { flexContainer } from '../../../styles';
-import { getAsset } from '../../../utils';
+import { flexContainer } from 'styles';
+import { getAsset } from 'utils';
 
 const StyledHeader = styled.header`
   ${flexContainer({ d: 'row', w: 'nowrap', jc: 'space-between' })}
