@@ -27,13 +27,13 @@ export const GlobalStyle = createGlobalStyle/*css*/ `
     --color-skyblue:#EAF5F7;
 
     /* 여백 크기 */
-    --spacing-xxs: 0.25rem; /* 4px */
-    --spacing-xs: 0.625rem; /* 8px */
-    --spacing-sm: 0.75rem; /* 12px */
+    --spacing-xxs: 0.5rem /* 8px */
     --spacing-base: 1rem; /* 16px */
-    --spacing-md: 1.25rem; /* 20px */
-    --spacing-lg: 1.5rem; /* 24px */
-    --spacing-xl: 2rem; /* 32px */
+    --spacing-xs: 1.25rem; /* 20px */
+    --spacing-sm: 2rem; /* 32px */
+    --spacing-md: 2.5rem; /* 40px */
+    --spacing-lg: 3rem; /* 48px */
+    --spacing-xl: 3.5rem; /* 56px */
     --spacing-xxl: 4.375rem; /* 70px */
     --spacing-xxxl: 9.375rem; /* 150px */
   }
