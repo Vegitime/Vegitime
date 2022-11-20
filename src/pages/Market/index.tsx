@@ -1,4 +1,10 @@
-import { Header, LinkVegiInfo, Title, Navigation } from './components';
+import {
+  Header,
+  ButtonVegiInfo,
+  Title,
+  Navigation,
+  ModalDialog,
+} from './components';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
 
@@ -25,26 +31,27 @@ const StyledUl = styled.ul`
   }
 `;
 
-export default function MyFarm() {
+export default function Market() {
   return (
     <Container>
       <Header />
       <StyledMain>
-        <Title text="My Farm" />
+        <Title text="Vegi Market" />
         <StyledUl>
           <li>
-            <LinkVegiInfo vegetble="eggplant" level={3} />
+            <ButtonVegiInfo vegetble="eggplant" />
           </li>
           <li>
-            <LinkVegiInfo vegetble="carrot" level={2} />
+            <ButtonVegiInfo vegetble="carrot" />
           </li>
           <li>
-            <LinkVegiInfo vegetble="onion" level={1} />
+            <ButtonVegiInfo vegetble="onion" />
           </li>
           <li>
-            <LinkVegiInfo vegetble="eggplant" level={5} />
+            <ButtonVegiInfo vegetble="eggplant" />
           </li>
         </StyledUl>
+        <ModalDialog />
       </StyledMain>
       <Navigation />
     </Container>

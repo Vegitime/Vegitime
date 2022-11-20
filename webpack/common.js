@@ -9,10 +9,8 @@ const {
 const commonConfig = {
   target: 'browserslist',
   resolve: {
+    modules: [resolve('src'), 'node_modules'],
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.wasm'],
-    alias: {
-      '@': resolve('src'),
-    },
   },
 
   entry: {
