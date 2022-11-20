@@ -8,6 +8,7 @@ const {
   createImageMinify,
   createCleanup,
   createBundleAnalyzer,
+  createDotEnv,
 } = require('./plugins');
 
 const prodConfig = merge(commonConfig, {
@@ -22,7 +23,9 @@ const prodConfig = merge(commonConfig, {
     ...commonConfig.plugins,
     createCopyAssets(),
     createBundleAnalyzer(),
+    createDotEnv({ path: './.env/.prod' }),
   ].filter(Boolean),
+
   optimization: {
     minimize: true,
     minimizer: [createJsMinify(), createImageMinify(), createCleanup()].filter(

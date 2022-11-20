@@ -2,7 +2,6 @@
   "name": "vegitime",
   "version": "1.0.0",
   "description": "Let's greet the Fresh morning!",
-  "main": "index.js",
   "scripts": {
     "start": "npm run dev -- --open",
     "dev": "webpack server --progress --node-env=development -c webpack/dev.js",

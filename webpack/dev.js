@@ -7,10 +7,7 @@ const devConfig = merge(commonConfig, {
   mode: 'development',
   devtool: 'eval-cheap-source-map',
   devServer: serverConfig,
-  plugins: [
-    ...commonConfig.plugins,
-    createDotEnv({ path: '.env/.dev' }),
-  ].filter(Boolean),
+  plugins: [createDotEnv({ path: './.env/.dev' })].filter(Boolean),
 });
 
 module.exports = devConfig;

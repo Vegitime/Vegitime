@@ -1,12 +1,16 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { MoneyInfo } from './index';
 import { flexContainer } from 'styles';
 import { getAsset } from 'utils';
 
-const StyledLink = styled(Link)`
+const StyledButton = styled.button`
   ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center' })}
   width: 100%;
+  background: none;
+  border: none;
   padding: 0;
+  font: inherit;
+  cursor: pointer;
   font-size: var(--text-xs);
   > img {
     height: 6.25rem;
@@ -18,9 +22,10 @@ const StyledLink = styled(Link)`
 `;
 
 interface Ivegetable {
-  [key: string]: string;
-  // src: string;
-  // alt: string;
+  src: string;
+  name: string;
+  price: number;
+  specialty: string;
 }
 interface Ivegetables {
   [key: string]: Ivegetable;
@@ -29,36 +34,38 @@ interface Ivegetables {
 }
 interface IVegiInfo {
   vegetble?: string;
-  level?: number;
 }
 
 const vegetables: Ivegetables = {
   eggplant: {
     src: `${getAsset('eggplant.svg')}`,
     name: '가지',
+    price: 1000,
+    specialty: '여러가지',
   },
   onion: {
     src: `${getAsset('onion.svg')}`,
     name: '양파',
+    price: 1000,
+    specialty: '야아앙파',
   },
   carrot: {
     src: `${getAsset('carrot.svg')}`,
     name: '당근',
+    price: 1000,
+    specialty: '긍정인형',
   },
 };
 
-export default function LinkVegiInfo({
-  vegetble = 'onion',
-  level = 1,
-}: IVegiInfo) {
-  const { src, name } = vegetables[vegetble];
+export default function ButtonVegiInfo({ vegetble = 'onion' }: IVegiInfo) {
+  const { src, name, price } = vegetables[vegetble];
   return (
-    <StyledLink to="..">
+    <StyledButton>
       <img src={src} alt={name} />
-      <div>Level. {level}</div>
       <div>
         {name} {name}
       </div>
-    </StyledLink>
+      <MoneyInfo money={price} />
+    </StyledButton>
   );
 }
