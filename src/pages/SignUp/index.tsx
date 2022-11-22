@@ -81,14 +81,18 @@ const UserIdCheckButton = styled.button<{isCheckActive: boolean}>`
   color: #FFFFFF;
 `
 
-const FormInput = styled.input`
-  width: 72%;
+const FormInput = styled.input<{phSize: string}>`
+  width: 74%;
   height: 100%;
-  margin-left: 81px;
+  margin-left: 83px;
   border: none;
-  padding: none;
+  padding: 0;
   outline: none;
   font-size: 24px;
+  border-radius: 0px 50px 50px 0px;
+  &::placeholder {
+    font-size: ${props => props.phSize};
+  }
 `
 
 
@@ -126,7 +130,7 @@ export default function SignUp() {
             <FromInputContainer>
               <label className="sr-only" htmlFor="userId">아이디</label>
               <Formuser fill='#01192C' width="35" height="35"/>
-              <FormInput type="text" id="userId" required placeholder="아이디"/>
+              <FormInput type="text" id="userId" required placeholder="아이디를 입력해주세요" phSize='24px'/>
               <SignUpErrorMessage>영문, 숫자 포함 6~15자로 입력해주세요.</SignUpErrorMessage>
               <UserIdCheckButton type="button" isCheckActive={true}>완료!</UserIdCheckButton>
             </FromInputContainer>
@@ -134,21 +138,21 @@ export default function SignUp() {
             <FromInputContainer>
               <label className="sr-only" htmlFor="userNickName">닉네임</label>
               <Name fill='#01192C' width="35" height="35"/>
-              <FormInput type="text" id="userNickName" required placeholder="닉네임"/>
+              <FormInput type="text" id="userNickName" required placeholder="닉네임을 입력해주세요" phSize='24px'/>
               <SignUpErrorMessage>1글자 이상 입력해주세요.</SignUpErrorMessage>
             </FromInputContainer>
             
             <FromInputContainer>
               <label className="sr-only" htmlFor="userPwd">비밀번호</label>
               <Padlock fill='#01192C' width="35" height="35"/>
-              <FormInput type="password" id="userPwd" required placeholder="패스워드"/>
+              <FormInput type="password" id="userPwd" required placeholder="패스워드를 입력해주세요" phSize='24px'/>
               <SignUpErrorMessage>영문, 숫자 포함 6~10자로 입력해주세요.</SignUpErrorMessage>
             </FromInputContainer>
 
             <FromInputContainer>
               <label className="sr-only" htmlFor="userPwdCheck">비밀번호 확인</label>
               <Padlock fill='#01192C' width="35" height="35"/>
-              <FormInput type="password" id="userPwdCheck" required placeholder="패스워드 재확인"/>
+              <FormInput type="password" id="userPwdCheck" required placeholder="패스워드를 한 번 더 입력해주세요" phSize='20px'/>
               <SignUpErrorMessage>비밀번호가 일치하지 않아요.</SignUpErrorMessage>
             </FromInputContainer>
             
