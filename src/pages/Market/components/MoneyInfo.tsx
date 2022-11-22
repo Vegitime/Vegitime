@@ -30,7 +30,7 @@ export default function MoneyInfo({ money, fontSize, gap, size }: IMoneyInfo) {
 
 MoneyInfo.defaultProps = {
   money: 1000,
-  fontSize: 'var(--text-xs)',
-  gap: 'var(--spacing-xxs)',
-  size: 'var(--spacing-md)',
+  fontSize: 'var(--text-xxs)',
+  gap: 'calc(var(--spacing-xxxs)/2)',
+  size: 'var(--spacing-xxs)',
 };

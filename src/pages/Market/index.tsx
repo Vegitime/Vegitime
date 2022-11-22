@@ -11,7 +11,7 @@ import { flexContainer } from 'styles';
 const Container = styled.div`
   position: relative;
   min-height: 100vh;
-  padding: var(--spacing-xxl) var(--spacing-md) var(--spacing-md);
+  padding: var(--spacing-xxl) var(--spacing-xxs) var(--spacing-xs);
 `;
 
 const StyledMain = styled.main`
@@ -20,13 +20,13 @@ const StyledMain = styled.main`
 `;
 
 const StyledUl = styled.ul`
-  ${flexContainer({ d: 'row', w: 'wrap', g: 'var(--spacing-md)' })}
+  ${flexContainer({ d: 'row', w: 'wrap', g: 'var(--spacing-xxs)' })}
   width: 100%;
   li {
     ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center' })}
-    width: calc(50% - var(--spacing-md) / 2);
+    width: calc(50% - var(--spacing-xxs) / 2);
     padding: var(--spacing-base);
-    border-radius: var(--spacing-md);
+    border-radius: var(--spacing-xxs);
     background: hsla(0, 0%, 100%, 0.5);
   }
 `;

@@ -5,7 +5,7 @@ import { getAsset } from 'utils';
 
 const StyledHeader = styled.header`
   ${flexContainer({ d: 'row', w: 'nowrap', jc: 'space-between' })}
-  margin: 0 var(--spacing-sm);
+  padding: 0 var(--spacing-base);
 `;
 
 const StyledDiv = styled.div`
@@ -19,7 +19,7 @@ export default function Header() {
       <StyledDiv>
         <MoneyInfo
           fontSize="var(--text-sm)"
-          gap="var(--spacing-sm)"
+          gap="var(--spacing-xxxs)"
           size="2.25rem"
         />
         <img src={getAsset('logout.png')} alt="로그아웃" />

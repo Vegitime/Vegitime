@@ -13,7 +13,7 @@ const StyledLink = styled(Link)`
     margin-bottom: var(--spacing-base);
   }
   div {
-    line-height: var(--spacing-lg);
+    line-height: 1.5625rem;
   }
 `;
 
