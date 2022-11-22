@@ -46,6 +46,20 @@ const SignUpErrorMessage = styled.div`
   font-size: 16px;
   color: #D9A059;
 `
+const UserIdCheckButton = styled.button<{isCheckActive: boolean}>`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 68px;
+  height: inherit;
+  border: none;
+  padding: 0;
+  border-radius: 0px 29px 29px 0px;
+  background: ${(props) => (props.isCheckActive ? '#5F9538' : '#A5c597')}; 
+
+  font-size: 16px;
+  color: #FFFFFF;
+`
 
 const FromInputContainer = styled.div`
   background: #FFFFFF;
@@ -54,8 +68,17 @@ const FromInputContainer = styled.div`
   width: 100%;
   min-width: 390px;
   height: 60px;
+  
   &:focus-within {
     border: 2px solid #5F9538;
+    ${SignUpErrorMessage} {
+      left: -2px;
+      top: 66px;
+    }
+    ${UserIdCheckButton} {
+      top: -2px;
+      right: -2px;
+    }
   }
   svg {
     position: absolute;
@@ -64,21 +87,8 @@ const FromInputContainer = styled.div`
   }
 
   ${SignUpErrorMessage} {
-    top: 68px !important;
+    top: 68px;
   }
-`
-const UserIdCheckButton = styled.button<{isCheckActive: boolean}>`
-  position: absolute;
-  right: 0;
-  width: 68px;
-  height: 100%;
-  border: none;
-  padding: 0;
-  border-radius: 0px 50px 50px 0px;
-  background: ${(props) => (props.isCheckActive ? '#5F9538' : '#A5c597')}; 
-
-  font-size: 16px;
-  color: #FFFFFF;
 `
 
 const FormInput = styled.input<{phSize: string}>`
