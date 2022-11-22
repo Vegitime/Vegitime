@@ -18,6 +18,16 @@ const FormContainer = styled.div`
     font-size: 50px;
     margin-bottom: 40px;
   }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+  }
 `
 
 const Form = styled.form`

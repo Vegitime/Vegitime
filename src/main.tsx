@@ -2,10 +2,10 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter } from 'react-router-dom';
-import { Market } from 'pages';
+import { SignUp } from 'pages';
 import { GlobalStyle } from 'styles';
 
-const App = () => <Market />;
+const App = () => <SignUp />;
 
 const rootNode = document.getElementById('root');
 
