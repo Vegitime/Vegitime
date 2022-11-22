@@ -10,13 +10,13 @@ const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 390px;
-  min-width: 390px;
-  margin: 140px auto 0;
+  max-width: 24.375rem; // 390px
+  min-width: 24.375rem; // 390px
+  margin: 8.75rem auto 0; // 140px
   
   h2 {
-    font-size: 50px;
-    margin-bottom: 40px;
+    font-size: var(--text-xxl);
+    margin-bottom: var(--spacing-md);
   }
 
   .sr-only {
@@ -34,68 +34,97 @@ const Form = styled.form`
   fieldset {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: var(--spacing-md);
     align-items: center;
   }
 `
-const SignInErrorMessage = styled.div`
+const FormErrorMessage = styled.div<{formType: string}>`
   width: 100%;
   position: absolute;
-  bottom: 120px;
-  margin-left: 30px;
-  font-size: 16px;
-  color: #F13E1F;
+  ${(props => (props.formType === 'signin' ? 'bottom: 7rem' : ''))}; // 112px;  // 로그인
+  margin-left: var(--spacing-sm);
+  font-size: var(--text-xs);
+  color: var( ${(props) => (props.formType === 'signin' ? '--color-red' : '--color-gold')} );// #F13E1F;
 `
 
-const FromInputContainer = styled.div`
-  background: #FFFFFF;
-  border-radius: 50px;
+const UserIdCheckButton = styled.button<{isCheckActive: boolean}>`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4.25rem; // 68px
+  height: inherit;
+  border: none;
+  padding: 0;
+  border-radius: 0px 1.813rem 1.813rem 0px; // 29px
+  background: var( ${(props) => (props.isCheckActive ? '--color-normal-green' : '--color-light-green')} ); 
+  font-size: var(--text-xs);
+  color: var(--color-white);
+`
+
+const FormInputContainer = styled.div`
+  background: var(--color-white);
+  border-radius: var(--text-xxl); // 50px
   position: relative;
   width: 100%;
-  height: 60px;
+  min-width: 24.375rem; // 390px
+  height: 3.75rem; // 60px;
+
   &:focus-within {
-    border: 2px solid #5F9538;
+    border: 0.125rem solid var(--color-normal-green);  // 2px
+    ${FormErrorMessage} {
+      left: -0.125rem;   //-2px
+      top: 4.125rem; // 66px;
+    }
+    ${UserIdCheckButton} {
+      top: -0.125rem;   //-2px
+      right: -0.125rem;   //-2px
+    }
   }
   svg {
     position: absolute;
-    left: 30px;
-    top: 12px;
+    left: var(--spacing-sm);
+    top: 0.75rem; // 12px;
   }
 
-  ${SignInErrorMessage} {
-    top: 68px !important;
+  ${FormErrorMessage} {
+    top: 4.25rem; // 68px
   }
 `
 
 
-const FormInput = styled.input`
-  width: 72%;
+const FormInput = styled.input<{phSize?: string}>`
+  width: 74%;
   height: 100%;
-  margin-left: 81px;
+  margin-left: 5.188rem; // 83px
   border: none;
-  padding: none;
+  padding: 0;
   outline: none;
-  font-size: 24px;
+  font-size: var(--text-md);
+  border-radius: 0px var(--text-xxl) var(--text-xxl) 0px; // 50px
+  &::placeholder {
+    font-size: var(${props => props.phSize ? props.phSize : '--text-md'});
+  }
 `
 
 
-const FromButton = styled.button<{isActive : boolean}>`
+const FormButton = styled.button<{isActive : boolean}>`
   width: 100%;
-  height: 60px;
-  background: ${(props) => (props.isActive ? '#5F9538' : '#A5c597')}; 
+  height: 3.75rem; // 60px;
+  background: var( ${(props) => (props.isActive ? '--color-normal-green' : '--color-light-green')} ); 
   border: none;
-  border-radius: 50px;
+  border-radius: var(--text-xxl); // 50px;
 
-  font-size: 24px;
-  color: #FFFFFF;
+  font-size: var(--text-md);
+  color: var(--color-white);
 `
+
 const FormTip = styled.div`
-  margin-top: 24px;
-  font-size: 20px;
+  margin-top: var(--spacing-base);
+  font-size: var(--text-sm);
   display: flex;
-  gap: 19px;
+  gap: var(--spacing-base);
   a {
-    color: #2E6316;
+    color: var(--color-deep-green);
   }
 `
 
@@ -108,22 +137,22 @@ export default function SignIn() {
           <fieldset>
             <legend className="sr-only">회원 로그인 폼</legend>
             
-            <FromInputContainer>
+            <FormInputContainer>
               <label className="sr-only" htmlFor="userId">아이디</label>
               <Formuser fill='#01192C' width="35" height="35"/>
               <FormInput type="text" id="userId" required placeholder="아이디를 입력해주세요"/>
-              <SignInErrorMessage>아이디를 잘못 입력했습니다.</SignInErrorMessage>
-            </FromInputContainer>
+              <FormErrorMessage formType="signin">아이디를 잘못 입력했습니다.</FormErrorMessage>
+            </FormInputContainer>
             
-            <FromInputContainer>
+            <FormInputContainer>
               <label className="sr-only" htmlFor="userPwd">비밀번호</label>
               <Padlock fill='#01192C' width="35" height="35"/>
               <FormInput type="password" id="userPwd" required placeholder="패스워드를 입력해주세요"/>
-              <SignInErrorMessage>비밀번호를 잘못 입력했습니다.</SignInErrorMessage>
-            </FromInputContainer>
+              <FormErrorMessage formType="signin">비밀번호를 잘못 입력했습니다.</FormErrorMessage>
+            </FormInputContainer>
             
-            <SignInErrorMessage>일치하는 회원 정보가 없어요. 다시 시도해주세요.</SignInErrorMessage>
-            <FromButton type="submit" isActive={false}>로그인</FromButton>
+            <FormErrorMessage formType="signin">일치하는 회원 정보가 없어요. 다시 시도해주세요.</FormErrorMessage>
+            <FormButton type="submit" isActive={true}>로그인</FormButton>
           </fieldset>
         </Form>
         <FormTip>

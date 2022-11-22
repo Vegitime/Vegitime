@@ -27,9 +27,10 @@ export const GlobalStyle = createGlobalStyle/*css*/ `
     --color-skyblue:#EAF5F7;
 
     /* 여백 크기 */
-    --spacing-xxs: 0.5rem /* 8px */
+    --spacing-xxxs: 0.5rem; /* 8px */
     --spacing-base: 1rem; /* 16px */
-    --spacing-xs: 1.25rem; /* 20px */
+    --spacing-xxs: 1.25rem; /* 20px */
+    --spacing-xs : 1.5; /* 24px */
     --spacing-sm: 2rem; /* 32px */
     --spacing-md: 2.5rem; /* 40px */
     --spacing-lg: 3rem; /* 48px */
