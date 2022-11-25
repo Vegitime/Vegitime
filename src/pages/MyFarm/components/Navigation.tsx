@@ -6,12 +6,12 @@ const StyledNav = styled.nav`
   width: 100vw;
   ${absolute({ b: 0, l: 0 })};
   background: hsla(0, 0%, 100%, 0.2);
-  border-radius: var(--spacing-md) var(--spacing-md) 0 0;
+  border-radius: var(--spacing-xxs) var(--spacing-xxs) 0 0;
 `;
 
 const StyledUl = styled.ul`
   ${flexContainer({ d: 'row', w: 'nowrap', jc: 'space-between' })};
-  margin: var(--spacing-lg) var(--spacing-xl);
+  margin: var(--spacing-xs) var(--spacing-md);
 `;
 
 export default function Navigation() {
