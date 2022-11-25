@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 const StyledButton = styled.button`
+  width: var(--spacing-xxxl);
+  padding: var(--spacing-base) 0;
   background: var(--color-normal-green);
-  padding: var(--spacing-sm) var(--spacing-xl);
   border: none;
   border-radius: 3.125rem;
   font: inherit;

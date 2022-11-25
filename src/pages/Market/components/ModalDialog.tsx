@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { flexContainer, absolute } from 'styles';
+import { flexContainer } from 'styles';
 import { getAsset } from 'utils';
 import { TextButton, IconButton } from './index';
 
@@ -10,10 +10,11 @@ const StyledDiv = styled.div`
     ai: 'center',
     g: 'var(--spacing-base)',
   })}
+  position: relative;
   width: 100%;
-  padding: var(--spacing-xl);
+  padding: var(--spacing-sm) 0 var(--spacing-base);
   background: var(--color-white);
-  border-radius: var(--spacing-md);
+  border-radius: var(--spacing-xxs);
   border: 0.125rem solid var(--color-light-green);
   font: inherit;
   font-size: var(--text-sm);
@@ -21,7 +22,7 @@ const StyledDiv = styled.div`
     height: 12.5rem;
   }
   span {
-    line-height: var(--spacing-xl);
+    line-height: 1.875rem;
   }
 `;
 
@@ -80,7 +81,17 @@ export default function ModalDialog({ vegetble = 'carrot' }: IVegiInfo) {
         </li>
       </ul>
       <TextButton />
-      <IconButton url={getAsset('close.png')} alt="모달 창 닫기" />
+      <IconButton
+        url={getAsset('close.png')}
+        alt="모달 창 닫기"
+        width="var(--spacing-xxs)"
+        height="var(--spacing-xxs)"
+        style={{
+          position: 'absolute',
+          top: 'var(--spacing-xxs)',
+          right: 'var(--spacing-xxs)',
+        }}
+      />
     </StyledDiv>
   );
 }
