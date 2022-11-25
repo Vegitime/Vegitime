@@ -1,5 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter } from 'react-router-dom';
 import { MyPage } from 'pages';
 import { GlobalStyle } from 'styles';

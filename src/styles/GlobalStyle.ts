@@ -93,6 +93,9 @@ export const GlobalStyle = createGlobalStyle/*css*/ `
     font-family: 'Y_Spotlight', sans-serif;
     background-color: var(--color-skyblue);
   }
+  input, button {
+    font-family: inherit;
+  }
   a {
     text-decoration: none;
     color: inherit; // 부모에게서 가져와서 링크 색이 변하지 않음
