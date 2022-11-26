@@ -31,14 +31,14 @@ const FrontBar = styled.div`
 
 const P = styled.p`
   width: 100%;
-  font-size: 16px;
+  font-size: var(--spacing-base);
   color: #5f9538;
   position: absolute;
   top: 0px;
   left: 0px;
   text-align: center;
   margin: 0;
-  line-height: 30px;
+  line-height: 3.75rem;
 `;
 
 export default function ProgressBar({ text }: TextType) {

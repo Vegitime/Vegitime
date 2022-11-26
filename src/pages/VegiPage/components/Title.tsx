@@ -6,9 +6,9 @@ interface TitleType {
 }
 
 const StyledH2 = styled.h2`
-  font-size: 30px;
-  margin-top: 56px;
-  margin-bottom: 32px;
+  font-size: 3.75rem;
+  margin-top: var(--spacing-xl);
+  margin-bottom: var(2rem);
   text-align: center;
 
   p {
