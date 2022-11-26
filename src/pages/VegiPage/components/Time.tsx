@@ -5,7 +5,7 @@ interface TimeType {
 }
 
 const StyledP = styled.p`
-  font-size: 30px;
+  font-size: 3.75rem;
   text-align: center;
 `;
 
