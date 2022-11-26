@@ -20,7 +20,7 @@ export default function TimePicker() {
     >
       <div id="myTimepickerLabel">Choose a time to wake up</div>
       <div className="date" id="myTimepickerTime">
-        current value is {'Friday, June 30th, 2019'}
+        현재 선택된 시간은 {isAm ? '오전' : '오후'} {hour}시 {minute}분 입니다
       </div>
       <div className="meridian spinbutton">
         <button
