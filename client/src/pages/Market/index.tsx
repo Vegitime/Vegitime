@@ -1,10 +1,5 @@
-import {
-  Header,
-  ButtonVegiInfo,
-  Title,
-  Navigation,
-  ModalDialog,
-} from './components';
+import { ButtonVegiInfo, Title, Navigation, ModalDialog } from './components';
+import { Header } from 'components';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
 

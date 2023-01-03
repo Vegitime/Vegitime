@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import AlarmList from './components/AlarmList';
-import { Header, Navigation, Title } from '../MyFarm/components';
+import { Navigation, Title } from '../MyFarm/components';
+import { Header } from 'components';
 
 const Container = styled.div`
   position: relative;

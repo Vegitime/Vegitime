@@ -1,4 +1,5 @@
-import { Header, LinkVegiInfo, Title, Navigation } from './components';
+import { LinkVegiInfo, Title, Navigation } from './components';
+import { Header } from 'components';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
 

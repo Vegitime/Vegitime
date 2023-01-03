@@ -1,4 +1,5 @@
-import { Header, Title, Navigation, TimePicker } from './components';
+import { Title, Navigation, TimePicker } from './components';
+import { Header } from 'components';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
 import users from '../../../../server/mock/users.js';
