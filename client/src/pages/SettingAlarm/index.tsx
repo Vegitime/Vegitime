@@ -1,7 +1,7 @@
 import { Header, Title, Navigation, TimePicker } from './components';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
-import users from '../../../../server/mock/users.js';
+// import users from '../../../../server/mock/users.js';
 
 const Container = styled.div`
   position: relative;

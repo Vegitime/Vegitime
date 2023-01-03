@@ -11,7 +11,7 @@ const FormContainer = styled.div`
   max-width: 24.375rem; // 390px
   min-width: 24.375rem; // 390px
   margin: 8.75rem auto 0; // 140px
-  
+
   h2 {
     font-size: var(--text-xxl);
     margin-bottom: var(--spacing-md);
@@ -26,17 +26,15 @@ const FormContainer = styled.div`
     clip: rect(0, 0, 0, 0);
     clip-path: inset(50%);
   }
-`
-
-
+`;
 
 export default function SignIn() {
   return (
     <>
       <FormContainer>
         <h2>Sign in</h2>
-        <SignForm formType='signIn'/>
-        <SignTip formType='signIn'/>
+        <SignForm formType="signIn" />
+        <SignTip formType="signIn" />
       </FormContainer>
       <FooterImg type="start" />
     </>

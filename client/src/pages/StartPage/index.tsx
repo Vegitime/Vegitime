@@ -33,8 +33,8 @@ export default function StartPage() {
       <StartContainer>
         <LogoImg src="/assets/logo.png" alt="vegitime 로고" />
         <ButtonContainer>
-          <Button to="/">로그인</Button>
-          <Button to="/">회원가입</Button>
+          <Button to="signin">로그인</Button>
+          <Button to="signup">회원가입</Button>
         </ButtonContainer>
       </StartContainer>
       <FooterImg type="start" />

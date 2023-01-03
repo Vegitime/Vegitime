@@ -2,6 +2,7 @@ import { MoneyInfo } from './index';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
 import { getAsset } from 'utils';
+import { Link } from 'react-router-dom';
 
 const StyledHeader = styled.header`
   ${flexContainer({ d: 'row', w: 'nowrap', jc: 'space-between' })}
@@ -15,14 +16,18 @@ const StyledDiv = styled.div`
 export default function Header() {
   return (
     <StyledHeader>
-      <img src={getAsset('home.png')} alt="메인 페이지 이동" />
+      <Link to="/myfarm">
+        <img src={getAsset('home.png')} alt="메인 페이지 이동" />
+      </Link>
       <StyledDiv>
         <MoneyInfo
           fontSize="var(--text-sm)"
           gap="var(--spacing-xxxs)"
           size="2.25rem"
         />
-        <img src={getAsset('logout.png')} alt="로그아웃" />
+        <Link to="/">
+          <img src={getAsset('logout.png')} alt="로그아웃" />
+        </Link>
       </StyledDiv>
     </StyledHeader>
   );
