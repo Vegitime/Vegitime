@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { absolute, flexContainer } from 'styles';
 import { getAsset } from 'utils';
@@ -19,13 +20,19 @@ export default function Navigation() {
     <StyledNav>
       <StyledUl>
         <li>
-          <img src={getAsset('alarmlist.png')} alt="알람 리스트" />
+          <Link to="/alarmlist">
+            <img src={getAsset('alarmlist.png')} alt="알람 리스트" />
+          </Link>
         </li>
         <li>
-          <img src={getAsset('user.png')} alt="내 정보" />
+          <Link to="/mypage">
+            <img src={getAsset('user.png')} alt="내 정보" />
+          </Link>
         </li>
         <li>
-          <img src={getAsset('cart.png')} alt="야채 시장" />
+          <Link to="/market">
+            <img src={getAsset('cart.png')} alt="야채 시장" />
+          </Link>
         </li>
       </StyledUl>
     </StyledNav>
