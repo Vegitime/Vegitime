@@ -1,5 +1,5 @@
-import { ButtonVegiInfo, Title, Navigation, ModalDialog } from './components';
-import { Header } from 'components';
+import { ButtonVegiInfo, Navigation, ModalDialog } from './components';
+import { Header, Title } from 'components';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
 
@@ -31,7 +31,7 @@ export default function Market() {
     <Container>
       <Header />
       <StyledMain>
-        <Title text="Vegi Market" />
+        <Title>Vegi Market</Title>
         <StyledUl>
           <li>
             <ButtonVegiInfo vegetble="eggplant" />

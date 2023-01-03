@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import AlarmList from './components/AlarmList';
-import { Navigation, Title } from '../MyFarm/components';
-import { Header } from 'components';
+import { Navigation } from '../MyFarm/components';
+import { Header, Title } from 'components';
 
 const Container = styled.div`
   position: relative;
@@ -14,7 +14,7 @@ export default function AlarmListComponent() {
   return (
     <Container>
       <Header />
-      <Title text="Alarm List" />
+      <Title>Alarm List</Title>
       <AlarmList />
       <AlarmList />
       <AlarmList />

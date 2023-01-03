@@ -1,5 +1,5 @@
-import { LinkVegiInfo, Title, Navigation } from './components';
-import { Header } from 'components';
+import { LinkVegiInfo, Navigation } from './components';
+import { Header, Title } from 'components';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
 
@@ -31,7 +31,7 @@ export default function MyFarm() {
     <Container>
       <Header />
       <StyledMain>
-        <Title text="My Farm" />
+        <Title>My Farm</Title>
         <StyledUl>
           <li>
             <LinkVegiInfo vegetble="eggplant" level={3} />

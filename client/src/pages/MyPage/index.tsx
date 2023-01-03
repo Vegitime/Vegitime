@@ -1,5 +1,5 @@
-import { Title, Navigation } from './components';
-import { Header } from 'components';
+import { Navigation } from './components';
+import { Header, Title } from 'components';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
 import users from '../../../../server/mock/users.js';
@@ -142,7 +142,7 @@ export default function MyPage() {
     <Container>
       <Header />
       <StyledMain>
-        <Title text="My Page" />
+        <Title>My Page</Title>
         <StyledUl>
           <li>닉네임 : {nickname}</li>
           <li>자산 : {money}원 </li>

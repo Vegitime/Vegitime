@@ -1,5 +1,5 @@
-import { Title, Navigation, TimePicker } from './components';
-import { Header } from 'components';
+import { Navigation, TimePicker } from './components';
+import { Header, Title } from 'components';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
 import users from '../../../../server/mock/users.js';
@@ -20,7 +20,7 @@ export default function SettingAlarm() {
     <Container>
       <Header />
       <StyledMain>
-        <Title text="Setting Alarm" />
+        <Title>Setting Alarm</Title>
         <TimePicker />
       </StyledMain>
       <Navigation />
