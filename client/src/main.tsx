@@ -2,10 +2,20 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter } from 'react-router-dom';
-import { SettingAlarm } from 'pages';
+import {
+  StartPage,
+  SignIn,
+  SignUp,
+  MyFarm,
+  Market,
+  MyPage,
+  SettingAlarm,
+  AlarmList,
+  VegiPage,
+} from 'pages';
 import { GlobalStyle } from 'styles';
 
-const App = () => <SettingAlarm />;
+const App = () => <MyPage />;
 
 const rootNode = document.getElementById('root');
 

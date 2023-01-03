@@ -1,7 +1,7 @@
 import { Header, Title, Navigation } from './components';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
-import users from '../../../server/users.js';
+import users from '../../../../server/mock/users.js';
 import Chart from 'react-apexcharts';
 
 const Container = styled.div`
