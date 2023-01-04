@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { Title, Time, VegiImage, ProgressBar } from './components';
-import { Navigation } from '../../pages/MyFarm/components';
-import { Header } from 'components';
+import { Header, Navigation } from 'components';
 
 const Container = styled.div`
   position: relative;

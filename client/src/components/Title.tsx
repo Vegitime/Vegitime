@@ -4,11 +4,12 @@ interface ITitle {
   children: string;
 }
 
-const StyledH2 = styled.h2`
+const StyledH1 = styled.h1`
+  margin: var(--spacing-md) 0;
   font-size: var(--text-xl);
-  margin: var(--spacing-xl) 0;
+  text-align: center;
 `;
 
 export default function Title({ children }: ITitle) {
-  return <StyledH2>{children}</StyledH2>;
+  return <StyledH1>{children}</StyledH1>;
 }
