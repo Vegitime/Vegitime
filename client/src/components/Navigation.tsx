@@ -17,25 +17,23 @@ const StyledUl = styled.ul`
   ${flexContainer({ d: 'row', w: 'nowrap', jc: 'space-between' })};
 `;
 
-// 홈 아이콘 변경, 아이콘 svg로 변경
-
 export default function Navigation() {
   return (
     <StyledNav>
       <StyledUl>
         <li>
           <Link to="/mypage">
-            <img src={getAsset('user.png')} alt="마이 페이지로 이동 " />
+            <img src={getAsset('user.svg')} alt="마이 페이지로 이동 " />
           </Link>
         </li>
         <li>
           <Link to="/alarmlist">
-            <img src={getAsset('user.png')} alt="홈으로 이동" />
+            <img src={getAsset('home.svg')} alt="홈으로 이동" />
           </Link>
         </li>
         <li>
           <Link to="/market">
-            <img src={getAsset('cart.png')} alt="야채 시장으로 이동" />
+            <img src={getAsset('cart.svg')} alt="야채 시장으로 이동" />
           </Link>
         </li>
       </StyledUl>

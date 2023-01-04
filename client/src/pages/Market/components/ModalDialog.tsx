@@ -82,7 +82,7 @@ export default function ModalDialog({ vegetble = 'carrot' }: IVegiInfo) {
       </ul>
       <TextButton />
       <IconButton
-        url={getAsset('close.png')}
+        url={getAsset('close.svg')}
         alt="모달 창 닫기"
         width="var(--spacing-xxs)"
         height="var(--spacing-xxs)"
