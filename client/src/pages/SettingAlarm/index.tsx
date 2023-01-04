@@ -1,28 +1,25 @@
-import { Header, Title, Navigation, TimePicker } from './components';
+import { TimePicker } from './components';
+import { Header, Title, Navigation } from 'components';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
 // import users from '../../../../server/mock/users.js';
 
-const Container = styled.div`
-  position: relative;
-  min-height: 100vh;
-  padding: var(--spacing-xxl) var(--spacing-xxs) var(--spacing-xs);
-`;
-
 const StyledMain = styled.main`
   ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center' })};
-  margin-bottom: 15.625rem;
+  position: relative;
+  min-height: 100vh;
+  padding: 0 var(--spacing-xxs) var(--spacing-xs);
 `;
 
 export default function SettingAlarm() {
   return (
-    <Container>
+    <>
       <Header />
       <StyledMain>
-        <Title text="Setting Alarm" />
+        <Title>Setting Alarm</Title>
         <TimePicker />
       </StyledMain>
       <Navigation />
-    </Container>
+    </>
   );
 }

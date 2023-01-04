@@ -1,18 +1,14 @@
-import { Header, Title, Navigation } from './components';
+import { Header, Title, Navigation } from 'components';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
 import users from '../../../../server/mock/users.js';
 import Chart from 'react-apexcharts';
 
-const Container = styled.div`
-  position: relative;
-  min-height: 100vh;
-  padding: var(--spacing-xxl) var(--spacing-xxs) var(--spacing-xs);
-`;
-
 const StyledMain = styled.main`
   ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center' })};
-  margin-bottom: 15.625rem;
+  position: relative;
+  min-height: 100vh;
+  padding: 0 var(--spacing-xxs) var(--spacing-xs);
 `;
 
 const StyledUl = styled.ul`
@@ -138,10 +134,10 @@ export default function MyPage() {
     ],
   };
   return (
-    <Container>
+    <>
       <Header />
       <StyledMain>
-        <Title text="My Page" />
+        <Title>My Page</Title>
         <StyledUl>
           <li>닉네임 : {nickname}</li>
           <li>자산 : {money}원 </li>
@@ -160,6 +156,6 @@ export default function MyPage() {
         </StyledDiv>
       </StyledMain>
       <Navigation />
-    </Container>
+    </>
   );
 }

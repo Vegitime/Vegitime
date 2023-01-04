@@ -46,13 +46,13 @@ const vegetables: Ivegetables = {
   onion: {
     src: `${getAsset('onion.svg')}`,
     name: '양파',
-    price: 1000,
+    price: 2000,
     specialty: '야아앙파',
   },
   carrot: {
     src: `${getAsset('carrot.svg')}`,
     name: '당근',
-    price: 1000,
+    price: 3000,
     specialty: '긍정인형',
   },
 };
@@ -65,7 +65,7 @@ export default function ButtonVegiInfo({ vegetble = 'onion' }: IVegiInfo) {
       <div>
         {name} {name}
       </div>
-      <MoneyInfo money={price} />
+      <MoneyInfo>{price}</MoneyInfo>
     </StyledButton>
   );
 }
