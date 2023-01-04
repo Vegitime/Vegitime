@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { MoneyInfo } from './index';
+import { MoneyInfo } from 'components';
 import { flexContainer } from 'styles';
 import { getAsset } from 'utils';
 

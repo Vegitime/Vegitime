@@ -18,7 +18,6 @@ const StyledDiv = styled.div`
   ${flexContainer({ d: 'row', w: 'nowrap', g: 'var(--spacing-base)' })}
 `;
 
-// 뒤로가기 아이콘 변경, 아이콘 svg로 변경
 // 갖고있는 돈 변경
 // 로그아웃 아이콘 클릭시 이벤트 핸들러 변경
 
@@ -28,12 +27,12 @@ export default function Header() {
   return (
     <StyledHeader>
       <button onClick={() => navigate(-1)}>
-        <img src={getAsset('home.png')} alt="뒤로 가기" />
+        <img src={getAsset('arrow.svg')} alt="뒤로 가기" />
       </button>
       <StyledDiv>
         <MoneyInfo size="large">{2323200}</MoneyInfo>
         <button type="button" onClick={() => console.log('로그아웃 연결')}>
-          <img src={getAsset('logout.png')} alt="로그아웃" />
+          <img src={getAsset('logout.svg')} alt="로그아웃" />
         </button>
       </StyledDiv>
     </StyledHeader>
