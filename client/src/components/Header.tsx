@@ -8,8 +8,10 @@ const StyledHeader = styled.header`
   position: sticky;
   top: 0;
   ${flexContainer({ d: 'row', w: 'nowrap', jc: 'space-between' })}
-  padding: var(--spacing-xl) var(--spacing-base) var(--spacing-base);
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-xxs) var(--spacing-md);
   background-color: var(--color-skyblue);
+  z-index: 1000;
 `;
 
 const StyledDiv = styled.div`
