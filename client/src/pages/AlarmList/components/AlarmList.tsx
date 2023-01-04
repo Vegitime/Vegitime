@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import { ReactComponent as Eggplant } from '@/assets/eggplant.svg';
+import { Link } from 'react-router-dom';
+
 // import { ReactComponent as Remove } from '@/assets/remove.svg';
 
-const ListContainer = styled.div`
+const ListContainer = styled(Link)`
   width: 48.75rem;
   height: 10rem;
   border-radius: 6.25rem;
@@ -32,7 +34,7 @@ const VegiImage = styled(Eggplant)`
 
 export default function AlarmList() {
   return (
-    <ListContainer>
+    <ListContainer to="/setting_alarm">
       <VegiImage width="7.125rem" height="6.25rem" />
       <Span>AM 07:00</Span>
       {/* <RemoveButton width="80px" height="40px" /> */}

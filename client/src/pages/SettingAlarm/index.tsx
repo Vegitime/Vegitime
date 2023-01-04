@@ -2,7 +2,7 @@ import { TimePicker } from './components';
 import { Header, Title, Navigation } from 'components';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
-import users from '../../../../server/mock/users.js';
+// import users from '../../../../server/mock/users.js';
 
 const StyledMain = styled.main`
   ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center' })};

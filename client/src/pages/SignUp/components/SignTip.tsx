@@ -10,12 +10,16 @@ const FormTip = styled.div`
   a {
     color: var(--color-deep-green);
   }
-`
-export default function SignTip({formType}:{formType:string}) {
+`;
+export default function SignTip({ formType }: { formType: string }) {
   return (
     <FormTip>
-      <span>{formType === 'signIn' ? '아직 회원이 아니신가요?' : '이미 회원이세요?'}</span>
-      <Link to="/">{formType === 'signIn' ? '회원가입' : '로그인'}</Link>
+      <span>
+        {formType === 'signIn' ? '아직 회원이 아니신가요?' : '이미 회원이세요?'}
+      </span>
+      <Link to={formType === 'signIn' ? '/signup' : '/signin'}>
+        {formType === 'signIn' ? '회원가입' : '로그인'}
+      </Link>
     </FormTip>
   );
 }
