@@ -1,17 +1,13 @@
-import { ButtonVegiInfo, Navigation, ModalDialog } from './components';
-import { Header, Title } from 'components';
+import { ButtonVegiInfo, ModalDialog } from './components';
+import { Header, Title, Navigation } from 'components';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
 
-const Container = styled.div`
-  position: relative;
-  min-height: 100vh;
-  padding: var(--spacing-xxl) var(--spacing-xxs) var(--spacing-xs);
-`;
-
 const StyledMain = styled.main`
   ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center' })};
-  margin-bottom: 15.625rem;
+  position: relative;
+  min-height: 100vh;
+  padding: 0 var(--spacing-xxs) var(--spacing-xs);
 `;
 
 const StyledUl = styled.ul`
@@ -28,7 +24,7 @@ const StyledUl = styled.ul`
 
 export default function Market() {
   return (
-    <Container>
+    <>
       <Header />
       <StyledMain>
         <Title>Vegi Market</Title>
@@ -49,6 +45,6 @@ export default function Market() {
         <ModalDialog />
       </StyledMain>
       <Navigation />
-    </Container>
+    </>
   );
 }
