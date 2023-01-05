@@ -2,23 +2,32 @@ import styled from 'styled-components';
 import AlarmList from './components/AlarmList';
 import { Header, Title, Navigation } from 'components';
 
-const Container = styled.div`
+const Container = styled.ul`
   position: relative;
   min-height: 100vh;
-  padding: 2rem 1rem 1rem;
-  background: #eaf5f7;
+  padding: 1rem;
 `;
 
 export default function AlarmListComponent() {
   return (
-    <Container>
+    <>
       <Header />
       <Title>Alarm List</Title>
-      <AlarmList />
-      <AlarmList />
-      <AlarmList />
-      <AlarmList />
+      <Container>
+        <li>
+          <AlarmList isActive={true} vegetable="eggplant" level={3} />
+        </li>
+        <li>
+          <AlarmList isActive={true} vegetable="carrot" level={2} />
+        </li>
+        <li>
+          <AlarmList isActive={true} />
+        </li>
+        <li>
+          <AlarmList isActive={false} disabled={true} />
+        </li>
+      </Container>
       <Navigation />
-    </Container>
+    </>
   );
 }
