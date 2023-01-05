@@ -1,14 +1,12 @@
 import styled from 'styled-components';
 
 interface TitleType {
-  level: string;
   name: string;
 }
 
 const StyledH2 = styled.h2`
-  font-size: 3.75rem;
-  margin-top: var(--spacing-xl);
-  margin-bottom: var(2rem);
+  margin: var(--spacing-md) 0;
+  font-size: var(--text-xl);
   text-align: center;
 
   p {
@@ -17,11 +15,6 @@ const StyledH2 = styled.h2`
   }
 `;
 
-export default function Title({ level, name }: TitleType) {
-  return (
-    <StyledH2>
-      <p>{level}</p>
-      <p>{name}</p>
-    </StyledH2>
-  );
+export default function Title({ name }: TitleType) {
+  return <StyledH2>{name}</StyledH2>;
 }
