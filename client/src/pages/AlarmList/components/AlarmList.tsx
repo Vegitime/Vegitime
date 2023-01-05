@@ -87,7 +87,7 @@ export default function AlarmList({
 }: VegiInfo) {
   const { src, name } = vegetables[vegetable];
   return (
-    <Link to="/setting_alarm">
+    <Link to="/vegipage">
       <ListContainer isActive={isActive} disabled={disabled}>
         <VegiImage src={src} alt={name} />
         <InfoContainer>
