@@ -62,7 +62,7 @@ export default function SignForm({ formType }: { formType: string }) {
           </FormErrorMessage>
         ) : null}
         <FormButton isActive={true} type="submit">
-          <Link to={formType === 'signIn' ? '/myfarm' : '/signin'}>
+          <Link to={formType === 'signIn' ? '/alarmList' : '/signin'}>
             {formType === 'signIn' ? '로그인' : '회원가입'}
           </Link>
         </FormButton>
