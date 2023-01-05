@@ -40,7 +40,7 @@ const Container = styled.div<{ size: 'small' | 'large' }>`
 export default function MoneyInfo({ size, children }: IMoneyInfo) {
   return (
     <Container size={size}>
-      <img src={getAsset('moneybag.png')} alt="캐시" />
+      <img src={getAsset('money.svg')} alt="캐시" />
       <span>{children}</span>
     </Container>
   );
