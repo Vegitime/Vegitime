@@ -5,6 +5,15 @@ import users from '../../../../server/mock/users.js';
 import Chart from 'react-apexcharts';
 import { makeChart } from 'utils';
 
+interface Ivegi {
+  id: number;
+  type: string;
+  name: string;
+  level: number;
+  alarm: string;
+  attendance: Array<boolean>;
+}
+
 const StyledMain = styled.main`
   ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center' })};
   position: relative;
@@ -37,17 +46,18 @@ const StyledDiv = styled.div`
 
 export default function MyPage() {
   const { nickname, money, vegis, harvest } = users[0];
-  const categories = vegis.map(({ name }) => name);
-  const types = vegis.map(({ type }) => type);
+  const categories = vegis.map((vegi) => vegi['name']);
+  const types = vegis.map((vegi) => vegi['type']);
   const success = vegis.map(
-    ({ attendance }) => attendance.filter((a) => a === true).length
+    (vegi: Ivegi) =>
+      vegi['attendance']?.filter((a: boolean) => a === true).length
   );
   const fail = vegis.map(
-    ({ attendance }) => attendance.filter((a) => a === false).length
+    (vegi: Ivegi) =>
+      vegi['attendance']?.filter((a: boolean) => a === false).length
   );
 
   const chart = makeChart({ categories, types, success, fail });
-
   return (
     <>
       <Header />
