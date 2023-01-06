@@ -1,9 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-// import { createGlobalStyle } from 'styled-components';
-// import { BrowserRouter } from 'react-router-dom';
 import {
   StartPage,
   SignIn,
@@ -43,7 +41,7 @@ const router = createBrowserRouter([
     element: <MyPage />,
   },
   {
-    path: 'setting_alarm',
+    path: 'settingalarm',
     element: <SettingAlarm />,
   },
   {
@@ -51,7 +49,7 @@ const router = createBrowserRouter([
     element: <AlarmList />,
   },
   {
-    path: 'vegipage',
+    path: 'myvegi',
     element: <VegiPage />,
   },
 ]);
@@ -59,20 +57,9 @@ const router = createBrowserRouter([
 const rootNode = document.getElementById('root');
 if (!rootNode) throw new Error('루트 엘리먼트가 존재하지 않습니다.');
 
-ReactDOM.createRoot(rootNode).render(
-  <React.StrictMode>
+createRoot(rootNode).render(
+  <StrictMode>
     <GlobalStyle />
     <RouterProvider router={router} />
-  </React.StrictMode>
+  </StrictMode>
 );
-
-// const App = () => <MyPage />;
-
-// createRoot(rootNode).render(
-//   <StrictMode>
-//     <BrowserRouter>
-//       <GlobalStyle />
-//       <App />
-//     </BrowserRouter>
-//   </StrictMode>
-// );

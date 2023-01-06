@@ -80,7 +80,15 @@ export default function ModalDialog({ vegetble = 'carrot' }: IVegiInfo) {
           <span>특기 : {specialty}</span>
         </li>
       </ul>
-      <TextButton />
+      <TextButton
+        width="9.375rem"
+        size="small"
+        onClick={() => {
+          console.log('구매하기 버튼 클릭');
+        }}
+      >
+        구매하기
+      </TextButton>
       <IconButton
         url={getAsset('close.svg')}
         alt="모달 창 닫기"

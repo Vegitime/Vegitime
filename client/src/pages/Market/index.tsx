@@ -22,6 +22,17 @@ const StyledUl = styled.ul`
   }
 `;
 
+type Vegis = 'avocado' | 'carrot' | 'eggplant' | 'onion' | 'radish' | 'tomato';
+
+const VEGETABLE_TYPES: Array<Vegis> = [
+  'avocado',
+  'carrot',
+  'eggplant',
+  'onion',
+  'radish',
+  'tomato',
+];
+
 export default function Market() {
   return (
     <>
@@ -29,20 +40,12 @@ export default function Market() {
       <StyledMain>
         <Title>Vegi Market</Title>
         <StyledUl>
-          <li>
-            <ButtonVegiInfo vegetble="eggplant" />
-          </li>
-          <li>
-            <ButtonVegiInfo vegetble="carrot" />
-          </li>
-          <li>
-            <ButtonVegiInfo vegetble="onion" />
-          </li>
-          <li>
-            <ButtonVegiInfo vegetble="eggplant" />
-          </li>
+          {VEGETABLE_TYPES.map((type) => (
+            <li key={type}>
+              <ButtonVegiInfo type={type} />
+            </li>
+          ))}
         </StyledUl>
-        <ModalDialog />
       </StyledMain>
       <Navigation />
     </>
