@@ -1,12 +1,6 @@
 import styled from 'styled-components';
-import {
-  Title,
-  Time,
-  VegiImage,
-  ProgressBar,
-  ActionButton,
-} from './components';
-import { Header, Navigation } from 'components';
+import { Time, VegiImage, ProgressBar, ActionButton } from './components';
+import { Header, Title, Navigation } from 'components';
 
 const Container = styled.div`
   position: relative;
@@ -20,8 +14,8 @@ export default function VegiPage() {
   return (
     <>
       <Header />
-      <Title name="가지 가지" />
       <Container>
+        <Title>가지가지</Title>
         <ProgressBar text="3 / 5" />
         <VegiImage />
         <Time text="AM 07:00" />

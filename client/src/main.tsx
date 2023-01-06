@@ -6,7 +6,6 @@ import {
   StartPage,
   SignIn,
   SignUp,
-  MyFarm,
   Market,
   MyPage,
   SettingAlarm,
@@ -27,10 +26,6 @@ const router = createBrowserRouter([
   {
     path: 'signup',
     element: <SignUp />,
-  },
-  {
-    path: 'myfarm',
-    element: <MyFarm />,
   },
   {
     path: 'market',
