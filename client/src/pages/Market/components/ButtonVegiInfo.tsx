@@ -13,7 +13,7 @@ interface Ivegetables {
   [key: string]: Ivegetable;
 }
 interface VegiInfoProps {
-  type: string;
+  type: 'avocado' | 'carrot' | 'eggplant' | 'onion' | 'radish' | 'tomato';
 }
 
 const StyledButton = styled.button`

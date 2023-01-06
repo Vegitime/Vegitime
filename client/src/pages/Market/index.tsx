@@ -22,7 +22,9 @@ const StyledUl = styled.ul`
   }
 `;
 
-const VEGETABLE_TYPES = [
+type Vegis = 'avocado' | 'carrot' | 'eggplant' | 'onion' | 'radish' | 'tomato';
+
+const VEGETABLE_TYPES: Array<Vegis> = [
   'avocado',
   'carrot',
   'eggplant',
