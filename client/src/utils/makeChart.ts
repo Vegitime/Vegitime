@@ -10,12 +10,12 @@ interface Icolors {
 }
 
 const vegiColors: Icolors = {
-  avocado: '#7a992a',
-  carrot: '#f68121',
-  eggplant: '#734382',
-  onion: '#7a992a',
-  radish: '#7a992a',
-  tomato: '#7a992a',
+  avocado: '#075F22',
+  carrot: '#FF8C0D',
+  eggplant: '#C322FF',
+  onion: '#FBFB71',
+  radish: '#C2FF63',
+  tomato: '#FE0B29',
 };
 
 export const makeChart = ({ categories, types, success, fail }: chartArgs) => ({
