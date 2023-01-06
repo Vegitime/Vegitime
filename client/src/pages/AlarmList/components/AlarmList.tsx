@@ -1,43 +1,102 @@
 import styled from 'styled-components';
-import { ReactComponent as Eggplant } from '@/assets/eggplant.svg';
 import { Link } from 'react-router-dom';
+import { getAsset } from 'utils';
 
-// import { ReactComponent as Remove } from '@/assets/remove.svg';
+interface Vegetable {
+  [key: string]: string;
+}
+interface Vegetables {
+  [key: string]: Vegetable;
+}
+interface VegiInfo {
+  vegetable?: string;
+  level?: number;
+  isActive: boolean;
+  disabled?: boolean;
+}
 
-const ListContainer = styled(Link)`
-  width: 48.75rem;
-  height: 10rem;
+const vegetables: Vegetables = {
+  eggplant: {
+    src: `${getAsset('eggplant05.svg')}`,
+    name: '가지',
+  },
+  onion: {
+    src: `${getAsset('onion04.svg')}`,
+    name: '양파',
+  },
+  carrot: {
+    src: `${getAsset('carrot03.svg')}`,
+    name: '당근',
+  },
+};
+
+const ListContainer = styled.button<{ isActive: boolean }>`
+  width: 100%;
+  height: 5rem;
   border-radius: 6.25rem;
+  border-color: var(
+    ${(props) =>
+      props.isActive ? '--color-normal-green' : '--color-light-green'}
+  );
   background: #fff;
   font-size: 3.75rem;
   margin: 0 auto var(--spacing-md);
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding: 0 var(--spacing-xl);
+  :disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 `;
 
-const Span = styled.span`
+const InfoContainer = styled.div`
   width: 100%;
-  line-height: 10rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Time = styled.p<{ isActive: boolean }>`
+  width: 100%;
   text-align: center;
+  font-size: var(--text-lg);
+  display: ${(props) => (props.isActive ? '' : 'none')};
 `;
 
-const VegiImage = styled(Eggplant)`
-  margin-left: var(--spacing-xl);
-  margin-top: 1.875rem;
+const VegiInfo = styled.p<{ isActive: boolean }>`
+  width: 100%;
+  text-align: center;
+  font-size: var(${(props) => (props.isActive ? '--text-sm' : '--text-lg')});
 `;
 
-// active 되었을 때 button icon style
-// const RemoveButton = styled(Remove)`
-//   margin-right: 48px;
-//   margin-top: 20px;
-// `;
+const VegiImage = styled.img`
+  margin: 0.5rem 0;
+  width: auto;
+  height: calc(100% - 1rem);
+`;
 
-export default function AlarmList() {
+export default function AlarmList({
+  vegetable = 'onion',
+  level = 1,
+  isActive,
+  disabled,
+}: VegiInfo) {
+  const { src, name } = vegetables[vegetable];
   return (
-    <ListContainer to="/setting_alarm">
-      <VegiImage width="7.125rem" height="6.25rem" />
-      <Span>AM 07:00</Span>
-      {/* <RemoveButton width="80px" height="40px" /> */}
-    </ListContainer>
+    <Link to="/vegipage">
+      <ListContainer isActive={isActive} disabled={disabled}>
+        <VegiImage src={src} alt={name} />
+        <InfoContainer>
+          <Time isActive={isActive}>AM 07:00</Time>
+          <VegiInfo isActive={isActive}>
+            Lv.{level} {name} {name}
+          </VegiInfo>
+        </InfoContainer>
+      </ListContainer>
+    </Link>
   );
 }
