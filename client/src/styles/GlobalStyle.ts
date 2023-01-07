@@ -35,7 +35,7 @@ export const GlobalStyle = createGlobalStyle/*css*/ `
     --spacing-md: 2.5rem; /* 40px */
     --spacing-lg: 3rem; /* 48px */
     --spacing-xl: 3.5rem; /* 56px */
-    --spacing-xxl: 4.375rem; /* 70px */
+    --spacing-xxl: 4rem; /* 64px */
     --spacing-xxxl: 9.375rem; /* 150px */
   }
 
