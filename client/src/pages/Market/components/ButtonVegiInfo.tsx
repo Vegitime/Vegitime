@@ -14,6 +14,7 @@ interface Ivegetables {
 }
 interface VegiInfoProps {
   type: 'avocado' | 'carrot' | 'eggplant' | 'onion' | 'radish' | 'tomato';
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const StyledButton = styled.button`
@@ -74,14 +75,10 @@ const VEGETABLE_INFO: Ivegetables = {
   },
 };
 
-export default function ButtonVegiInfo({ type }: VegiInfoProps) {
+export default function ButtonVegiInfo({ type, onClick }: VegiInfoProps) {
   const { src, name, price } = VEGETABLE_INFO[type];
   return (
-    <StyledButton
-      onClick={() => {
-        console.log('모달활성화');
-      }}
-    >
+    <StyledButton onClick={onClick}>
       <img height={100} src={src} alt={`${name} 캐릭터 구매하러 이동`} />
       <div>{name}</div>
       <MoneyInfo size="small">{price}</MoneyInfo>
