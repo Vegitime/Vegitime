@@ -28,7 +28,7 @@ export default function Time({ text }: TimeType) {
   return (
     <TimeContainer>
       <P>{text}</P>
-      <Link to="/setting_alarm">
+      <Link to="/settingalarm">
         <SettingImg src={getAsset('setting.svg')} />
       </Link>
     </TimeContainer>

@@ -1,6 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
+export interface IButton {
+  url?: string;
+  alt?: string;
+  width?: string;
+  height?: string;
+  style: React.CSSProperties;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+}
+
 const StyledButton = styled.button<{ width?: string; height?: string }>`
   background: none;
   border: none;
@@ -11,15 +20,8 @@ const StyledButton = styled.button<{ width?: string; height?: string }>`
   }
 `;
 
-export interface IButton {
-  url?: string;
-  alt?: string;
-  width?: string;
-  height?: string;
-  style: React.CSSProperties;
-}
-
 export default function IconButton({
+  onClick,
   url,
   alt,
   width,
@@ -27,7 +29,7 @@ export default function IconButton({
   ...restProps
 }: IButton) {
   return (
-    <StyledButton width={width} height={height}>
+    <StyledButton onClick={onClick} width={width} height={height}>
       <img src={url} alt={alt} {...restProps} />
     </StyledButton>
   );
