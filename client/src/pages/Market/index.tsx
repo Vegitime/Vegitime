@@ -1,7 +1,9 @@
-import { ButtonVegiInfo, ModalDialog } from './components';
-import { Header, Title, Navigation } from 'components';
+import { ButtonVegiInfo } from './components';
+import { Header, Title, Navigation, ModalDialog, TextButton } from 'components';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
+import { useState } from 'react';
+import { VEGETABLE_INFO } from 'utils';
 
 const StyledMain = styled.main`
   ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center' })};
@@ -34,6 +36,10 @@ const VEGETABLE_TYPES: Array<Vegis> = [
 ];
 
 export default function Market() {
+  const [activateModal, setActivateModal] = useState(false);
+  const [clickedType, setClickedType] = useState('tomato');
+  const { src, name, price, specialty } = VEGETABLE_INFO[clickedType];
+
   return (
     <>
       <Header />
@@ -42,10 +48,47 @@ export default function Market() {
         <StyledUl>
           {VEGETABLE_TYPES.map((type) => (
             <li key={type}>
-              <ButtonVegiInfo type={type} />
+              <ButtonVegiInfo
+                onClick={() => {
+                  setActivateModal(true);
+                  setClickedType(type);
+                  document.body.style.overflow = 'hidden';
+                }}
+                type={type}
+              />
             </li>
           ))}
         </StyledUl>
+        {activateModal && (
+          <ModalDialog
+            size="large"
+            onClose={() => {
+              setActivateModal(false);
+            }}
+          >
+            <img src={src} alt={name} />
+            <ul>
+              <li>
+                <span>이름 : {name}</span>
+              </li>
+              <li>
+                <span>가격 : {price}원</span>
+              </li>
+              <li>
+                <span>특기 : {specialty}</span>
+              </li>
+            </ul>
+            <TextButton
+              width="9.375rem"
+              size="small"
+              onClick={() => {
+                console.log('구매하기 버튼 클릭');
+              }}
+            >
+              구매하기
+            </TextButton>
+          </ModalDialog>
+        )}
       </StyledMain>
       <Navigation />
     </>
