@@ -1,34 +1,155 @@
-import * as React from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
+import styled from 'styled-components';
+import { flexContainer } from 'styles';
 
-export default function TimePicker() {
-  const current = new Date();
-  const [_hour, _minute, , ampm] = current
+interface keyDownHandlerArgs {
+  e: React.KeyboardEvent<HTMLDivElement>;
+  min: number;
+  max: number;
+  setState: Dispatch<SetStateAction<number>>;
+}
+interface timePickerProps {
+  time: Date | string;
+}
+
+const Container = styled.div`
+  width: 100%;
+  ${flexContainer({ d: 'row', w: 'nowrap', ai: 'center', jc: 'space-around' })}
+  font-size: var(--text-md);
+  &::before {
+    content: '';
+    width: calc(100% - var(--spacing-xxs) * 2);
+    height: 3.75rem;
+    display: block;
+    position: absolute;
+    z-index: -1;
+    border-radius: 3.125rem;
+    background-color: white;
+  }
+
+  .meridian,
+  .hour,
+  .minute {
+    ${flexContainer({
+      d: 'column',
+      w: 'nowrap',
+      ai: 'center',
+      g: 'var(--spacing-xxxs)',
+    })}
+  }
+
+  .previous,
+  .next {
+    color: var(--color-grey);
+  }
+
+  .meridian > button,
+  .hour > button,
+  .minute > button {
+    width: 7.3125rem;
+  }
+
+  .meridian > div,
+  .hour > div,
+  .minute > div {
+    width: 7.3125rem;
+    height: 3.75rem;
+    line-height: 3.75rem;
+    text-align: center;
+  }
+`;
+
+const CurrentHour = styled.div`
+  &::after {
+    content: ':';
+    position: absolute;
+    left: 66vw;
+  }
+`;
+
+const padStart = (time: number) => {
+  const timeStr = time + '';
+  return timeStr.padStart(2, '0');
+};
+
+const handleDivClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  window.getSelection()?.selectAllChildren(e.target as Node);
+};
+
+const handleKeyDown = ({ e, min, max, setState }: keyDownHandlerArgs) => {
+  if (
+    !e.key.match(`[0-9]`) &&
+    !e.key.includes('Arrow') &&
+    !e.key.includes('Page') &&
+    e.key !== 'Tab' &&
+    e.key !== 'Backspace' &&
+    e.key !== 'Delete' &&
+    e.key !== 'Enter' &&
+    e.key !== 'Home' &&
+    e.key !== 'End'
+  ) {
+    e.preventDefault();
+    return;
+  }
+  const target = e.target as HTMLDivElement;
+  const value = +target.innerText;
+  if (e.key === 'Enter' || e.key === 'Tab') {
+    e.preventDefault();
+    if (value >= min && value <= max) {
+      setState(value);
+      target.blur();
+      window.getSelection()?.removeAllRanges();
+    }
+  }
+};
+
+const handleInput = (e: React.ChangeEvent<HTMLDivElement>) => {
+  const target = e.target;
+  const text = target.textContent ?? '';
+  if (text.length > 2) {
+    target.textContent = text.slice(-2);
+    const range = document.createRange();
+    range.selectNodeContents(target);
+    range.collapse(false);
+    const selection = window.getSelection();
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+  }
+};
+
+export default function TimePicker({ time }: timePickerProps) {
+  const current = time === '' ? new Date() : time;
+  const [_hour, _minute, , ampm] = (current as Date)
     .toLocaleTimeString('en-US')
     .replace(' ', ':')
     .split(':');
-  const hour = +_hour;
-  const minute = +_minute;
-  const isAm = ampm === 'AM';
-  console.log(hour, minute, ampm);
+
+  const [hour, setHour] = useState(+_hour);
+  const [minute, setMinute] = useState(+_minute);
+  const [isAm, setIsAm] = useState(ampm === 'AM');
 
   return (
-    <div
+    <Container
       id="timepicker-group"
-      className="timepicker-spinbuttons"
       role="group"
       aria-labelledby="myTimepickerLabel myTimepickerTime"
     >
-      <div id="myTimepickerLabel">Choose a time to wake up</div>
-      <div className="date" id="myTimepickerTime">
+      <div id="myTimepickerLabel" className="sr-only">
+        기상 시간을 선택해주세요
+      </div>
+      <div id="myTimepickerTime" className="sr-only">
         현재 선택된 시간은 {isAm ? '오전' : '오후'} {hour}시 {minute}분 입니다
       </div>
-      <div className="meridian spinbutton">
+
+      <div className="meridian">
         <button
           type="button"
-          className="decrease"
           tabIndex={-1}
-          aria-label={isAm ? '' : 'AM'}
+          aria-label={isAm ? '' : '오전'}
           disabled={isAm ? true : false}
+          onClick={() => {
+            setIsAm(true);
+          }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
             <polygon points="2,18 18,18 10,4"></polygon>
@@ -41,7 +162,7 @@ export default function TimePicker() {
           role="spinbutton"
           tabIndex={0}
           aria-valuenow={1}
-          aria-valuetext={isAm ? 'AM' : 'PM'}
+          aria-valuetext={isAm ? '오전' : '오후'}
           aria-valuemin={0}
           aria-valuemax={1}
           aria-label="Meridian"
@@ -53,48 +174,12 @@ export default function TimePicker() {
         </div>
         <button
           type="button"
-          className="increase"
           tabIndex={-1}
-          aria-label={isAm ? 'PM' : ''}
+          aria-label={isAm ? '오후' : ''}
           disabled={isAm ? false : true}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-            <polygon points="2,4 18,4 10,18"></polygon>
-          </svg>
-        </button>
-      </div>
-      <div className="hour spinbutton">
-        <button
-          type="button"
-          className="decrease"
-          tabIndex={-1}
-          aria-label="previous hour"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-            <polygon points="2,18 18,18 10,4"></polygon>
-          </svg>
-        </button>
-        <div className="previous" aria-hidden="true">
-          {hour === 1 ? 12 : hour - 1}
-        </div>
-        <div
-          role="spinbutton"
-          tabIndex={0}
-          aria-valuenow={hour}
-          aria-valuemin={1}
-          aria-valuemax={12}
-          aria-label="Hour"
-        >
-          {hour}
-        </div>
-        <div className="next" aria-hidden="true">
-          {hour === 12 ? 1 : hour + 1}
-        </div>
-        <button
-          type="button"
-          className="increase"
-          tabIndex={-1}
-          aria-label="next hour"
+          onClick={() => {
+            setIsAm(false);
+          }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
             <polygon points="2,4 18,4 10,18"></polygon>
@@ -102,19 +187,70 @@ export default function TimePicker() {
         </button>
       </div>
 
-      <div className="minute spinbutton">
+      <div className="hour">
         <button
           type="button"
-          className="decrease"
           tabIndex={-1}
-          aria-label="previous minute"
+          aria-label="1시간 감소"
+          onClick={() => {
+            setHour(hour === 1 ? 12 : hour - 1);
+          }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
             <polygon points="2,18 18,18 10,4"></polygon>
           </svg>
         </button>
         <div className="previous" aria-hidden="true">
-          {minute === 1 ? 59 : minute - 1}
+          {hour === 1 ? 12 : padStart(hour - 1)}
+        </div>
+        <CurrentHour
+          role="spinbutton"
+          tabIndex={0}
+          aria-valuenow={hour}
+          aria-valuemin={1}
+          aria-valuemax={12}
+          aria-label="Hour"
+          contentEditable={true}
+          onClick={handleDivClick}
+          onKeyDown={(e) => {
+            handleKeyDown({ e, setState: setHour, min: 1, max: 12 });
+          }}
+          onInput={handleInput}
+        >
+          {padStart(hour)}
+        </CurrentHour>
+        <div className="next" aria-hidden="true">
+          {hour === 12 ? padStart(1) : padStart(hour + 1)}
+        </div>
+        <button
+          type="button"
+          tabIndex={-1}
+          aria-label="1시간 증가"
+          onClick={() => {
+            setHour(hour === 12 ? 1 : hour + 1);
+          }}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+            <polygon points="2,4 18,4 10,18"></polygon>
+          </svg>
+        </button>
+      </div>
+
+      <div className="minute">
+        <button
+          type="button"
+          tabIndex={-1}
+          aria-label="1분 감소"
+          onClick={() => {
+            setMinute(minute === 0 ? 59 : minute - 1);
+          }}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+            <polygon points="2,18 18,18 10,4"></polygon>
+          </svg>
+        </button>
+        <div className="previous" aria-hidden="true">
+          {minute === 0 ? 59 : padStart(minute - 1)}
         </div>
         <div
           role="spinbutton"
@@ -123,23 +259,31 @@ export default function TimePicker() {
           aria-valuemin={0}
           aria-valuemax={59}
           aria-label="Minute"
+          contentEditable={true}
+          onClick={handleDivClick}
+          onKeyDown={(e) => {
+            handleKeyDown({ e, setState: setMinute, min: 0, max: 59 });
+          }}
+          onInput={handleInput}
         >
-          {minute}
+          {padStart(minute)}
         </div>
         <div className="next" aria-hidden="true">
-          {minute === 59 ? 0 : minute + 1}
+          {minute === 59 ? padStart(0) : padStart(minute + 1)}
         </div>
         <button
           type="button"
-          className="increase"
           tabIndex={-1}
-          aria-label="next minute"
+          aria-label="1분 증가"
+          onMouseDown={() => {
+            setMinute(minute === 59 ? 0 : minute + 1);
+          }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
             <polygon points="2,4 18,4 10,18"></polygon>
           </svg>
         </button>
       </div>
-    </div>
+    </Container>
   );
 }
