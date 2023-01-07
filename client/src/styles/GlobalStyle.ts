@@ -103,4 +103,13 @@ export const GlobalStyle = createGlobalStyle/*css*/ `
     text-decoration: none;
     color: inherit; // 부모에게서 가져와서 링크 색이 변하지 않음
   }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+  }
 `;

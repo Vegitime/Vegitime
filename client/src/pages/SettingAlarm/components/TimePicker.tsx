@@ -1,4 +1,60 @@
-import * as React from 'react';
+import styled from 'styled-components';
+import { flexContainer } from 'styles';
+
+const Container = styled.div`
+  width: 100%;
+  ${flexContainer({ d: 'row', w: 'nowrap', ai: 'center', jc: 'space-around' })}
+  font-size: var(--text-md);
+  &::before {
+    content: '';
+    width: calc(100% - var(--spacing-xxs) * 2);
+    height: 3.75rem;
+    display: block;
+    position: absolute;
+    z-index: -1;
+    border-radius: 3.125rem;
+    background-color: white;
+  }
+
+  .meridian,
+  .hour,
+  .minute {
+    ${flexContainer({
+      d: 'column',
+      w: 'nowrap',
+      ai: 'center',
+      g: 'var(--spacing-xxxs)',
+    })}
+  }
+
+  .meridian > button,
+  .hour > button,
+  .minute > button {
+    width: 7.3125rem;
+  }
+
+  .meridian > div,
+  .hour > div,
+  .minute > div {
+    width: 7.3125rem;
+    height: 3.75rem;
+    line-height: 3.75rem;
+    text-align: center;
+  }
+`;
+
+const CurrentHour = styled.div`
+  &::after {
+    content: ':';
+    position: relative;
+    left: 2.5rem;
+  }
+`;
+
+const padStart = (time: number) => {
+  const timeStr = time + '';
+  return timeStr.padStart(2, '0');
+};
 
 export default function TimePicker() {
   const current = new Date();
@@ -9,20 +65,21 @@ export default function TimePicker() {
   const hour = +_hour;
   const minute = +_minute;
   const isAm = ampm === 'AM';
-  console.log(hour, minute, ampm);
 
   return (
-    <div
+    <Container
       id="timepicker-group"
       className="timepicker-spinbuttons"
       role="group"
       aria-labelledby="myTimepickerLabel myTimepickerTime"
     >
-      <div id="myTimepickerLabel">Choose a time to wake up</div>
-      <div className="date" id="myTimepickerTime">
+      <div id="myTimepickerLabel" className="sr-only">
+        기상 시간을 선택해주세요
+      </div>
+      <div className="sr-only" id="myTimepickerTime">
         현재 선택된 시간은 {isAm ? '오전' : '오후'} {hour}시 {minute}분 입니다
       </div>
-      <div className="meridian spinbutton">
+      <div className="meridian">
         <button
           type="button"
           className="decrease"
@@ -63,7 +120,7 @@ export default function TimePicker() {
           </svg>
         </button>
       </div>
-      <div className="hour spinbutton">
+      <div className="hour">
         <button
           type="button"
           className="decrease"
@@ -75,9 +132,9 @@ export default function TimePicker() {
           </svg>
         </button>
         <div className="previous" aria-hidden="true">
-          {hour === 1 ? 12 : hour - 1}
+          {hour === 1 ? 12 : padStart(hour - 1)}
         </div>
-        <div
+        <CurrentHour
           role="spinbutton"
           tabIndex={0}
           aria-valuenow={hour}
@@ -85,10 +142,10 @@ export default function TimePicker() {
           aria-valuemax={12}
           aria-label="Hour"
         >
-          {hour}
-        </div>
+          {padStart(hour)}
+        </CurrentHour>
         <div className="next" aria-hidden="true">
-          {hour === 12 ? 1 : hour + 1}
+          {hour === 12 ? padStart(1) : padStart(hour + 1)}
         </div>
         <button
           type="button"
@@ -102,7 +159,7 @@ export default function TimePicker() {
         </button>
       </div>
 
-      <div className="minute spinbutton">
+      <div className="minute">
         <button
           type="button"
           className="decrease"
@@ -114,7 +171,7 @@ export default function TimePicker() {
           </svg>
         </button>
         <div className="previous" aria-hidden="true">
-          {minute === 1 ? 59 : minute - 1}
+          {minute === 0 ? 59 : padStart(minute - 1)}
         </div>
         <div
           role="spinbutton"
@@ -124,10 +181,10 @@ export default function TimePicker() {
           aria-valuemax={59}
           aria-label="Minute"
         >
-          {minute}
+          {padStart(minute)}
         </div>
         <div className="next" aria-hidden="true">
-          {minute === 59 ? 0 : minute + 1}
+          {minute === 59 ? padStart(0) : padStart(minute + 1)}
         </div>
         <button
           type="button"
@@ -140,6 +197,6 @@ export default function TimePicker() {
           </svg>
         </button>
       </div>
-    </div>
+    </Container>
   );
 }
