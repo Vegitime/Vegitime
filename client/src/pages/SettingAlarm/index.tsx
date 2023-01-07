@@ -5,6 +5,15 @@ import { flexContainer } from 'styles';
 import { useState } from 'react';
 // import users from '../../../../server/mock/users.js';
 
+const mockDate = {
+  onion: {
+    time: '',
+  },
+  carrot: {
+    time: new Date(),
+  },
+};
+
 const StyledMain = styled.main`
   ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center' })};
   position: relative;
@@ -28,7 +37,7 @@ export default function SettingAlarm() {
       <Header />
       <StyledMain>
         <Title>Setting Alarm</Title>
-        <TimePicker />
+        <TimePicker time={mockDate.carrot.time} />
         <TextButton
           width="11.5625rem"
           size="small"
