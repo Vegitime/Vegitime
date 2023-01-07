@@ -66,6 +66,7 @@ export default function VegiPage() {
                 size="small"
                 onClick={() => {
                   setActivateModal(false);
+                  document.body.style.overflow = 'unset';
                 }}
               >
                 취소

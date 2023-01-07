@@ -72,6 +72,7 @@ export default function SettingAlarm() {
                 size="small"
                 onClick={() => {
                   setActivateModal(false);
+                  document.body.style.overflow = 'unset';
                 }}
               >
                 취소
