@@ -1,11 +1,19 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { VEGETABLE_INFO } from 'utils';
 import { flexContainer } from 'styles';
+import { VEGETABLE_INFO } from 'utils';
 import { ReactComponent as Arrow } from '@/assets/polygon.svg';
 
+interface VegiSelectProps {
+  id: number;
+  type: 'avocado' | 'carrot' | 'eggplant' | 'onion' | 'radish' | 'tomato';
+}
+
 interface SelectProps extends MenuProps {
-  types: ('avocado' | 'carrot' | 'eggplant' | 'onion' | 'radish' | 'tomato')[];
+  types: Array<VegiSelectProps>;
+  selectedId: number;
+  setSelectedId: Dispatch<SetStateAction<number>>;
 }
 
 interface MenuProps {
@@ -51,7 +59,8 @@ const ComboMenu = styled.div<MenuProps>`
   z-index: 10000;
 `;
 
-const ComboOption = styled.div`
+const ComboOption = styled(Link)`
+  display: block;
   padding: var(--spacing-base) 0;
   text-align: center;
   font-size: var(--text-sm);
@@ -67,11 +76,19 @@ const ComboOption = styled.div`
   }
 `;
 
-export default function VegiSelect({ maxHeight, types }: SelectProps) {
-  const [selectedIdx, setSelectedIdx] = useState(2);
+export default function VegiSelect({
+  maxHeight,
+  types,
+  selectedId,
+  setSelectedId,
+  ...props
+}: SelectProps) {
   const [isopen, setIsOpen] = useState(false);
+
+  const [selectedVegi] = types.filter(({ id: _id }) => _id === selectedId);
+
   return (
-    <Container>
+    <Container {...props}>
       <label id="combo-label" className="sr-only">
         알람을 설정할 야채를 선택하세요
       </label>
@@ -84,10 +101,10 @@ export default function VegiSelect({ maxHeight, types }: SelectProps) {
           id="combo"
           role="combobox"
           tabIndex={0}
-          aria-activedescendant={isopen ? `combo-${selectedIdx}` : ''}
+          aria-activedescendant={isopen ? `combo-${selectedId}` : ''}
           onClick={() => setIsOpen((isopen) => !isopen)}
         >
-          {VEGETABLE_INFO[types[selectedIdx]].name}
+          {VEGETABLE_INFO[selectedVegi.type].name}
           <SelectArrow
             transform={isopen ? 'rotate(180)' : ''}
             fill="var(--color-normal-green)"
@@ -101,15 +118,17 @@ export default function VegiSelect({ maxHeight, types }: SelectProps) {
             tabIndex={-1}
             maxHeight={maxHeight}
           >
-            {types.map((type, idx) => {
+            {types.map((_type) => {
+              const { type, id } = _type;
               return (
                 <ComboOption
-                  key={type}
+                  to={`/settingalarm/${id}`}
+                  key={id}
                   role="option"
-                  id={`combo-${idx}`}
-                  aria-selected={selectedIdx === idx ? 'true' : 'false'}
+                  id={`combo-${id}`}
+                  aria-selected={selectedId === id ? 'true' : 'false'}
                   onClick={() => {
-                    setSelectedIdx(idx);
+                    setSelectedId(id);
                     setIsOpen(false);
                   }}
                 >
