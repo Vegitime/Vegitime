@@ -9,6 +9,7 @@ interface ButtonProps {
 interface TextButtonProps extends ButtonProps {
   type?: 'button' | 'submit' | 'reset';
   onClick: React.MouseEventHandler<HTMLButtonElement>;
+  disabled?: boolean;
   children: string;
 }
 
@@ -33,11 +34,16 @@ const StyledButton = styled.button<ButtonProps>`
   color: var(--color-white);
   font-size: ${({ size }) => buttonStyle[size].fontSize};
   cursor: pointer;
+
+  &[disabled] {
+    background: var(--color-grey);
+  }
 `;
 
 export default function TextButton({
   type,
   onClick,
+  disabled,
   width,
   size,
   backgroundColor,
@@ -50,6 +56,7 @@ export default function TextButton({
       width={width}
       size={size}
       backgroundColor={backgroundColor}
+      disabled={disabled}
     >
       {children}
     </StyledButton>
@@ -58,6 +65,7 @@ export default function TextButton({
 
 TextButton.defaultProps = {
   type: 'button',
+  disabled: false,
   size: 'large',
   backgroundColor: 'var(--color-normal-green)',
 };
