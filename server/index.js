@@ -24,6 +24,9 @@ app.use(cors(corsOptions));
 const mongoose = require('mongoose');
 const connect = mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true}).then(() => {console.log('MongoDB Connected...')}).catch(err => console.log(err));
 
+// api 라우터 설정
+app.use('/api/users', require('./routes/users'));
+
 //use this to show the image you have in node js server to client (react js)
 app.use('/public', express.static('public'));
 
