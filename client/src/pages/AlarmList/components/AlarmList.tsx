@@ -1,34 +1,15 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { getAsset } from 'utils';
+import { getAsset, VEGETABLE_INFO } from 'utils';
 
-interface Vegetable {
-  [key: string]: string;
-}
-interface Vegetables {
-  [key: string]: Vegetable;
-}
 interface VegiInfo {
-  vegetable?: string;
-  level?: number;
+  type: 'avocado' | 'carrot' | 'eggplant' | 'onion' | 'radish' | 'tomato';
+  level: number;
+  alarm: string;
   isActive: boolean;
-  disabled?: boolean;
+  disabled: boolean;
+  id: number;
 }
-
-const vegetables: Vegetables = {
-  eggplant: {
-    src: `${getAsset('eggplant05.svg')}`,
-    name: '가지',
-  },
-  onion: {
-    src: `${getAsset('onion04.svg')}`,
-    name: '양파',
-  },
-  carrot: {
-    src: `${getAsset('carrot03.svg')}`,
-    name: '당근',
-  },
-};
 
 const ListContainer = styled.button<{ isActive: boolean }>`
   width: 100%;
@@ -80,20 +61,22 @@ const VegiImage = styled.img`
 `;
 
 export default function AlarmList({
-  vegetable = 'onion',
-  level = 1,
+  type,
+  level,
+  alarm,
   isActive,
   disabled,
+  id,
 }: VegiInfo) {
-  const { src, name } = vegetables[vegetable];
+  const { name } = VEGETABLE_INFO[type];
   return (
-    <Link to="/myvegi">
+    <Link to={`/myvegi/${id}`}>
       <ListContainer isActive={isActive} disabled={disabled}>
-        <VegiImage src={src} alt={name} />
+        <VegiImage src={getAsset(`${type}0${level}.svg`)} alt={name} />
         <InfoContainer>
-          <Time isActive={isActive}>AM 07:00</Time>
+          <Time isActive={isActive}>{alarm}</Time>
           <VegiInfo isActive={isActive}>
-            Lv.{level} {name} {name}
+            Lv.{level} {name}
           </VegiInfo>
         </InfoContainer>
       </ListContainer>
