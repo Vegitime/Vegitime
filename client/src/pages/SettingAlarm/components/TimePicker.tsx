@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
+import { ReactComponent as Arrow } from '@/assets/polygon.svg';
 
 interface keyDownHandlerArgs {
   e: React.KeyboardEvent<HTMLDivElement>;
@@ -151,9 +152,7 @@ export default function TimePicker({ time }: timePickerProps) {
             setIsAm(true);
           }}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-            <polygon points="2,18 18,18 10,4"></polygon>
-          </svg>
+          <Arrow transform="rotate(180)" />
         </button>
         <div className="previous" aria-hidden="true">
           {isAm ? '' : 'AM'}
@@ -181,9 +180,7 @@ export default function TimePicker({ time }: timePickerProps) {
             setIsAm(false);
           }}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-            <polygon points="2,4 18,4 10,18"></polygon>
-          </svg>
+          <Arrow />
         </button>
       </div>
 
@@ -196,9 +193,7 @@ export default function TimePicker({ time }: timePickerProps) {
             setHour(hour === 1 ? 12 : hour - 1);
           }}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-            <polygon points="2,18 18,18 10,4"></polygon>
-          </svg>
+          <Arrow transform="rotate(180)" />
         </button>
         <div className="previous" aria-hidden="true">
           {hour === 1 ? 12 : padStart(hour - 1)}
@@ -230,9 +225,7 @@ export default function TimePicker({ time }: timePickerProps) {
             setHour(hour === 12 ? 1 : hour + 1);
           }}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-            <polygon points="2,4 18,4 10,18"></polygon>
-          </svg>
+          <Arrow />
         </button>
       </div>
 
@@ -245,9 +238,7 @@ export default function TimePicker({ time }: timePickerProps) {
             setMinute(minute === 0 ? 59 : minute - 1);
           }}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-            <polygon points="2,18 18,18 10,4"></polygon>
-          </svg>
+          <Arrow transform="rotate(180)" />
         </button>
         <div className="previous" aria-hidden="true">
           {minute === 0 ? 59 : padStart(minute - 1)}
@@ -279,9 +270,7 @@ export default function TimePicker({ time }: timePickerProps) {
             setMinute(minute === 59 ? 0 : minute + 1);
           }}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-            <polygon points="2,4 18,4 10,18"></polygon>
-          </svg>
+          <Arrow />
         </button>
       </div>
     </Container>
