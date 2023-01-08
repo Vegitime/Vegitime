@@ -37,7 +37,7 @@ const router = createBrowserRouter([
         element: <MyPage />,
       },
       {
-        path: 'settingalarm',
+        path: 'settingalarm/:id',
         element: <SettingAlarm />,
       },
       {
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
         element: <AlarmList />,
       },
       {
-        path: 'myvegi',
+        path: 'myvegi/:id',
         element: <VegiPage />,
       },
     ],
