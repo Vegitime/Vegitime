@@ -4,6 +4,7 @@ import { getAsset } from 'utils';
 
 interface TimeType {
   text: string;
+  id: string;
 }
 
 const TimeContainer = styled.div`
@@ -24,11 +25,11 @@ const SettingImg = styled.img`
   height: auto;
 `;
 
-export default function Time({ text }: TimeType) {
+export default function Time({ text, id }: TimeType) {
   return (
     <TimeContainer>
-      <P>{text}</P>
-      <Link to="/settingalarm">
+      <P>{text === '' ? '시간을 설정해주세요' : text}</P>
+      <Link to={`/settingalarm/${id}`}>
         <SettingImg src={getAsset('setting.svg')} />
       </Link>
     </TimeContainer>

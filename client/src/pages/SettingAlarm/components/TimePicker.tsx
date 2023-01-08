@@ -1,7 +1,8 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
 import { ReactComponent as Arrow } from '@/assets/polygon.svg';
+import { separateAlarmFormat } from 'utils';
 
 interface keyDownHandlerArgs {
   e: React.KeyboardEvent<HTMLDivElement>;
@@ -10,7 +11,12 @@ interface keyDownHandlerArgs {
   setState: Dispatch<SetStateAction<number>>;
 }
 interface timePickerProps {
-  time: Date | string;
+  hour: number;
+  minute: number;
+  isAm: boolean;
+  setHour: Dispatch<SetStateAction<number>>;
+  setMinute: Dispatch<SetStateAction<number>>;
+  setIsAm: Dispatch<SetStateAction<boolean>>;
 }
 
 const Container = styled.div`
@@ -118,17 +124,14 @@ const handleInput = (e: React.ChangeEvent<HTMLDivElement>) => {
   }
 };
 
-export default function TimePicker({ time }: timePickerProps) {
-  const current = time === '' ? new Date() : time;
-  const [_hour, _minute, , ampm] = (current as Date)
-    .toLocaleTimeString('en-US')
-    .replace(' ', ':')
-    .split(':');
-
-  const [hour, setHour] = useState(+_hour);
-  const [minute, setMinute] = useState(+_minute);
-  const [isAm, setIsAm] = useState(ampm === 'AM');
-
+export default function TimePicker({
+  hour,
+  minute,
+  isAm,
+  setHour,
+  setMinute,
+  setIsAm,
+}: timePickerProps) {
   return (
     <Container
       id="timepicker-group"

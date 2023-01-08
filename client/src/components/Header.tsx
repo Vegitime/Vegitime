@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { flexContainer } from 'styles';
 import { getAsset } from 'utils';
 import { MoneyInfo } from 'components';
+import users from '../../../server/mock/users';
 
 const StyledHeader = styled.header`
   position: sticky;
@@ -22,6 +23,8 @@ const StyledDiv = styled.div`
 
 export default function Header() {
   const navigate = useNavigate();
+  const [user] = users;
+  const { money } = user;
 
   return (
     <StyledHeader>
@@ -34,7 +37,7 @@ export default function Header() {
         />
       </button>
       <StyledDiv>
-        <MoneyInfo size="large">{2323200}</MoneyInfo>
+        <MoneyInfo size="large">{money}</MoneyInfo>
         <button type="button" onClick={() => console.log('로그아웃 연결')}>
           <img
             width={40}
