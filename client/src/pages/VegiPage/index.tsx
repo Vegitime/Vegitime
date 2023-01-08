@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Time, VegiImage, ProgressBar, ActionButton } from './components';
+import { Time, VegiImage, ProgressBar, DictButton } from './components';
 import { Header, Title, Navigation, TextButton, ModalDialog } from 'components';
 import { useState } from 'react';
 import { flexContainer } from 'styles';
@@ -31,7 +31,7 @@ export default function VegiPage() {
         <ProgressBar text="3 / 5" />
         <VegiImage />
         <Time text="AM 07:00" />
-        <ActionButton action="voice" />
+        <DictButton>칭찬하기</DictButton>
         <TextButton
           width="100%"
           size="large"
