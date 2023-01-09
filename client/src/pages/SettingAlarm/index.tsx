@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
 import { separateAlarmFormat, getAlarmFormat } from 'utils';
@@ -52,6 +52,13 @@ export default function SettingAlarm() {
   const [minute, setMinute] = useState(+_minute);
   const [isAm, setIsAm] = useState(ampm === 'AM');
   const navigate = useNavigate();
+  console.log(id, selectedId);
+  useEffect(() => {
+    setSelectedId(+(id as string));
+    setHour(+_hour);
+    setMinute(+_minute);
+    setIsAm(ampm === 'AM');
+  }, [id]);
 
   return (
     <>

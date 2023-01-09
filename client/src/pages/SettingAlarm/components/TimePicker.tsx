@@ -2,7 +2,6 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
 import { ReactComponent as Arrow } from '@/assets/polygon.svg';
-import { separateAlarmFormat } from 'utils';
 
 interface keyDownHandlerArgs {
   e: React.KeyboardEvent<HTMLDivElement>;
@@ -212,6 +211,7 @@ export default function TimePicker({
           aria-valuemax={12}
           aria-label="Hour"
           contentEditable={true}
+          suppressContentEditableWarning={true}
           onClick={handleDivClick}
           onKeyDown={(e) => {
             handleKeyDown({ e, setState: setHour, min: 1, max: 12 });
@@ -257,6 +257,7 @@ export default function TimePicker({
           aria-valuemax={59}
           aria-label="Minute"
           contentEditable={true}
+          suppressContentEditableWarning={true}
           onClick={handleDivClick}
           onKeyDown={(e) => {
             handleKeyDown({ e, setState: setMinute, min: 0, max: 59 });
