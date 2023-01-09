@@ -13,7 +13,6 @@ interface VegiSelectProps {
 interface SelectProps extends MenuProps {
   types: Array<VegiSelectProps>;
   selectedId: number;
-  setSelectedId: Dispatch<SetStateAction<number>>;
 }
 
 interface MenuProps {
@@ -80,7 +79,6 @@ export default function VegiSelect({
   maxHeight,
   types,
   selectedId,
-  setSelectedId,
   ...props
 }: SelectProps) {
   const [isopen, setIsOpen] = useState(false);
@@ -128,7 +126,6 @@ export default function VegiSelect({
                   id={`combo-${id}`}
                   aria-selected={selectedId === id ? 'true' : 'false'}
                   onClick={() => {
-                    setSelectedId(id);
                     setIsOpen(false);
                   }}
                 >
