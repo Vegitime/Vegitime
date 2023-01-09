@@ -1,31 +1,31 @@
 import styled from 'styled-components';
 
-interface TextType {
-  text: string;
+interface LevelType {
+  level: number;
 }
 
 const Container = styled.div`
   position: relative;
   width: 100%;
   margin: 0 auto 2rem;
+  border-radius: 3.125rem;
+  overflow: hidden;
 `;
 
 const BackBar = styled.div`
   width: 100%;
   height: 1.875rem;
   background-color: var(--color-white);
-  border-radius: 3.125rem;
   margin: 0 auto;
 `;
 
-const FrontBar = styled.div`
-  width: calc(100% * (3 / 5));
+const FrontBar = styled.div<LevelType>`
+  width: calc(100% * (${(props) => props.level} / 5));
   height: 1.875rem;
   background-color: var(--color-light-green);
   position: absolute;
   top: 0px;
   left: 0px;
-  border-radius: 3.125rem;
   margin: 0 auto;
 `;
 
@@ -42,12 +42,12 @@ const P = styled.p`
   line-height: 1;
 `;
 
-export default function ProgressBar({ text }: TextType) {
+export default function ProgressBar({ level }: LevelType) {
   return (
     <Container>
-      <FrontBar />
+      <FrontBar level={level} />
       <BackBar />
-      <P>{text}</P>
+      <P>{level} / 5</P>
     </Container>
   );
 }
