@@ -1,8 +1,11 @@
+import { useParams, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import styled from 'styled-components';
+import { flexContainer } from 'styles';
+import { VEGETABLE_INFO, getAsset } from 'utils';
 import { Time, VegiImage, ProgressBar, DictButton } from './components';
 import { Header, Title, Navigation, TextButton, ModalDialog } from 'components';
-import { useState } from 'react';
-import { flexContainer } from 'styles';
+import users from '../../../../server/mock/users';
 
 const Container = styled.div`
   position: relative;
@@ -22,15 +25,20 @@ const ButtonGroup = styled.div`
 
 export default function VegiPage() {
   const [activateModal, setActivateModal] = useState(false);
-
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const [user] = users;
+  const { vegis } = user;
+  const [vegi] = vegis.filter(({ id: _id }) => _id === +(id as string));
+  const { type, level, alarm } = vegi;
   return (
     <>
       <Header />
       <Container>
-        <Title>가지가지</Title>
-        <ProgressBar text="3 / 5" />
-        <VegiImage />
-        <Time text="AM 07:00" />
+        <Title>{VEGETABLE_INFO[type].name}</Title>
+        <ProgressBar text={`${level} / 5`} />
+        <img src={getAsset(`${type}0${level}.svg`)} height={300} />
+        <Time text={alarm} id={id as string} />
         <DictButton>칭찬하기</DictButton>
         <TextButton
           width="100%"
@@ -56,7 +64,10 @@ export default function VegiPage() {
                 width="9.375rem"
                 size="small"
                 onClick={() => {
-                  console.log('판매하기');
+                  console.log(
+                    `${id}를 ${VEGETABLE_INFO[type].price * 1.5}에 판매하기`
+                  );
+                  navigate('/alarmlist');
                 }}
               >
                 확인

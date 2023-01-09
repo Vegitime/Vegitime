@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { flexContainer } from 'styles';
 import { useState } from 'react';
 import { VEGETABLE_INFO } from 'utils';
+import users from '../../../../server/mock/users';
 
 const StyledMain = styled.main`
   ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center' })};
@@ -39,7 +40,8 @@ export default function Market() {
   const [activateModal, setActivateModal] = useState(false);
   const [clickedType, setClickedType] = useState('tomato');
   const { src, name, price, specialty } = VEGETABLE_INFO[clickedType];
-
+  const [user] = users;
+  const { money } = user;
   return (
     <>
       <Header />
@@ -81,8 +83,12 @@ export default function Market() {
             <TextButton
               width="9.375rem"
               size="small"
+              disabled={money < price}
               onClick={() => {
-                console.log('구매하기 버튼 클릭');
+                console.log(
+                  `${clickedType} 구매하고 남은 돈 ${money - price} `
+                );
+                setActivateModal(false);
               }}
             >
               구매하기
