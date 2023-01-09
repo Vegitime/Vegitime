@@ -8,6 +8,7 @@ import { flexContainer } from 'styles';
 
 interface Text {
   children: string;
+  onClickHandler: () => void;
 }
 
 const ButtonContainer = styled.div`
@@ -42,7 +43,7 @@ const Button = styled.button`
   })}
 `;
 
-export default function DictButton({ children }: Text) {
+export default function DictButton({ children, onClickHandler }: Text) {
   const {
     transcript,
     listening,
@@ -53,13 +54,19 @@ export default function DictButton({ children }: Text) {
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser does not support speech recognition.</span>;
   }
+
+  const handleButtonClick = async () => {
+    await SpeechRecognition.startListening();
+    onClickHandler();
+  };
+
   return (
     <ButtonContainer>
-      <Button onClick={() => SpeechRecognition.startListening()}>
+      <Button onClick={handleButtonClick}>
         <Img src={listening ? getAsset('micon.svg') : getAsset('micoff.svg')} />
         {children}
       </Button>
-      <p className="sr-only">{transcript}</p>
+      <p>{transcript}</p>
     </ButtonContainer>
   );
 }
