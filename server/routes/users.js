@@ -9,74 +9,81 @@ router.get("/auth", auth, (req, res) => {
     return res.status(200).json(generateResponse(200, true, null, null, true));
 });
 
-router.post("/register", (req, res) => {
-    const user = new User(req.body);
-    user.save((err, doc) => {
-        if (err) {
-            return res.json(generateResponse(500, false, err));
-        }
-
+router.post("/register", async (req, res) => {
+    try {
+        const user = new User(req.body);
+        await user.save();
         return res.status(201).json(generateResponse(201, true));
-    });
+    }
+    catch(err) {
+        return res.json(generateResponse(500, false, err));
+    }
 });
 
-router.post("/duplication", (req, res) => {
-    console.log('duplication')
-    User.findOne({ id: req.body.id }, (err, doc) => {
-        if (doc) return res.json(generateResponse(500, false));
+router.post("/duplication", async (req, res) => {
+    try {
+        const userData = await User.findOne({ id: req.body.id }).exec();
+        if (userData) return res.json(generateResponse(500, false));
         return res.status(200).json(generateResponse(200, true));
-    });
+    }
+    catch(err) {
+        return res.json(generateResponse(500, false, err));
+    }
 });
 
-router.post("/login", (req, res) => {
-    User.findOne({ id: req.body.id }, (err, user) => {
-        if (!user)
-            return res.json(generateResponse(500, false, err));
+router.post("/login", async (req, res) => {
+    try {
+        const userData = await User.findOne({ id: req.body.id }).exec();
+        if (!userData) return res.json(generateResponse(500, false));
 
-        user.comparePassword(req.body.password, (err, isMatch) => {
+        userData.comparePassword(req.body.password, (err, isMatch) => {
             if (!isMatch)
                 return res.json(generateResponse(500, false, err));
-
-            user.generateToken((err, user) => {
+            userData.generateToken((err, user) => {
                 if (err) return res.json(generateResponse(500, false, err));
                 res.cookie("auth_token", user.token, {
                     maxAge: 1000 * 60 * 60 * 24 * 7, // 7d
                     httpOnly: true,
                     secure: true,
-                  }).status(200).json(generateResponse(200, true, null, user._id));
+                }).status(200).json(generateResponse(200, true, null, user._id));
             });
         });
-    });
+    }
+    catch(err) {
+        return res.json(generateResponse(500, false, err));
+    }
 });
 
-router.get("/logout", auth, (req, res) => {
-    User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, doc) => {
-        if (err) return res.json(generateResponse(500, false, err));
-
+router.get("/logout", auth, async (req, res) => {
+    try {
+        await User.findOneAndUpdate({ _id: req.user._id }, { token: "" }).exec();
         res.clearCookie('auth_token');
         return res.status(200).json(generateResponse(200, true));
-    });
+    }
+    catch(err) {
+        return res.json(generateResponse(500, false, err));
+    }
 });
 
-router.get("/info", auth, (req, res) => {
-    // user 고유 아이디로 vegis 배열 가져오기
-    // 그 다음 가공해서 리턴
-    Vegetable.find({ "ownerId": req.user._id })  // user의 고유 아이디를 갖는 야채 찾기
-        .exec((err, info) => {
-            if (err) return res.json(generateResponse(500, false, err));
-            const data = {
-                nickname: req.user.nickname,
-                money: req.user.money,
-                harvest: req.user.harvest
-            }
-            data.vegis = info.map(info => ({
-                name: info.name,
-                level: info.level,
-                alarm: info.alarm,
-                attendance: info.attendance
-            }))
-            res.status(200).json(generateResponse(200, true, null, null, null, data));
-        })
+router.get("/info", auth, async (req, res) => {
+    try {
+        const vegetableData = await Vegetable.find({ "ownerId": req.user._id }).exec();
+        const data = {
+            nickname: req.user.nickname,
+            money: req.user.money,
+            harvest: req.user.harvest
+        }
+        data.vegis = vegetableData.map(res => ({
+            name: res.name,
+            level: res.level,
+            alarm: res.alarm,
+            attendance: res.attendance
+        }))
+        res.status(200).json(generateResponse(200, true, null, null, null, data));
+    }
+    catch(err) {
+        return res.json(generateResponse(500, false, err));
+    }
 });
 
 module.exports = router;

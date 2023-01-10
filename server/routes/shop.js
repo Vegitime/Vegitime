@@ -6,29 +6,37 @@ const { Shop } = require("../models/Shop");
 const { auth } = require("../middleware/auth");
 const { generateResponse } = require("../utils/generateResponse");
 
-router.get("/", (req, res) => {
-  Shop.find({})
-      .exec((err, info) => {
-          if (err) return res.json(generateResponse(500, false, err));
-          return res.status(200).json(generateResponse(200, true, null, null, null,info));
-      })
+router.get("/", async (req, res) => {
+  try {
+    const shopData = await Shop.find({}).exec();
+    const data = await Promise.all(shopData.map(res => ({
+      src: res.image[5],
+      name: res.name,
+      price: res.purchasePrice,
+      specialty: res.description,
+    })))
+    return res.status(200).json(generateResponse(200, true, null, null, null, data));
+  }
+  catch(err) {
+    return res.json(generateResponse(500, false, err));
+  }
 });
 
-router.post("/purchase", auth, (req, res) => {
-  Shop.findOne({_id: req.body.vegetableId})
-    .exec((err, info) => {
-        if (err) return res.json(generateResponse(500, false, err));
-        const vegetable = new Vegetable({
-          ownerId: req.user._id,
-          name: info.name,
-        });
-        vegetable.save((err, doc) => {
-          if (err) return res.json(generateResponse(500, false, err));
-        });
-        User.findOneAndUpdate({_id: req.user._id}, {$inc: { money: -info.purchasePrice}}).exec();
-    })
-
+router.post("/purchase", auth, async (req, res) => {
+  try {
+    const shopData = await Shop.findOne({_id: req.body.vegeId}).exec()
+    console.log(shopData)
+    const vegetable = new Vegetable({
+      ownerId: req.user._id,
+      name: shopData.name,
+    });
+    await vegetable.save();
+    await User.findOneAndUpdate({_id: req.user._id}, {$inc: { money: -shopData.purchasePrice}}).exec();
     return res.status(201).json(generateResponse(201, true));
+  }
+  catch(err) {
+    return res.json(generateResponse(500, false, err));
+  }
 });
 
 

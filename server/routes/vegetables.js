@@ -9,58 +9,56 @@ const axios = require('axios');
 
 require('dotenv').config();
 
-router.get("/", auth, (req, res) => {
-
-  Vegetable.find({ "ownerId": req.user._id })  // user의 고유 아이디를 갖는 야채 찾기
-      .exec((err, info) => {
-          if (err) return res.json(generateResponse(500, false, err));
-          const data = info.map(info => {
-            const result = {
-              id: info._id, // 야채의 고유 아이디
-              name: info.name,
-              level: info.level,
-              alarm: info.alarm,
-              attendance: info.attendance,
-            }
-            Shop.findOne({"name": info.name}).exec((err, shopInfo) => {
-              if (err) return res.json(generateResponse(500, false, err));
-              result.src = shopInfo.image[5]
-            })
-            return result;
-          })
-          res.status(200).json(generateResponse(200, true, null, null, null, data));
-      })
+router.get("/", auth, async (req, res) => {
+  try {
+    const vegetableArr = await Vegetable.find({ "ownerId": req.user._id }).exec()
+    const data = await Promise.all(vegetableArr.map(async res => {
+      const shopData = await Shop.findOne({"name": res.name}).exec()
+      return {
+        vegeId: res._id, // 야채의 고유 아이디
+        name: res.name,
+        level: res.level,
+        alarm: res.alarm,
+        attendance: res.attendance,
+        src: shopData.image[5]
+      }
+    }))   
+    res.status(200).json(generateResponse(200, true, null, null, null, data));
+  }
+  catch(err) {
+    return res.json(generateResponse(500, false, err));
+  }
 });
 
-router.get("/:vegetableId", (req, res) => {
-
-  let { vegetableId } = req.params;
-  console.log(vegetableId)
-  Vegetable.findOne({ "_id": vegetableId })  // user의 고유 아이디를 갖는 야채 찾기
-      .exec((err, info) => {
-          if (err) return res.json(generateResponse(500, false, err));
-          const data = {
-            vegeId: info._id,
-            name: info.name,
-            level: info.level,
-            alarm: info.alarm,
-          }
-          Shop.findOne({"name": info.name}).exec((err, shopInfo) => {
-            if (err) return res.json(generateResponse(500, false, err));
-            data.src = shopInfo.image[info.level];
-            data.sellingPrice = shopInfo.sellingPrice;
-          })
-          res.status(200).json(generateResponse(200, true, null, null, null, data));
-      })
+router.get("/:vegetableId", async (req, res) => {
+  try {
+    const { vegetableId } = req.params;
+    const vegetableData = await Vegetable.findOne({ "_id": vegetableId }).exec()
+    const shopData = await Shop.findOne({"name": vegetableData.name}).exec();
+    const data = {
+      vegeId: vegetableData._id,
+      name: vegetableData.name,
+      level: vegetableData.level,
+      alarm: vegetableData.alarm,
+      src: shopData.image[vegetableData.level],
+      sellingPrice: shopData.sellingPrice
+    }
+    return res.status(200).json(generateResponse(200, true, null, null, null, data));
+  }
+  catch(err) {
+    return res.json(generateResponse(500, false, err));
+  }
 });
 
-router.patch("/:vegetableId/alarm", (req, res) => {
-
-  let { vegetableId } = req.params;
-  Vegetable.findOneAndUpdate({ _id: vegetableId }, { alarm: req.body.alarm }, (err, info) => {
-      if (err) return res.json(generateResponse(500, false, err));
-      return res.status(200).json(generateResponse(200, true));
-  });
+router.patch("/:vegetableId/alarm", async (req, res) => {
+  try {
+    const { vegetableId } = req.params;
+    await Vegetable.findOneAndUpdate({ _id: vegetableId }, { alarm: req.body.alarm }).exec();
+    return res.status(200).json(generateResponse(200, true));
+  }
+  catch(err) {
+    return res.json(generateResponse(500, false, err));
+  }
 });
 
 router.patch("/:vegetableId/praise", async (req, res) => {
@@ -74,75 +72,53 @@ router.patch("/:vegetableId/praise", async (req, res) => {
         "X-NCP-APIGW-API-KEY": process.env.SENTI_KEY,
         "Content-Type": "application/json"
       }
-    }).then(response => {
-      console.log(response.data)
-      return response.data
-    });
+    }).then(response => response.data);
     
-    console.log('sentiData : ', sentiData)
+    const vegetableData = await Vegetable.findOne({ _id: vegetableId }).exec();
+    const data = {
+      sentiment: ''
+    }
+    console.log(sentiData.document)
+    if (sentiData.document.sentiment == 'positive') {
+      // attandance에 true 추가
+      // level++
+      data.sentiment = 'positive';
+      await Vegetable.update({ _id: vegetableId }, { $push: { attendance: true }, $inc: { level: 1}}).exec();
+    }
+    else if (sentiData.document.sentiment == 'negative') {
+      // attandance에 false 추가
+      data.sentiment = 'negative';
+      await Vegetable.update({ _id: vegetableId }, { $push: { attendance: false } }).exec();
+    }
+    else {
+      // attandance에 true 추가
+      data.sentiment = 'neutral';
+      await Vegetable.update({ _id: vegetableId }, { $push: { attendance: true }}).exec();
+    }
+    const shopData = await Shop.findOne({"name": vegetableData.name}).exec();
+    data.src = shopData.image[vegetableData.level + 1];
+    data.sellingPrice = shopData.sellingPrice;
 
-    Vegetable.findOne({ _id: vegetableId })
-      .exec((err, info) => {
-        if (err) return res.json(generateResponse(500, false, err));
-        const data = {
-          sentiment: ''
-        }
-        if (sentiData.document.sentiment == 'positive') {
-          // attandance에 true 추가
-          // level++
-          data.sentiment = 'positive';
-          Vegetable.update({ _id: vegetableId }, { $push: { attendance: true }, $inc: { level: 1}}).exec();
-        }
-        else if (sentiData.document.sentiment == 'negative') {
-          // attandance에 false 추가
-          data.sentiment = 'negative';
-          Vegetable.update({ _id: vegetableId }, { $push: { attendance: false } }).exec();
-        }
-        else {
-          // attandance에 true 추가
-          data.sentiment = 'neutral';
-          Vegetable.update({ _id: vegetableId }, { $push: { attendance: true }}).exec();
-        }
-        Shop.findOne({"name": info.name}).exec((err, shopInfo) => {
-          if (err) return res.json(generateResponse(500, false, err));
-          data.src = shopInfo.image[info.level];
-          data.sellingPrice = shopInfo.sellingPrice;
-        })
-        res.status(200).json(generateResponse(200, true, null, null, null, data));
-    });
+    return res.status(200).json(generateResponse(200, true, null, null, null, data));
   }
   catch(err) {
-    console.log('err : ',err)
     return res.json(generateResponse(500, false, err));
   }
 });
 
-router.delete("/:vegetableId/sale", auth, (req, res) => {
+router.delete("/:vegetableId/sale", auth, async (req, res) => {
+  try {
+    let { vegetableId } = req.params;
+    const vegetableData = await Vegetable.findOne({ _id: vegetableId }).exec();
+    const shopData = await Shop.findOne({ name: vegetableData.name }).exec();
+    await User.update({ _id: req.user._id }, {$inc: { harvest: 1, money: shopData.sellingPrice}}).exec();
+    await Vegetable.findOneAndDelete({ _id: vegetableId }).exec();
 
-  let { vegetableId } = req.params;
-  User.findOne({ _id: req.user._id })
-    .exec((err, info) => {
-      if (err) return res.json(generateResponse(500, false, err));
-      Vegetable.findOne({ _id: vegetableId })
-        .exec((err, info) => {
-          if (err) return res.json(generateResponse(500, false, err));
-          console.log('info : ', info)
-          Shop.findOne({ name: info.name })
-            .exec((err, info) => {
-              if (err) return res.json(generateResponse(500, false, err));
-              console.log('info.sellingPrice : ', info.sellingPrice)
-              User.update({ _id: req.user._id }, {$inc: { harvest: 1, money: info.sellingPrice}}).exec();
-            
-              Vegetable.findOneAndDelete({ _id: vegetableId })
-                .exec((err, info) => {
-                  if (err) return res.json(generateResponse(500, false, err));
-                })
-            })
-        })
-    })
-
-
-  return res.status(200).json(generateResponse(200, true));
+    return res.status(200).json(generateResponse(200, true));
+  }
+  catch(err) {
+    return res.json(generateResponse(500, false, err));
+  }
 });
 
 module.exports = router;
