@@ -26,6 +26,8 @@ const connect = mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true})
 
 // api 라우터 설정
 app.use('/api/users', require('./routes/users'));
+app.use('/api/vegetables', require('./routes/vegetables'));
+app.use('/api/shop', require('./routes/shop'));
 
 //use this to show the image you have in node js server to client (react js)
 app.use('/public', express.static('public'));
