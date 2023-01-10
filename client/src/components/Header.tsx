@@ -18,9 +18,6 @@ const StyledDiv = styled.div`
   ${flexContainer({ d: 'row', w: 'nowrap', g: 'var(--spacing-base)' })}
 `;
 
-// 갖고있는 돈 변경
-// 로그아웃 아이콘 클릭시 이벤트 핸들러 변경
-
 export default function Header() {
   const navigate = useNavigate();
   const [user] = users;

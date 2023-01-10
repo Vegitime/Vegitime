@@ -1,9 +1,9 @@
-import { Header, Title, Navigation } from 'components';
 import styled from 'styled-components';
-import { flexContainer } from 'styles';
-import users from '../../../../server/mock/users.js';
 import Chart from 'react-apexcharts';
+import { flexContainer } from 'styles';
 import { makeChart } from 'utils';
+import { Header, Title, Navigation } from 'components';
+import users from '../../../../server/mock/users.js';
 
 interface Ivegi {
   id: number;

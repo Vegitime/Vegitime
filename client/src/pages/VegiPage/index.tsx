@@ -3,7 +3,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
 import { VEGETABLE_INFO, getAsset } from 'utils';
-import { Time, ProgressBar, ActionButton } from './components';
+import { Time, ProgressBar, DictButton } from './components';
 import { Header, Title, Navigation, TextButton, ModalDialog } from 'components';
 import users from '../../../../server/mock/users';
 
@@ -39,7 +39,7 @@ export default function VegiPage() {
         <ProgressBar text={`${level} / 5`} />
         <img src={getAsset(`${type}0${level}.svg`)} height={300} />
         <Time text={alarm} id={id as string} />
-        <ActionButton action="voice" />
+        <DictButton>칭찬하기</DictButton>
         <TextButton
           width="100%"
           size="large"
