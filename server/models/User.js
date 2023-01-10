@@ -24,17 +24,9 @@ const userSchema = mongoose.Schema({
     type: Number,
     default: 10000,
   },
-  soldCropNumber:{
+  harvest:{
     type: Number,
     default: 0,
-  },
-  cropNumber:{
-    type: Number,
-    default: 0,
-  },
-  ownVegetables:{
-    type : [String],
-    default: [],
   },
   token: {
     type: String,
@@ -50,12 +42,9 @@ userSchema.pre('save', function(next) {
     // 비밀번호를 암호화
     bcrypt.genSalt(saltRounds, function(err, salt) {
       if (err) return next(err)
-      console.log('1')
       // 첫번재 인자로 입력한 비번(plain password), 두번째 인자로 salt, 세번째 인자로 콜백함수
       bcrypt.hash(user.password, salt, function(err, hash) {  // hash가 암호화된 비밀번호
-        console.log('2')
         if (err) return next(err)
-        console.log('3')
         user.password = hash  // user 패스워드를 hash로 교체
         next()
       })
