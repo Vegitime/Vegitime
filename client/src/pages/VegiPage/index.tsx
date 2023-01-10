@@ -3,7 +3,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
 import { VEGETABLE_INFO, getAsset } from 'utils';
-import { Time, VegiImage, ProgressBar, DictButton } from './components';
+import { Time, ProgressBar, DictButton } from './components';
 import { Header, Title, Navigation, TextButton, ModalDialog } from 'components';
 import users from '../../../../server/mock/users';
 

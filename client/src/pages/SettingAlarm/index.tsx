@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
@@ -41,7 +41,7 @@ const Question = styled.div`
 export default function SettingAlarm() {
   const [activateModal, setActivateModal] = useState(false);
   const { id } = useParams();
-  const [selectedId, setSelectedId] = useState(+(id as string));
+  const selectedId = +(id as string);
   const [user] = users;
   const { vegis } = user;
   const [vegi] = vegis.filter(({ id: _id }) => _id === selectedId);
@@ -52,6 +52,12 @@ export default function SettingAlarm() {
   const [minute, setMinute] = useState(+_minute);
   const [isAm, setIsAm] = useState(ampm === 'AM');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setHour(+_hour);
+    setMinute(+_minute);
+    setIsAm(ampm === 'AM');
+  }, [id]);
 
   return (
     <>
@@ -69,7 +75,6 @@ export default function SettingAlarm() {
         <StyledVegiSelect
           types={types as Array<VegiSelectProps>}
           selectedId={selectedId}
-          setSelectedId={setSelectedId}
         />
         <ButtonGroup
           d="column"
