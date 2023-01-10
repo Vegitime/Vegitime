@@ -10,7 +10,6 @@ interface Ivegetables {
   [key: string]: Ivegetable;
 }
 
-// 야채 이름, 가격, 특기 변경
 export const VEGETABLE_INFO: Ivegetables = {
   avocado: {
     src: `${getAsset('avocado05.svg')}`,
