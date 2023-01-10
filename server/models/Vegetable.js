@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const alarmSchema = new mongoose.Schema({
-  time: String,
+  ampm: String,
   hour: Number,
   minute: Number,
 });
@@ -19,7 +19,7 @@ const vegetableSchema = mongoose.Schema({
   alarm: {  // 설정된 알람
     type: alarmSchema,
     default: {
-      time: "",
+      ampm: "",
       hour: 0,
       minute: 0,
     }
