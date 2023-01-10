@@ -39,7 +39,7 @@ export default function VegiPage() {
         <Title>{VEGETABLE_INFO[type].name}</Title>
         <ProgressBar level={currentLevel} />
         <img
-          src={getAsset(`${type}0${level}.svg`)}
+          src={getAsset(`${type}0${currentLevel}.svg`)}
           height={300}
           alt={`${type}`}
         />

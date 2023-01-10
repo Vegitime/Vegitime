@@ -18,8 +18,7 @@ const StyledButton = styled.button`
   cursor: pointer;
   font-size: var(--text-xs);
   > img {
-    height: 6.25rem;
-    margin-bottom: var(--spacing-base);
+    height: 8rem;
   }
   div {
     line-height: 1.5625rem;

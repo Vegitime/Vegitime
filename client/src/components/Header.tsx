@@ -11,6 +11,8 @@ const StyledHeader = styled.header`
   ${flexContainer({ d: 'row', w: 'nowrap', jc: 'space-between' })}
   padding: var(--spacing-xxl) var(--spacing-md) var(--spacing-xxs);
   background-color: var(--color-skyblue);
+  box-shadow: 0px 2px 16px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 var(--spacing-xxs) var(--spacing-xxs);
   z-index: 1000;
 `;
 
