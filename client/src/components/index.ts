@@ -9,6 +9,7 @@ import ScrollToTop from './ScrollToTop';
 import SignTip from './SignTip';
 import FooterImg from './FooterImg';
 import Form from './Form';
+import InputContainer from './InputContainer';
 
 export {
   MoneyInfo,
@@ -22,4 +23,5 @@ export {
   SignTip,
   FooterImg,
   Form,
+  InputContainer,
 };
