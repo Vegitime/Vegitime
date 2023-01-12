@@ -4,11 +4,12 @@ interface ButtonProps {
   width: string | number;
   size: 'large' | 'small';
   backgroundColor: string;
+  disabledBackgroundColor?: string;
 }
 
 interface TextButtonProps extends ButtonProps {
   type?: 'button' | 'submit' | 'reset';
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
   children: string;
 }
@@ -36,7 +37,8 @@ const StyledButton = styled.button<ButtonProps>`
   cursor: pointer;
 
   &[disabled] {
-    background: var(--color-grey);
+    background: ${({ disabledBackgroundColor }) =>
+      disabledBackgroundColor ?? 'var(--color-grey)'};
   }
 `;
 
@@ -47,6 +49,7 @@ export default function TextButton({
   width,
   size,
   backgroundColor,
+  disabledBackgroundColor,
   children,
 }: TextButtonProps) {
   return (
@@ -56,6 +59,7 @@ export default function TextButton({
       width={width}
       size={size}
       backgroundColor={backgroundColor}
+      disabledBackgroundColor={disabledBackgroundColor}
       disabled={disabled}
     >
       {children}
