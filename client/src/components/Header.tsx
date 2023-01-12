@@ -4,7 +4,7 @@ import { flexContainer } from 'styles';
 import { getAsset } from 'utils';
 import { MoneyInfo } from 'components';
 import users from '../../../server/mock/users';
-
+import axios from 'axios';
 const StyledHeader = styled.header`
   position: sticky;
   top: 0;
@@ -24,7 +24,16 @@ export default function Header() {
   const navigate = useNavigate();
   const [user] = users;
   const { money } = user;
-
+  const logout = async () => {
+    try {
+      await axios
+        .get(`${process.env.URL}api/users/logout`, { withCredentials: true })
+        .then((response) => response.data);
+      navigate('/');
+    } catch (err) {
+      console.error(err);
+    }
+  };
   return (
     <StyledHeader>
       <button onClick={() => navigate(-1)}>
@@ -37,7 +46,7 @@ export default function Header() {
       </button>
       <StyledDiv>
         <MoneyInfo size="large">{money}</MoneyInfo>
-        <button type="button" onClick={() => console.log('로그아웃 연결')}>
+        <button type="button" onClick={logout}>
           <img
             width={40}
             height={40}
