@@ -1,4 +1,3 @@
-import SignForm from './SignForm';
-import SignTip from './SignTip';
+import DuplicationButton from './DuplicationButton';
 
-export { SignForm, SignTip };
+export { DuplicationButton };
