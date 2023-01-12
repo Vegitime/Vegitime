@@ -10,7 +10,8 @@ import {
   VegiPage,
 } from 'pages';
 import { ScrollToTop } from 'components';
-
+import Auth from 'hoc/auth';
+// Auth(LandingPage, null)
 const router = createBrowserRouter([
   {
     path: '/',
@@ -18,35 +19,35 @@ const router = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <StartPage />,
+        element: Auth(StartPage, false),
       },
       {
         path: 'signin',
-        element: <SignIn />,
+        element: Auth(SignIn, false),
       },
       {
         path: 'signup',
-        element: <SignUp />,
+        element: Auth(SignUp, false),
       },
       {
         path: 'market',
-        element: <Market />,
+        element: Auth(Market, true),
       },
       {
         path: 'mypage',
-        element: <MyPage />,
+        element: Auth(MyPage, true),
       },
       {
         path: 'settingalarm/:id',
-        element: <SettingAlarm />,
+        element: Auth(SettingAlarm, true),
       },
       {
         path: 'alarmlist',
-        element: <AlarmList />,
+        element: Auth(AlarmList, true),
       },
       {
         path: 'myvegi/:id',
-        element: <VegiPage />,
+        element: Auth(VegiPage, true),
       },
     ],
   },

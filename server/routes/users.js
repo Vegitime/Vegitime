@@ -6,7 +6,7 @@ const { auth } = require("../middleware/auth");
 const { generateResponse } = require("../utils/generateResponse");
 
 router.get("/auth", auth, (req, res) => {
-    return res.status(200).json(generateResponse(200, true, null, null, true));
+    return res.status(200).json({ isAuth: true });
 });
 
 router.post("/register", async (req, res) => {
