@@ -68,6 +68,7 @@
   },
   "dependencies": {
     "apexcharts": "^3.36.3",
+    "axios": "^1.2.2",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
     "react-dom": "^18.2.0",
