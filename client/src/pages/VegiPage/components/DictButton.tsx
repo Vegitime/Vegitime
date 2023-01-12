@@ -6,6 +6,7 @@ import SpeechRecognition, {
 } from 'react-speech-recognition';
 import { getAsset } from 'utils';
 import { flexContainer } from 'styles';
+import praise from '../../../../../server/mock/praise';
 
 interface Text {
   children: string;
@@ -52,10 +53,12 @@ export default function DictButton({ children, increaseLevel }: Text) {
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
 
+  const [sentimental] = praise;
+
   useEffect(() => {
-    if (!listening && transcript) {
+    if (!listening && sentimental) {
       increaseLevel();
-    }
+    } // sentimental 조건에 따라, positive, negative, neutral을 판단할 수 있습니다! 그에 따라 캐릭터 레벨업 여부 판단 가능합니다!
   }, [listening]);
 
   const handleButtonClick = () => {
@@ -72,7 +75,7 @@ export default function DictButton({ children, increaseLevel }: Text) {
         <Img src={listening ? getAsset('micon.svg') : getAsset('micoff.svg')} />
         {children}
       </Button>
-      <p>{transcript}</p>
+      <p className="sr-only">{transcript}</p>
     </ButtonContainer>
   );
 }
