@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { FooterImg } from './components';
+import { FooterImg } from 'components';
 
 const StartContainer = styled.div`
   /* margin: 0 auto; */

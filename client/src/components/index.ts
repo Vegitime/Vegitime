@@ -6,6 +6,8 @@ import ModalDialog from './ModalDialog';
 import TextButton from './TextButton';
 import IconButton from './IconButton';
 import ScrollToTop from './ScrollToTop';
+import SignTip from './SignTip';
+import FooterImg from './FooterImg';
 
 export {
   MoneyInfo,
@@ -16,4 +18,6 @@ export {
   TextButton,
   IconButton,
   ScrollToTop,
+  SignTip,
+  FooterImg,
 };

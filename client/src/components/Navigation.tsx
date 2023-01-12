@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
 import { getAsset } from 'utils';
+import { FooterImg } from 'components';
 
 const StyledNav = styled.nav`
   width: 100vw;
@@ -20,39 +21,42 @@ const StyledUl = styled.ul`
 
 export default function Navigation() {
   return (
-    <StyledNav>
-      <StyledUl>
-        <li>
-          <Link to="/mypage">
-            <img
-              width={40}
-              height={40}
-              src={getAsset('user.svg')}
-              alt="마이 페이지로 이동 "
-            />
-          </Link>
-        </li>
-        <li>
-          <Link to="/alarmlist">
-            <img
-              width={40}
-              height={40}
-              src={getAsset('home.svg')}
-              alt="홈으로 이동"
-            />
-          </Link>
-        </li>
-        <li>
-          <Link to="/market">
-            <img
-              width={40}
-              height={40}
-              src={getAsset('cart.svg')}
-              alt="야채 시장으로 이동"
-            />
-          </Link>
-        </li>
-      </StyledUl>
-    </StyledNav>
+    <>
+      <StyledNav>
+        <StyledUl>
+          <li>
+            <Link to="/mypage">
+              <img
+                width={40}
+                height={40}
+                src={getAsset('user.svg')}
+                alt="마이 페이지로 이동 "
+              />
+            </Link>
+          </li>
+          <li>
+            <Link to="/alarmlist">
+              <img
+                width={40}
+                height={40}
+                src={getAsset('home.svg')}
+                alt="홈으로 이동"
+              />
+            </Link>
+          </li>
+          <li>
+            <Link to="/market">
+              <img
+                width={40}
+                height={40}
+                src={getAsset('cart.svg')}
+                alt="야채 시장으로 이동"
+              />
+            </Link>
+          </li>
+        </StyledUl>
+      </StyledNav>
+      <FooterImg type="main" />
+    </>
   );
 }
