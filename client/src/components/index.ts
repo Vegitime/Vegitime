@@ -8,6 +8,7 @@ import IconButton from './IconButton';
 import ScrollToTop from './ScrollToTop';
 import SignTip from './SignTip';
 import FooterImg from './FooterImg';
+import Form from './Form';
 
 export {
   MoneyInfo,
@@ -20,4 +21,5 @@ export {
   ScrollToTop,
   SignTip,
   FooterImg,
+  Form,
 };
