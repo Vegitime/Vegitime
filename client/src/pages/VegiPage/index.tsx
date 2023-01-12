@@ -58,7 +58,7 @@ export default function VegiPage() {
           </TextButton>
         ) : (
           <DictButton
-            onClickHandler={() => setCurrentLevel((prevLevel) => prevLevel + 1)}
+            increaseLevel={() => setCurrentLevel((prevLevel) => prevLevel + 1)}
           >
             칭찬하기
           </DictButton>

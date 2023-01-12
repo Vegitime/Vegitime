@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import 'regenerator-runtime/runtime';
 import SpeechRecognition, {
@@ -8,7 +9,7 @@ import { flexContainer } from 'styles';
 
 interface Text {
   children: string;
-  onClickHandler: () => void;
+  increaseLevel: () => void;
 }
 
 const ButtonContainer = styled.div`
@@ -43,7 +44,7 @@ const Button = styled.button`
   })}
 `;
 
-export default function DictButton({ children, onClickHandler }: Text) {
+export default function DictButton({ children, increaseLevel }: Text) {
   const {
     transcript,
     listening,
@@ -51,14 +52,19 @@ export default function DictButton({ children, onClickHandler }: Text) {
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
 
+  useEffect(() => {
+    if (!listening && transcript) {
+      increaseLevel();
+    }
+  }, [listening]);
+
+  const handleButtonClick = () => {
+    SpeechRecognition.startListening();
+  };
+
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser does not support speech recognition.</span>;
   }
-
-  const handleButtonClick = async () => {
-    await SpeechRecognition.startListening();
-    onClickHandler();
-  };
 
   return (
     <ButtonContainer>
