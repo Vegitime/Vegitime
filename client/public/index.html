@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html lang="<%= lang %>">
+  <head>
+    <meta charset="<%= charset %>" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <link
+      rel="stylesheet"
+      href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css"
+    />
+    <link rel="icon" href="assets/vegi_favicon.png" />
+  </head>
 
-<head>
-  <meta charset="<%= charset %>" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>
-    <%= htmlWebpackPlugin.options.title %>
-  </title>
-  <link rel="stylesheet" href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css" />
-  <!-- <link rel="icon" href="assets/logo.svg" /> -->
-</head>
-
-<body>
-  <!-- ... -->
-  <div id="<%= rootId %>"></div>
-  <div id="modal-zone"></div>
-</body>
-
+  <body>
+    <!-- ... -->
+    <div id="<%= rootId %>"></div>
+    <div id="modal-zone"></div>
+  </body>
 </html>
