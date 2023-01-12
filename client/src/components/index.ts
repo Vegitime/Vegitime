@@ -10,6 +10,7 @@ import SignTip from './SignTip';
 import FooterImg from './FooterImg';
 import Form from './Form';
 import InputContainer from './InputContainer';
+import Input from './Input';
 
 export {
   MoneyInfo,
@@ -24,4 +25,5 @@ export {
   FooterImg,
   Form,
   InputContainer,
+  Input,
 };
