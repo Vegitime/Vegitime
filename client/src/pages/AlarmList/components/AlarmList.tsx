@@ -57,7 +57,7 @@ const VegiInfo = styled.p<{ isActive: boolean }>`
 const VegiImage = styled.img`
   margin: 0.5rem 0;
   width: auto;
-  height: calc(100% - 1rem);
+  height: 100%;
 `;
 
 export default function AlarmList({
