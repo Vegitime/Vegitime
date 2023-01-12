@@ -73,8 +73,6 @@ export const useForm = ({ initialValues, validate, onSubmit }: IuseForm) => {
     values,
     errors,
     touched,
-    handleChange,
-    handleBlur,
     handleSubmit,
     getFieldProps,
     isValid,
