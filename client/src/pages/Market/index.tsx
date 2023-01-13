@@ -2,9 +2,10 @@ import { ButtonVegiInfo } from './components';
 import { Header, Title, Navigation, ModalDialog, TextButton } from 'components';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { VEGETABLE_INFO } from 'utils';
 import users from '../../../../server/mock/users';
+import axios from 'axios';
 
 const StyledMain = styled.main`
   ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center' })};
@@ -39,24 +40,44 @@ const VEGETABLE_TYPES: Array<Vegis> = [
 export default function Market() {
   const [activateModal, setActivateModal] = useState(false);
   const [clickedType, setClickedType] = useState('tomato');
+  const [vegitables, setVegitables] = useState([]);
   const { src, name, price, specialty } = VEGETABLE_INFO[clickedType];
   const [user] = users;
   const { money } = user;
+
+  useEffect(() => {
+    async function fetchUserInfo() {
+      try {
+        const res = await axios.get(`${process.env.URL}api/shop`, {
+          withCredentials: true,
+        });
+        const vegitables = res.data.body.data;
+        setVegitables(vegitables);
+        console.log(vegitables);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchUserInfo();
+  }, []);
+
   return (
     <>
       <Header />
       <StyledMain>
         <Title>Vegi Market</Title>
         <StyledUl>
-          {VEGETABLE_TYPES.map((type) => (
-            <li key={type}>
+          {vegitables.map(({ src, name, price }) => (
+            <li key={name}>
               <ButtonVegiInfo
                 onClick={() => {
                   setActivateModal(true);
                   setClickedType(type);
                   document.body.style.overflow = 'hidden';
                 }}
-                type={type}
+                src={src}
+                name={name}
+                price={price}
               />
             </li>
           ))}

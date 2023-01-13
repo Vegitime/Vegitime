@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import AlarmList from './components/AlarmList';
 import { Header, Title, Navigation } from 'components';
-import users from '../../../../server/mock/users';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 interface Users {
   nickname: string;
@@ -25,8 +26,22 @@ const Container = styled.ul`
 `;
 
 export default function AlarmListComponent() {
-  const [user] = users;
-  const { vegis } = user as Users;
+  const [vegis, setVegis] = useState([]);
+  useEffect(() => {
+    async function fetchUserInfo() {
+      try {
+        const res = await axios.get(`${process.env.URL}api/users/info`, {
+          withCredentials: true,
+        });
+        const { vegis } = res.data.body.data;
+        console.log(vegis);
+        setVegis(vegis);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchUserInfo();
+  }, []);
   return (
     <>
       <Header />
