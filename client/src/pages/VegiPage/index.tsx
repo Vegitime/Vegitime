@@ -1,11 +1,11 @@
-import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
+import { Header, Title, Navigation, TextButton, ModalDialog } from 'components';
+import { Time, ProgressBar, DictButton } from './components';
 import { flexContainer } from 'styles';
 import { getAsset, getAlarmFormat } from 'utils';
-import { Time, ProgressBar, DictButton } from './components';
-import { Header, Title, Navigation, TextButton, ModalDialog } from 'components';
-import axios from 'axios';
 
 const Container = styled.div`
   position: relative;
@@ -30,14 +30,14 @@ const ButtonGroup = styled.div`
 `;
 
 export default function VegiPage() {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [activateModal, setActivateModal] = useState(false);
   const [name, setName] = useState('');
   const [level, setLevel] = useState(0);
   const [alarm, setAlarm] = useState('');
   const [price, setPrice] = useState(0);
   const [type, setType] = useState('');
-  const navigate = useNavigate();
-  const { id } = useParams();
 
   useEffect(() => {
     async function fetchUserInfo() {

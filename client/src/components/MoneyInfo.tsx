@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { getAsset } from 'utils';
 import { flexContainer } from 'styles';
+import { getAsset } from 'utils';
 
 interface IMoneyInfo {
   size: 'small' | 'large';

@@ -1,10 +1,10 @@
-import { ButtonVegiInfo } from './components';
-import { Header, Title, Navigation, ModalDialog, TextButton } from 'components';
-import styled from 'styled-components';
-import { flexContainer } from 'styles';
 import { useEffect, useState } from 'react';
-import { getAsset } from 'utils';
+import styled from 'styled-components';
 import axios from 'axios';
+import { Header, Title, Navigation, ModalDialog, TextButton } from 'components';
+import { ButtonVegiInfo } from './components';
+import { flexContainer } from 'styles';
+import { getAsset } from 'utils';
 
 const StyledMain = styled.main`
   ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center' })};
@@ -30,6 +30,7 @@ export default function Market() {
   const [clickedType, setClickedType] = useState('tomato');
   const [money, setMoney] = useState(0);
   const [vegetables, setVegetables] = useState([]);
+
   const selectedVegi = vegetables.find(({ type }) => type === clickedType);
   const { type, src, name, price, specialty } = selectedVegi ?? {
     type: '',

@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
+import { IconButton } from 'components';
 import { flexContainer } from 'styles';
 import { getAsset } from 'utils';
-import { IconButton } from 'components';
 
 interface VegiInfoProps {
   onClose: React.MouseEventHandler<HTMLElement>;

@@ -1,10 +1,11 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
+import { MoneyInfo } from 'components';
 import { flexContainer } from 'styles';
 import { getAsset } from 'utils';
-import { MoneyInfo } from 'components';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+
 const StyledHeader = styled.header`
   position: sticky;
   top: 0;

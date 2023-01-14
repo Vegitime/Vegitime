@@ -1,13 +1,13 @@
 import { Dispatch, SetStateAction, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 import 'regenerator-runtime/runtime';
 import SpeechRecognition, {
   useSpeechRecognition,
 } from 'react-speech-recognition';
 import { getAsset } from 'utils';
 import { flexContainer } from 'styles';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
 
 interface Text {
   children: string;
