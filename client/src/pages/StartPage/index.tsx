@@ -31,7 +31,7 @@ export default function StartPage() {
   return (
     <>
       <StartContainer>
-        <LogoImg src="/assets/logo.png" alt="vegitime 로고" />
+        <LogoImg src="/assets/vegi_logo.png" alt="vegitime 로고" />
         <ButtonContainer>
           <Button to="signin">로그인</Button>
           <Button to="signup">회원가입</Button>
