@@ -110,6 +110,7 @@ export default function VegiPage() {
                       withCredentials: true,
                     }
                   );
+                  document.body.style.overflow = 'unset';
                   navigate('/alarmlist');
                 }}
               >

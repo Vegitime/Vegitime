@@ -152,6 +152,7 @@ export default function SettingAlarm() {
                       withCredentials: true,
                     }
                   );
+                  document.body.style.overflow = 'unset';
                   navigate(`/myvegi/${id}`);
                 }}
               >
