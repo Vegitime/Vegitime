@@ -1,17 +1,17 @@
-import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
+import styled from 'styled-components';
+import axios from 'axios';
+import { Header, Title, Navigation } from 'components';
 import { flexContainer } from 'styles';
 import { makeChart } from 'utils';
-import { Header, Title, Navigation } from 'components';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
 
-interface Ivegi {
-  id: number;
-  type: string;
+interface Vegi {
+  id: string;
+  type: 'avocado' | 'carrot' | 'eggplant' | 'onion' | 'radish' | 'tomato';
   name: string;
   level: number;
-  alarm: string;
+  alarm: { ampm: '' | 'AM' | 'PM'; hour: number; minute: number };
   attendance: Array<boolean>;
 }
 
@@ -46,10 +46,10 @@ const StyledDiv = styled.div`
 `;
 
 export default function MyPage() {
-  const [nickname, setNickname] = useState('a');
-  const [money, setMoney] = useState(10000);
-  const [harvest, setHarvest] = useState(3);
-  const [vegis, setVegis] = useState([]);
+  const [nickname, setNickname] = useState('');
+  const [money, setMoney] = useState();
+  const [harvest, setHarvest] = useState();
+  const [vegis, setVegis] = useState<Vegi[]>();
   const [chart, setChart] = useState(
     makeChart({
       categories: [],
@@ -65,15 +65,16 @@ export default function MyPage() {
         const res = await axios.get(`${process.env.URL}api/users/info`, {
           withCredentials: true,
         });
+
         const { nickname, money, harvest, vegis } = res.data.body.data;
-        const categories = vegis.map((vegi) => vegi['name']);
-        const types = vegis.map((vegi) => vegi['type']);
+        const categories = vegis.map((vegi: Vegi) => vegi['name']);
+        const types = vegis.map((vegi: Vegi) => vegi['type']);
         const success = vegis.map(
-          (vegi: Ivegi) =>
+          (vegi: Vegi) =>
             vegi['attendance']?.filter((a: boolean) => a === true).length
         );
         const fail = vegis.map(
-          (vegi: Ivegi) =>
+          (vegi: Vegi) =>
             vegi['attendance']?.filter((a: boolean) => a === false).length
         );
 
@@ -91,14 +92,14 @@ export default function MyPage() {
 
   return (
     <>
-      <Header />
+      <Header money={money} />
       <StyledMain>
         <Title>My Page</Title>
         <StyledUl>
           <li>닉네임 : {nickname}</li>
           <li>자산 : {money}원 </li>
           <li>판매 작물 : {harvest}개</li>
-          <li>보유 작물 : {vegis.length}개</li>
+          <li>보유 작물 : {vegis?.length}개</li>
           <li>통계: </li>
           <StyledDiv>
             <Chart

@@ -1,6 +1,5 @@
-/* eslint-disable prettier/prettier */
-import styled from 'styled-components';
 import { ReactNode } from 'react';
+import styled from 'styled-components';
 
 const FormInputContainer = styled.div`
   background: var(--color-white);
@@ -14,12 +13,12 @@ const FormInputContainer = styled.div`
     position: absolute;
     left: var(--spacing-sm);
     top: 0.75rem; // 12px;
-    width: 35px; 
+    width: 35px;
     height: 35px;
   }
 
   &:focus-within {
-    border: 0.125rem solid var(--color-normal-green);  // 2px
+    border: 0.125rem solid var(--color-normal-green); // 2px
 
     svg {
       left: 1.875rem;
@@ -31,17 +30,12 @@ const FormInputContainer = styled.div`
       top: 4.125rem;
     }
     button {
-      top: -0.125rem;   //-2px
-      right: -0.125rem;   //-2px
+      top: -0.125rem; //-2px
+      right: -0.125rem; //-2px
     }
   }
-`
+`;
 
-export default function InputContainer({children} : {children: ReactNode}) {
-
-  return (
-    <FormInputContainer>
-      {children}      
-    </FormInputContainer>
-  )
+export default function InputContainer({ children }: { children: ReactNode }) {
+  return <FormInputContainer>{children}</FormInputContainer>;
 }

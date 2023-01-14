@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
+import { MoneyInfo } from 'components';
 import { flexContainer } from 'styles';
 import { getAsset } from 'utils';
-import { MoneyInfo } from 'components';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+
 const StyledHeader = styled.header`
   position: sticky;
   top: 0;
@@ -20,7 +20,7 @@ const StyledDiv = styled.div`
   ${flexContainer({ d: 'row', w: 'nowrap', g: 'var(--spacing-base)' })}
 `;
 
-export default function Header() {
+export default function Header({ money }: { money?: number }) {
   const navigate = useNavigate();
   const logout = async () => {
     try {
@@ -33,23 +33,6 @@ export default function Header() {
     }
   };
 
-  const [money, setMoney] = useState(0);
-  useEffect(() => {
-    async function fetchUserInfo() {
-      try {
-        const res = await axios.get(`${process.env.URL}api/users/info`, {
-          withCredentials: true,
-        });
-        const { money } = res.data.body.data;
-        setMoney(money);
-        console.log(money);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    fetchUserInfo();
-  }, []);
-
   return (
     <StyledHeader>
       <button onClick={() => navigate(-1)}>
@@ -61,7 +44,7 @@ export default function Header() {
         />
       </button>
       <StyledDiv>
-        <MoneyInfo size="large">{money}</MoneyInfo>
+        {money && <MoneyInfo size="large">{money}</MoneyInfo>}
         <button type="button" onClick={logout}>
           <img
             width={40}

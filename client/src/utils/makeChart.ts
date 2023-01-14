@@ -40,6 +40,17 @@ export const makeChart = ({ categories, types, success, fail }: chartArgs) => ({
             ? $marker?.appendChild($div)
             : $marker?.replaceChild($div, $oldDiv as Node);
         },
+        click: function (event: any) {
+          // The last parameter config contains additional information like `seriesIndex` and `dataPointIndex` for cartesian charts
+          if (!event.target.closest('.apexcharts-bar-series')) {
+            const $tooltip = document.querySelector('.apexcharts-tooltip');
+            $tooltip?.classList.remove('apexcharts-active');
+            ($tooltip as HTMLElement).style.display = 'none';
+          } else {
+            const $tooltip = document.querySelector('.apexcharts-tooltip');
+            ($tooltip as HTMLElement).style.display = 'block';
+          }
+        },
       },
     },
     colors: [

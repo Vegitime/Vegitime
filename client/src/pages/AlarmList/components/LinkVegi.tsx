@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import { getAsset, VEGETABLE_INFO } from 'utils';
 
 interface VegiInfo {
@@ -16,8 +16,8 @@ const ListContainer = styled.button<{ isActive: boolean }>`
   height: 5rem;
   border-radius: 6.25rem;
   border-color: var(
-    ${(props) =>
-      props.isActive ? '--color-normal-green' : '--color-light-green'}
+    ${({ isActive }) =>
+      isActive ? '--color-normal-green' : '--color-light-green'}
   );
   background: #fff;
   font-size: 3.75rem;
@@ -28,7 +28,6 @@ const ListContainer = styled.button<{ isActive: boolean }>`
   padding: 0 var(--spacing-md);
   :disabled {
     opacity: 0.5;
-    cursor: not-allowed;
   }
 `;
 
@@ -45,22 +44,20 @@ const Time = styled.p<{ isActive: boolean }>`
   width: 100%;
   text-align: center;
   font-size: var(--text-lg);
-  display: ${(props) => (props.isActive ? '' : 'none')};
+  display: ${({ isActive }) => (isActive ? '' : 'none')};
 `;
 
 const VegiInfo = styled.p<{ isActive: boolean }>`
   width: 100%;
   text-align: center;
-  font-size: var(${(props) => (props.isActive ? '--text-sm' : '--text-md')});
+  font-size: var(${({ isActive }) => (isActive ? '--text-sm' : '--text-md')});
 `;
 
 const VegiImage = styled.img`
   margin: 0.5rem 0;
-  width: auto;
-  height: 100%;
 `;
 
-export default function AlarmList({
+export default function LinkVegi({
   type,
   level,
   alarm,
@@ -72,9 +69,14 @@ export default function AlarmList({
   return (
     <Link to={`/myvegi/${id}`}>
       <ListContainer isActive={isActive} disabled={disabled}>
-        <VegiImage src={getAsset(`${type}0${level}.svg`)} alt={name} />
+        <VegiImage
+          width={80}
+          height={80}
+          src={getAsset(`${type}0${level}.svg`)}
+          alt={name}
+        />
         <InfoContainer>
-          <Time isActive={isActive}>{alarm}</Time>
+          <Time isActive={isActive}>{level === 5 ? '성장 완료!' : alarm}</Time>
           <VegiInfo isActive={isActive}>
             Lv.{level} {name}
           </VegiInfo>

@@ -1,7 +1,7 @@
 interface Alarm {
   ampm: 'AM' | 'PM';
-  hour: string;
-  minute: string;
+  hour: number;
+  minute: number;
 }
 
 export const getDefaultAlarmFormat = () => {
@@ -13,29 +13,25 @@ export const getDefaultAlarmFormat = () => {
   return `${ampm} ${hour}:${minute}`;
 };
 
-export const separateDefaultAlarmFormat = () => {
+export const separateDefaultAlarmFormat = (): Alarm => {
   const date = new Date();
-  const [_hour, _minute, , ampm] = date
+  const [_hour, _minute, , _ampm] = date
     .toLocaleTimeString('en-US')
     .replace(' ', ':')
     .split(':');
+  const ampm = _ampm as 'AM' | 'PM';
+
   return { hour: +_hour, minute: +_minute, ampm };
 };
 
 export const separateAlarmFormat = (datestr: string): Alarm => {
   const alarmFormat = datestr === '' ? getDefaultAlarmFormat() : datestr;
-  const [ampm, hour, minute] = alarmFormat.replace(':', ' ').split(' ');
-  return { ampm, hour, minute };
+  const [_ampm, _hour, _minute] = alarmFormat.replace(':', ' ').split(' ');
+  const ampm = _ampm as 'AM' | 'PM';
+
+  return { ampm, hour: +_hour, minute: +_minute };
 };
 
-export const getAlarmFormat = ({
-  hour,
-  minute,
-  ampm,
-}: {
-  hour: number;
-  minute: number;
-  ampm: 'AM' | 'PM';
-}) => {
+export const getAlarmFormat = ({ hour, minute, ampm }: Alarm) => {
   return `${ampm} ${hour}:${minute}`;
 };
