@@ -57,7 +57,7 @@ export default function SettingAlarm() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [activateModal, setActivateModal] = useState(false);
-  const [types, setTypes] = useState<VegiSelectProps[]>([]);
+  const [types, setTypes] = useState<VegiSelectProps[]>();
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
   const [ampm, setAmpm] = useState<'AM' | 'PM'>('AM');
@@ -68,6 +68,8 @@ export default function SettingAlarm() {
         const res = await axios.get(`${process.env.URL}api/vegetables`, {
           withCredentials: true,
         });
+        console.log(res.data.body.data);
+
         const vegis = res.data.body.data as Array<Vegi>;
         const types = vegis.map(({ type, vegeId: id }) => ({ id, type }));
         setTypes(types);
@@ -79,8 +81,6 @@ export default function SettingAlarm() {
         setHour(hour);
         setMinute(minute);
         setAmpm(ampm as 'AM' | 'PM');
-
-        console.log(vegi);
       } catch (err) {
         console.error(err);
       }
@@ -101,11 +101,13 @@ export default function SettingAlarm() {
           setMinute={setMinute}
           setAmpm={setAmpm}
         />
-        {types && (
+        {types ? (
           <StyledVegiSelect
             types={types as VegiSelectProps[]}
             selectedId={id as string}
           />
+        ) : (
+          <div style={{ height: '76px' }} />
         )}
         <ButtonGroup
           d="column"

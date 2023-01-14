@@ -55,8 +55,6 @@ const VegiInfo = styled.p<{ isActive: boolean }>`
 
 const VegiImage = styled.img`
   margin: 0.5rem 0;
-  width: auto;
-  height: 100%;
 `;
 
 export default function LinkVegi({
@@ -71,7 +69,12 @@ export default function LinkVegi({
   return (
     <Link to={`/myvegi/${id}`}>
       <ListContainer isActive={isActive} disabled={disabled}>
-        <VegiImage src={getAsset(`${type}0${level}.svg`)} alt={name} />
+        <VegiImage
+          width={80}
+          height={80}
+          src={getAsset(`${type}0${level}.svg`)}
+          alt={name}
+        />
         <InfoContainer>
           <Time isActive={isActive}>{level === 5 ? '성장 완료!' : alarm}</Time>
           <VegiInfo isActive={isActive}>

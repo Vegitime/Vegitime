@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -34,17 +34,20 @@ export default function VegiPage() {
   const navigate = useNavigate();
   const [activateModal, setActivateModal] = useState(false);
   const [name, setName] = useState('');
-  const [level, setLevel] = useState(0);
+  const [level, setLevel] = useState<number>();
   const [alarm, setAlarm] = useState('');
-  const [price, setPrice] = useState(0);
-  const [type, setType] = useState('');
+  const [price, setPrice] = useState<number>();
+  const [type, setType] = useState();
+  console.log('@@@@', type, level);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     async function fetchUserInfo() {
       try {
         const res = await axios.get(`${process.env.URL}api/vegetables/${id}`, {
           withCredentials: true,
         });
+        console.log(res.data.body.data);
+
         const {
           name,
           level,
@@ -53,6 +56,7 @@ export default function VegiPage() {
           type,
         } = res.data.body.data;
 
+        console.log('@@@@', type, level);
         const { ampm, hour, minute } = _alarm;
         const alarm =
           ampm === '' && hour === 0 && minute === 0
@@ -76,11 +80,23 @@ export default function VegiPage() {
       <Container>
         <Title>{name}</Title>
         <ProgressBar level={level} />
-        <img
-          src={getAsset(`${type}0${level}.svg`)}
-          height={300}
-          alt={`${type}`}
-        />
+        {type ? (
+          <img
+            src={getAsset(`${type}0${level}.svg`)}
+            width={300}
+            height={300}
+            style={{ background: 'var(--color-skyblue)' }}
+            alt={`${type}`}
+          />
+        ) : (
+          <div
+            style={{
+              width: '300px',
+              height: '300px',
+              background: 'var(--color-skyblue)',
+            }}
+          ></div>
+        )}
         {level === 5 ? (
           <P>키워주셔서 감사합니다 ^^</P>
         ) : (
@@ -99,7 +115,11 @@ export default function VegiPage() {
             판매하기
           </TextButton>
         ) : (
-          <DictButton setLevel={setLevel}>칭찬하기</DictButton>
+          <DictButton
+            setLevel={setLevel as React.Dispatch<React.SetStateAction<number>>}
+          >
+            칭찬하기
+          </DictButton>
         )}
         {activateModal && (
           <ModalDialog
