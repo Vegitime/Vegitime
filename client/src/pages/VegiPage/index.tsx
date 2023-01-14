@@ -36,7 +36,6 @@ export default function VegiPage() {
   const [name, setName] = useState('');
   const [level, setLevel] = useState<number>();
   const [alarm, setAlarm] = useState('');
-  const [price, setPrice] = useState<number>();
   const [type, setType] = useState();
   const [money, setMoney] = useState<number>();
 
@@ -54,13 +53,7 @@ export default function VegiPage() {
         });
 
         const { money } = resUser.data.body.data;
-        const {
-          name,
-          level,
-          alarm: _alarm,
-          sellingPrice: price,
-          type,
-        } = resVegi.data.body.data;
+        const { name, level, alarm: _alarm, type } = resVegi.data.body.data;
         const { ampm, hour, minute } = _alarm;
         const alarm =
           ampm === '' && hour === 0 && minute === 0
@@ -71,7 +64,6 @@ export default function VegiPage() {
         setAlarm(alarm);
         setName(name);
         setLevel(level);
-        setPrice(price);
         setType(type);
       } catch (err) {
         console.error(err);

@@ -1,4 +1,3 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -45,7 +44,7 @@ export default function Header({ money }: { money?: number }) {
         />
       </button>
       <StyledDiv>
-        <MoneyInfo size="large">{money}</MoneyInfo>
+        {money && <MoneyInfo size="large">{money}</MoneyInfo>}
         <button type="button" onClick={logout}>
           <img
             width={40}
