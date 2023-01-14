@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
 import { ReactComponent as Arrow } from '@/assets/polygon.svg';
@@ -12,10 +12,10 @@ interface keyDownHandlerArgs {
 interface timePickerProps {
   hour: number;
   minute: number;
-  isAm: boolean;
+  ampm: 'AM' | 'PM';
   setHour: Dispatch<SetStateAction<number>>;
   setMinute: Dispatch<SetStateAction<number>>;
-  setIsAm: Dispatch<SetStateAction<boolean>>;
+  setAmpm: Dispatch<SetStateAction<'AM' | 'PM'>>;
 }
 
 const Container = styled.div`
@@ -129,10 +129,10 @@ const handleInput = (e: React.ChangeEvent<HTMLDivElement>) => {
 export default function TimePicker({
   hour,
   minute,
-  isAm,
+  ampm,
   setHour,
   setMinute,
-  setIsAm,
+  setAmpm,
 }: timePickerProps) {
   return (
     <Container
@@ -144,45 +144,46 @@ export default function TimePicker({
         기상 시간을 선택해주세요
       </div>
       <div id="myTimepickerTime" className="sr-only">
-        현재 선택된 시간은 {isAm ? '오전' : '오후'} {hour}시 {minute}분 입니다
+        현재 선택된 시간은 {ampm === 'AM' ? '오전' : '오후'} {hour}시 {minute}분
+        입니다
       </div>
 
       <div className="meridian">
         <button
           type="button"
           tabIndex={-1}
-          aria-label={isAm ? '' : '오전'}
-          disabled={isAm ? true : false}
+          aria-label={ampm === 'AM' ? '' : '오전'}
+          disabled={ampm === 'AM' ? true : false}
           onClick={() => {
-            setIsAm(true);
+            setAmpm('AM');
           }}
         >
           <Arrow transform="rotate(180)" />
         </button>
         <div className="previous" aria-hidden="true">
-          {isAm ? '' : 'AM'}
+          {ampm === 'AM' ? '' : 'AM'}
         </div>
         <div
           role="spinbutton"
           tabIndex={0}
           aria-valuenow={1}
-          aria-valuetext={isAm ? '오전' : '오후'}
+          aria-valuetext={ampm === 'AM' ? '오전' : '오후'}
           aria-valuemin={0}
           aria-valuemax={1}
           aria-label="Meridian"
         >
-          {isAm ? 'AM' : 'PM'}
+          {ampm === 'AM' ? 'AM' : 'PM'}
         </div>
         <div className="next" aria-hidden="true">
-          {isAm ? 'PM' : ''}
+          {ampm === 'AM' ? 'PM' : ''}
         </div>
         <button
           type="button"
           tabIndex={-1}
-          aria-label={isAm ? '오후' : ''}
-          disabled={isAm ? false : true}
+          aria-label={ampm === 'AM' ? '오후' : ''}
+          disabled={ampm === 'AM' ? false : true}
           onClick={() => {
-            setIsAm(false);
+            setAmpm('PM');
           }}
         >
           <Arrow />

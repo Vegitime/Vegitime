@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 import AlarmList from './components/AlarmList';
 import { Header, Title, Navigation } from 'components';
-import users from '../../../../server/mock/users';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { getAlarmFormat } from 'utils';
 
-interface Users {
-  nickname: string;
-  money: number;
-  vegis: Array<Vegis>;
+interface Alarm {
+  ampm: 'AM' | 'PM' | '';
+  hour: number;
+  minute: number;
 }
 
 interface Vegis {
@@ -14,7 +16,7 @@ interface Vegis {
   type: 'avocado' | 'carrot' | 'eggplant' | 'onion' | 'radish' | 'tomato';
   name: string;
   level: number;
-  alarm: string;
+  alarm: Alarm;
   attendance: Array<boolean>;
 }
 
@@ -25,25 +27,45 @@ const Container = styled.ul`
 `;
 
 export default function AlarmListComponent() {
-  const [user] = users;
-  const { vegis } = user as Users;
+  const [vegis, setVegis] = useState([]);
+  useEffect(() => {
+    async function fetchUserInfo() {
+      try {
+        const res = await axios.get(`${process.env.URL}api/users/info`, {
+          withCredentials: true,
+        });
+        const { vegis } = res.data.body.data;
+        setVegis(vegis);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchUserInfo();
+  }, []);
   return (
     <>
       <Header />
       <Title>Alarm List</Title>
       <Container>
-        {vegis.map(({ id, type, alarm, level }: Vegis) => (
-          <li key={id}>
-            <AlarmList
-              isActive={alarm === '' ? false : true}
-              alarm={alarm}
-              type={type}
-              level={level}
-              disabled={alarm === '' ? true : false}
-              id={id}
-            />
-          </li>
-        ))}
+        {vegis.map(({ id, type, alarm: _alarm, level }: Vegis) => {
+          const { ampm, hour, minute } = _alarm;
+          const alarm =
+            ampm === '' && hour === 0 && minute === 0
+              ? ''
+              : getAlarmFormat({ hour, minute, ampm });
+          return (
+            <li key={id}>
+              <AlarmList
+                isActive={alarm === '' ? false : true}
+                alarm={alarm}
+                type={type}
+                level={level}
+                disabled={alarm === '' ? true : false}
+                id={id}
+              />
+            </li>
+          );
+        })}
       </Container>
       <Navigation />
     </>

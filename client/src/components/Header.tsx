@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { flexContainer } from 'styles';
 import { getAsset } from 'utils';
 import { MoneyInfo } from 'components';
-import users from '../../../server/mock/users';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 const StyledHeader = styled.header`
   position: sticky;
   top: 0;
@@ -22,8 +22,6 @@ const StyledDiv = styled.div`
 
 export default function Header() {
   const navigate = useNavigate();
-  const [user] = users;
-  const { money } = user;
   const logout = async () => {
     try {
       await axios
@@ -34,6 +32,24 @@ export default function Header() {
       console.error(err);
     }
   };
+
+  const [money, setMoney] = useState(0);
+  useEffect(() => {
+    async function fetchUserInfo() {
+      try {
+        const res = await axios.get(`${process.env.URL}api/users/info`, {
+          withCredentials: true,
+        });
+        const { money } = res.data.body.data;
+        setMoney(money);
+        console.log(money);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchUserInfo();
+  }, []);
+
   return (
     <StyledHeader>
       <button onClick={() => navigate(-1)}>

@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import { MoneyInfo } from 'components';
 import { flexContainer } from 'styles';
-import { VEGETABLE_INFO } from 'utils';
+import { getAsset } from 'utils';
 
 interface VegiInfoProps {
-  type: 'avocado' | 'carrot' | 'eggplant' | 'onion' | 'radish' | 'tomato';
+  src: string;
+  name: string;
+  price: number;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -25,11 +27,19 @@ const StyledButton = styled.button`
   }
 `;
 
-export default function ButtonVegiInfo({ type, onClick }: VegiInfoProps) {
-  const { src, name, price } = VEGETABLE_INFO[type];
+export default function ButtonVegiInfo({
+  src,
+  name,
+  price,
+  onClick,
+}: VegiInfoProps) {
   return (
     <StyledButton onClick={onClick}>
-      <img height={100} src={src} alt={`${name} 캐릭터 구매하러 이동`} />
+      <img
+        height={100}
+        src={getAsset(src)}
+        alt={`${name} 캐릭터 구매하러 이동`}
+      />
       <div>{name}</div>
       <MoneyInfo size="small">{price}</MoneyInfo>
     </StyledButton>

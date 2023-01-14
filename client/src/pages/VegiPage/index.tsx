@@ -1,11 +1,11 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
-import { VEGETABLE_INFO, getAsset } from 'utils';
+import { getAsset, getAlarmFormat } from 'utils';
 import { Time, ProgressBar, DictButton } from './components';
 import { Header, Title, Navigation, TextButton, ModalDialog } from 'components';
-import users from '../../../../server/mock/users';
+import axios from 'axios';
 
 const Container = styled.div`
   position: relative;
@@ -25,26 +25,58 @@ const ButtonGroup = styled.div`
 
 export default function VegiPage() {
   const [activateModal, setActivateModal] = useState(false);
+  const [name, setName] = useState('');
+  const [level, setLevel] = useState(0);
+  const [alarm, setAlarm] = useState('');
+  const [price, setPrice] = useState(0);
+  const [type, setType] = useState('');
   const navigate = useNavigate();
   const { id } = useParams();
-  const [user] = users;
-  const { vegis } = user;
-  const [vegi] = vegis.filter(({ id: _id }) => _id === +(id as string));
-  const { type, level, alarm } = vegi;
-  const [currentLevel, setCurrentLevel] = useState(level);
+
+  useEffect(() => {
+    async function fetchUserInfo() {
+      try {
+        const res = await axios.get(`${process.env.URL}api/vegetables/${id}`, {
+          withCredentials: true,
+        });
+        const {
+          name,
+          level,
+          alarm: _alarm,
+          sellingPrice: price,
+          type,
+        } = res.data.body.data;
+
+        const { ampm, hour, minute } = _alarm;
+        const alarm =
+          ampm === '' && hour === 0 && minute === 0
+            ? ''
+            : getAlarmFormat({ hour, minute, ampm });
+        setAlarm(alarm);
+        setName(name);
+        setLevel(level);
+        setPrice(price);
+        setType(type);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchUserInfo();
+  }, []);
+
   return (
     <>
       <Header />
       <Container>
-        <Title>{VEGETABLE_INFO[type].name}</Title>
-        <ProgressBar level={currentLevel} />
+        <Title>{name}</Title>
+        <ProgressBar level={level} />
         <img
-          src={getAsset(`${type}0${currentLevel}.svg`)}
+          src={getAsset(`${type}0${level}.svg`)}
           height={300}
           alt={`${type}`}
         />
         <Time text={alarm} id={id as string} />
-        {currentLevel === 5 ? (
+        {level === 5 ? (
           <TextButton
             width="100%"
             size="large"
@@ -57,11 +89,7 @@ export default function VegiPage() {
             판매하기
           </TextButton>
         ) : (
-          <DictButton
-            increaseLevel={() => setCurrentLevel((prevLevel) => prevLevel + 1)}
-          >
-            칭찬하기
-          </DictButton>
+          <DictButton setLevel={setLevel}>칭찬하기</DictButton>
         )}
         {activateModal && (
           <ModalDialog
@@ -75,9 +103,12 @@ export default function VegiPage() {
               <TextButton
                 width="9.375rem"
                 size="small"
-                onClick={() => {
-                  console.log(
-                    `${id}를 ${VEGETABLE_INFO[type].price * 1.5}에 판매하기`
+                onClick={async () => {
+                  await axios.delete(
+                    `${process.env.URL}api/vegetables/${id}/sale`,
+                    {
+                      withCredentials: true,
+                    }
                   );
                   navigate('/alarmlist');
                 }}

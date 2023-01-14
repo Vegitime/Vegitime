@@ -3,7 +3,8 @@ import Chart from 'react-apexcharts';
 import { flexContainer } from 'styles';
 import { makeChart } from 'utils';
 import { Header, Title, Navigation } from 'components';
-import users from '../../../../server/mock/users.js';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 interface Ivegi {
   id: number;
@@ -45,19 +46,49 @@ const StyledDiv = styled.div`
 `;
 
 export default function MyPage() {
-  const { nickname, money, vegis, harvest } = users[0];
-  const categories = vegis.map((vegi) => vegi['name']);
-  const types = vegis.map((vegi) => vegi['type']);
-  const success = vegis.map(
-    (vegi: Ivegi) =>
-      vegi['attendance']?.filter((a: boolean) => a === true).length
-  );
-  const fail = vegis.map(
-    (vegi: Ivegi) =>
-      vegi['attendance']?.filter((a: boolean) => a === false).length
+  const [nickname, setNickname] = useState('a');
+  const [money, setMoney] = useState(10000);
+  const [harvest, setHarvest] = useState(3);
+  const [vegis, setVegis] = useState([]);
+  const [chart, setChart] = useState(
+    makeChart({
+      categories: [],
+      types: [],
+      success: [],
+      fail: [],
+    })
   );
 
-  const chart = makeChart({ categories, types, success, fail });
+  useEffect(() => {
+    async function fetchUserInfo() {
+      try {
+        const res = await axios.get(`${process.env.URL}api/users/info`, {
+          withCredentials: true,
+        });
+        const { nickname, money, harvest, vegis } = res.data.body.data;
+        const categories = vegis.map((vegi) => vegi['name']);
+        const types = vegis.map((vegi) => vegi['type']);
+        const success = vegis.map(
+          (vegi: Ivegi) =>
+            vegi['attendance']?.filter((a: boolean) => a === true).length
+        );
+        const fail = vegis.map(
+          (vegi: Ivegi) =>
+            vegi['attendance']?.filter((a: boolean) => a === false).length
+        );
+
+        setNickname(nickname);
+        setMoney(money);
+        setHarvest(harvest);
+        setVegis(vegis);
+        setChart(makeChart({ categories, types, success, fail }));
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchUserInfo();
+  }, []);
+
   return (
     <>
       <Header />
