@@ -61,16 +61,20 @@ export default function SettingAlarm() {
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
   const [ampm, setAmpm] = useState<'AM' | 'PM'>('AM');
+  const [money, setMoney] = useState<number>();
 
   useEffect(() => {
     async function fetchUserInfo() {
       try {
-        const res = await axios.get(`${process.env.URL}api/vegetables`, {
+        const resVegis = await axios.get(`${process.env.URL}api/vegetables`, {
           withCredentials: true,
         });
-        console.log(res.data.body.data);
+        const resUser = await axios.get(`${process.env.URL}api/users/info`, {
+          withCredentials: true,
+        });
 
-        const vegis = res.data.body.data as Array<Vegi>;
+        const { money } = resUser.data.body.data;
+        const vegis = resVegis.data.body.data as Array<Vegi>;
         const types = vegis.map(({ type, vegeId: id }) => ({ id, type }));
         setTypes(types);
         const vegi = vegis.find(({ vegeId }) => vegeId === id);
@@ -78,6 +82,8 @@ export default function SettingAlarm() {
           vegi?.alarm.ampm === ''
             ? separateDefaultAlarmFormat()
             : (vegi as Vegi).alarm;
+
+        setMoney(money);
         setHour(hour);
         setMinute(minute);
         setAmpm(ampm as 'AM' | 'PM');
@@ -90,7 +96,7 @@ export default function SettingAlarm() {
 
   return (
     <>
-      <Header />
+      <Header money={money} />
       <StyledMain>
         <Title>Setting Alarm</Title>
         <TimePicker

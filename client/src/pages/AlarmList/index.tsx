@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Header, Title, Navigation } from 'components';
@@ -28,6 +28,7 @@ const Container = styled.ul`
 
 export default function AlarmList() {
   const [vegis, setVegis] = useState([]);
+  const [money, setMoney] = useState();
 
   useEffect(() => {
     async function fetchUserInfo() {
@@ -35,8 +36,9 @@ export default function AlarmList() {
         const res = await axios.get(`${process.env.URL}api/users/info`, {
           withCredentials: true,
         });
-        const { vegis } = res.data.body.data;
+        const { vegis, money } = res.data.body.data;
         setVegis(vegis);
+        setMoney(money);
       } catch (err) {
         console.error(err);
       }
@@ -46,7 +48,7 @@ export default function AlarmList() {
 
   return (
     <>
-      <Header />
+      <Header money={money} />
       <Title>Alarm List</Title>
       <Container>
         {vegis.map(({ id, type, alarm: _alarm, level }: Vegis) => {

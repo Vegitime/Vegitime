@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -21,7 +21,7 @@ const StyledDiv = styled.div`
   ${flexContainer({ d: 'row', w: 'nowrap', g: 'var(--spacing-base)' })}
 `;
 
-export default function Header() {
+export default function Header({ money }: { money?: number }) {
   const navigate = useNavigate();
   const logout = async () => {
     try {
@@ -33,23 +33,6 @@ export default function Header() {
       console.error(err);
     }
   };
-
-  const [money, setMoney] = useState(0);
-  useEffect(() => {
-    async function fetchUserInfo() {
-      try {
-        const res = await axios.get(`${process.env.URL}api/users/info`, {
-          withCredentials: true,
-        });
-        const { money } = res.data.body.data;
-        setMoney(money);
-        console.log(money);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    fetchUserInfo();
-  }, []);
 
   return (
     <StyledHeader>

@@ -46,10 +46,10 @@ const StyledDiv = styled.div`
 `;
 
 export default function MyPage() {
-  const [nickname, setNickname] = useState('a');
-  const [money, setMoney] = useState(10000);
-  const [harvest, setHarvest] = useState(3);
-  const [vegis, setVegis] = useState([]);
+  const [nickname, setNickname] = useState('');
+  const [money, setMoney] = useState();
+  const [harvest, setHarvest] = useState();
+  const [vegis, setVegis] = useState<Vegi[]>();
   const [chart, setChart] = useState(
     makeChart({
       categories: [],
@@ -65,6 +65,7 @@ export default function MyPage() {
         const res = await axios.get(`${process.env.URL}api/users/info`, {
           withCredentials: true,
         });
+
         const { nickname, money, harvest, vegis } = res.data.body.data;
         const categories = vegis.map((vegi: Vegi) => vegi['name']);
         const types = vegis.map((vegi: Vegi) => vegi['type']);
@@ -91,14 +92,14 @@ export default function MyPage() {
 
   return (
     <>
-      <Header />
+      <Header money={money} />
       <StyledMain>
         <Title>My Page</Title>
         <StyledUl>
           <li>닉네임 : {nickname}</li>
           <li>자산 : {money}원 </li>
           <li>판매 작물 : {harvest}개</li>
-          <li>보유 작물 : {vegis.length}개</li>
+          <li>보유 작물 : {vegis?.length}개</li>
           <li>통계: </li>
           <StyledDiv>
             <Chart

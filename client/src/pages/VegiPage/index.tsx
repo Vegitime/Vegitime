@@ -38,30 +38,36 @@ export default function VegiPage() {
   const [alarm, setAlarm] = useState('');
   const [price, setPrice] = useState<number>();
   const [type, setType] = useState();
-  console.log('@@@@', type, level);
+  const [money, setMoney] = useState<number>();
 
   useLayoutEffect(() => {
     async function fetchUserInfo() {
       try {
-        const res = await axios.get(`${process.env.URL}api/vegetables/${id}`, {
+        const resVegi = await axios.get(
+          `${process.env.URL}api/vegetables/${id}`,
+          {
+            withCredentials: true,
+          }
+        );
+        const resUser = await axios.get(`${process.env.URL}api/users/info`, {
           withCredentials: true,
         });
-        console.log(res.data.body.data);
 
+        const { money } = resUser.data.body.data;
         const {
           name,
           level,
           alarm: _alarm,
           sellingPrice: price,
           type,
-        } = res.data.body.data;
-
-        console.log('@@@@', type, level);
+        } = resVegi.data.body.data;
         const { ampm, hour, minute } = _alarm;
         const alarm =
           ampm === '' && hour === 0 && minute === 0
             ? ''
             : getAlarmFormat({ hour, minute, ampm });
+
+        setMoney(money);
         setAlarm(alarm);
         setName(name);
         setLevel(level);
@@ -76,7 +82,7 @@ export default function VegiPage() {
 
   return (
     <>
-      <Header />
+      <Header money={money} />
       <Container>
         <Title>{name}</Title>
         <ProgressBar level={level} />

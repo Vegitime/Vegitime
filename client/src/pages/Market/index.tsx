@@ -28,7 +28,7 @@ const StyledUl = styled.ul`
 export default function Market() {
   const [activateModal, setActivateModal] = useState(false);
   const [clickedType, setClickedType] = useState('tomato');
-  const [money, setMoney] = useState(0);
+  const [money, setMoney] = useState<number>();
   const [vegetables, setVegetables] = useState([]);
 
   const selectedVegi = vegetables.find(({ type }) => type === clickedType);
@@ -62,7 +62,7 @@ export default function Market() {
 
   return (
     <>
-      <Header />
+      <Header money={money} />
       <StyledMain>
         <Title>Vegi Market</Title>
         <StyledUl>
@@ -103,7 +103,7 @@ export default function Market() {
             <TextButton
               width="9.375rem"
               size="small"
-              disabled={money < price}
+              disabled={(money ?? 0) < price}
               onClick={async () => {
                 try {
                   await axios.post(
@@ -113,6 +113,7 @@ export default function Market() {
                       withCredentials: true,
                     }
                   );
+                  setMoney((money) => (money ?? 0) - price);
                 } catch (err) {
                   console.error(err);
                 }

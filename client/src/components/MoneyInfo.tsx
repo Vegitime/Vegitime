@@ -4,7 +4,7 @@ import { getAsset } from 'utils';
 
 interface IMoneyInfo {
   size: 'small' | 'large';
-  children: number;
+  children: number | undefined;
 }
 
 const moneyInfoStyle = {
