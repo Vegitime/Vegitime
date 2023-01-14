@@ -15,6 +15,12 @@ const Container = styled.div`
   text-align: center;
 `;
 
+const P = styled.p`
+  margin: 2rem 0;
+  font-size: var(--text-lg);
+  text-align: center;
+`;
+
 const Question = styled.div`
   font-size: var(--text-lg);
 `;
@@ -75,7 +81,11 @@ export default function VegiPage() {
           height={300}
           alt={`${type}`}
         />
-        <Time text={alarm} id={id as string} />
+        {level === 5 ? (
+          <P>키워주셔서 감사합니다 ^^</P>
+        ) : (
+          <Time text={alarm} id={id as string} />
+        )}
         {level === 5 ? (
           <TextButton
             width="100%"
@@ -111,6 +121,7 @@ export default function VegiPage() {
                     }
                   );
                   document.body.style.overflow = 'unset';
+
                   navigate('/alarmlist');
                 }}
               >
