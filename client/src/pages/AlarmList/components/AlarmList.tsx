@@ -25,7 +25,7 @@ const ListContainer = styled.button<{ isActive: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 var(--spacing-xl);
+  padding: 0 var(--spacing-md);
   :disabled {
     opacity: 0.5;
     cursor: not-allowed;
@@ -51,7 +51,7 @@ const Time = styled.p<{ isActive: boolean }>`
 const VegiInfo = styled.p<{ isActive: boolean }>`
   width: 100%;
   text-align: center;
-  font-size: var(${(props) => (props.isActive ? '--text-sm' : '--text-lg')});
+  font-size: var(${(props) => (props.isActive ? '--text-sm' : '--text-md')});
 `;
 
 const VegiImage = styled.img`
