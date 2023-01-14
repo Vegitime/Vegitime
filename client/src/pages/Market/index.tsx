@@ -1,10 +1,10 @@
-import { ButtonVegiInfo } from './components';
-import { Header, Title, Navigation, ModalDialog, TextButton } from 'components';
-import styled from 'styled-components';
-import { flexContainer } from 'styles';
 import { useEffect, useState } from 'react';
-import { getAsset } from 'utils';
+import styled from 'styled-components';
 import axios from 'axios';
+import { Header, Title, Navigation, ModalDialog, TextButton } from 'components';
+import { ButtonVegiInfo } from './components';
+import { flexContainer } from 'styles';
+import { getAsset } from 'utils';
 
 const StyledMain = styled.main`
   ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center' })};
@@ -28,8 +28,9 @@ const StyledUl = styled.ul`
 export default function Market() {
   const [activateModal, setActivateModal] = useState(false);
   const [clickedType, setClickedType] = useState('tomato');
-  const [money, setMoney] = useState(0);
+  const [money, setMoney] = useState<number>();
   const [vegetables, setVegetables] = useState([]);
+
   const selectedVegi = vegetables.find(({ type }) => type === clickedType);
   const { type, src, name, price, specialty } = selectedVegi ?? {
     type: '',
@@ -61,7 +62,7 @@ export default function Market() {
 
   return (
     <>
-      <Header />
+      <Header money={money} />
       <StyledMain>
         <Title>Vegi Market</Title>
         <StyledUl>
@@ -102,7 +103,7 @@ export default function Market() {
             <TextButton
               width="9.375rem"
               size="small"
-              disabled={money < price}
+              disabled={(money ?? 0) < price}
               onClick={async () => {
                 try {
                   await axios.post(
@@ -112,6 +113,7 @@ export default function Market() {
                       withCredentials: true,
                     }
                   );
+                  setMoney((money) => (money ?? 0) - price);
                 } catch (err) {
                   console.error(err);
                 }

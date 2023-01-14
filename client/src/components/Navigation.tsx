@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { FooterImg } from 'components';
 import { flexContainer } from 'styles';
 import { getAsset } from 'utils';
-import { FooterImg } from 'components';
 
 const StyledNav = styled.nav`
   width: 100vw;

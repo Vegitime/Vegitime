@@ -11,5 +11,5 @@ const StyledH1 = styled.h1`
 `;
 
 export default function Title({ children }: ITitle) {
-  return <StyledH1>{children}</StyledH1>;
+  return <StyledH1 style={{ height: '40px' }}>{children}</StyledH1>;
 }

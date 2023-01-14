@@ -1,8 +1,8 @@
+import { useEffect, useLayoutEffect, useState } from 'react';
 import styled from 'styled-components';
-import AlarmList from './components/AlarmList';
-import { Header, Title, Navigation } from 'components';
-import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Header, Title, Navigation } from 'components';
+import { LinkVegi } from './components';
 import { getAlarmFormat } from 'utils';
 
 interface Alarm {
@@ -26,25 +26,29 @@ const Container = styled.ul`
   padding: 1rem;
 `;
 
-export default function AlarmListComponent() {
+export default function AlarmList() {
   const [vegis, setVegis] = useState([]);
+  const [money, setMoney] = useState();
+
   useEffect(() => {
     async function fetchUserInfo() {
       try {
         const res = await axios.get(`${process.env.URL}api/users/info`, {
           withCredentials: true,
         });
-        const { vegis } = res.data.body.data;
+        const { vegis, money } = res.data.body.data;
         setVegis(vegis);
+        setMoney(money);
       } catch (err) {
         console.error(err);
       }
     }
     fetchUserInfo();
   }, []);
+
   return (
     <>
-      <Header />
+      <Header money={money} />
       <Title>Alarm List</Title>
       <Container>
         {vegis.map(({ id, type, alarm: _alarm, level }: Vegis) => {
@@ -52,15 +56,15 @@ export default function AlarmListComponent() {
           const alarm =
             ampm === '' && hour === 0 && minute === 0
               ? ''
-              : getAlarmFormat({ hour, minute, ampm });
+              : getAlarmFormat({ hour, minute, ampm: ampm as 'AM' | 'PM' });
           return (
             <li key={id}>
-              <AlarmList
-                isActive={alarm === '' ? false : true}
+              <LinkVegi
+                isActive={level !== 5 && alarm === '' ? false : true}
                 alarm={alarm}
                 type={type}
                 level={level}
-                disabled={alarm === '' ? true : false}
+                disabled={level !== 5 && alarm === '' ? true : false}
                 id={id}
               />
             </li>

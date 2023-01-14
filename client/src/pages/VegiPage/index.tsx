@@ -1,17 +1,23 @@
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+import { Header, Title, Navigation, TextButton, ModalDialog } from 'components';
+import { Time, ProgressBar, DictButton } from './components';
 import { flexContainer } from 'styles';
 import { getAsset, getAlarmFormat } from 'utils';
-import { Time, ProgressBar, DictButton } from './components';
-import { Header, Title, Navigation, TextButton, ModalDialog } from 'components';
-import axios from 'axios';
 
 const Container = styled.div`
   position: relative;
   min-height: 100vh;
   padding: 1rem;
   background: var(--color-skyblue);
+  text-align: center;
+`;
+
+const P = styled.p`
+  margin: 2rem 0;
+  font-size: var(--text-lg);
   text-align: center;
 `;
 
@@ -24,38 +30,40 @@ const ButtonGroup = styled.div`
 `;
 
 export default function VegiPage() {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [activateModal, setActivateModal] = useState(false);
   const [name, setName] = useState('');
-  const [level, setLevel] = useState(0);
+  const [level, setLevel] = useState<number>();
   const [alarm, setAlarm] = useState('');
-  const [price, setPrice] = useState(0);
-  const [type, setType] = useState('');
-  const navigate = useNavigate();
-  const { id } = useParams();
+  const [type, setType] = useState();
+  const [money, setMoney] = useState<number>();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     async function fetchUserInfo() {
       try {
-        const res = await axios.get(`${process.env.URL}api/vegetables/${id}`, {
+        const resVegi = await axios.get(
+          `${process.env.URL}api/vegetables/${id}`,
+          {
+            withCredentials: true,
+          }
+        );
+        const resUser = await axios.get(`${process.env.URL}api/users/info`, {
           withCredentials: true,
         });
-        const {
-          name,
-          level,
-          alarm: _alarm,
-          sellingPrice: price,
-          type,
-        } = res.data.body.data;
 
+        const { money } = resUser.data.body.data;
+        const { name, level, alarm: _alarm, type } = resVegi.data.body.data;
         const { ampm, hour, minute } = _alarm;
         const alarm =
           ampm === '' && hour === 0 && minute === 0
             ? ''
             : getAlarmFormat({ hour, minute, ampm });
+
+        setMoney(money);
         setAlarm(alarm);
         setName(name);
         setLevel(level);
-        setPrice(price);
         setType(type);
       } catch (err) {
         console.error(err);
@@ -66,16 +74,32 @@ export default function VegiPage() {
 
   return (
     <>
-      <Header />
+      <Header money={money} />
       <Container>
         <Title>{name}</Title>
         <ProgressBar level={level} />
-        <img
-          src={getAsset(`${type}0${level}.svg`)}
-          height={300}
-          alt={`${type}`}
-        />
-        <Time text={alarm} id={id as string} />
+        {type ? (
+          <img
+            src={getAsset(`${type}0${level}.svg`)}
+            width={300}
+            height={300}
+            style={{ background: 'var(--color-skyblue)' }}
+            alt={`${type}`}
+          />
+        ) : (
+          <div
+            style={{
+              width: '300px',
+              height: '300px',
+              background: 'var(--color-skyblue)',
+            }}
+          ></div>
+        )}
+        {level === 5 ? (
+          <P>키워주셔서 감사합니다 ^^</P>
+        ) : (
+          <Time text={alarm} id={id as string} />
+        )}
         {level === 5 ? (
           <TextButton
             width="100%"
@@ -89,7 +113,11 @@ export default function VegiPage() {
             판매하기
           </TextButton>
         ) : (
-          <DictButton setLevel={setLevel}>칭찬하기</DictButton>
+          <DictButton
+            setLevel={setLevel as React.Dispatch<React.SetStateAction<number>>}
+          >
+            칭찬하기
+          </DictButton>
         )}
         {activateModal && (
           <ModalDialog
@@ -110,6 +138,8 @@ export default function VegiPage() {
                       withCredentials: true,
                     }
                   );
+                  document.body.style.overflow = 'unset';
+
                   navigate('/alarmlist');
                 }}
               >

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface LevelType {
-  level: number;
+  level?: number;
 }
 
 const Container = styled.div`
