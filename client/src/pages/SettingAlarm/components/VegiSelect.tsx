@@ -12,7 +12,7 @@ interface VegiSelectProps {
 
 interface SelectProps extends MenuProps {
   types: Array<VegiSelectProps>;
-  selectedId: number;
+  selectedId: string;
 }
 
 interface MenuProps {
