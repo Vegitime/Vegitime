@@ -28,7 +28,6 @@ const ListContainer = styled.button<{ isActive: boolean }>`
   padding: 0 var(--spacing-md);
   :disabled {
     opacity: 0.5;
-    cursor: not-allowed;
   }
 `;
 
@@ -60,7 +59,7 @@ const VegiImage = styled.img`
   height: 100%;
 `;
 
-export default function AlarmList({
+export default function LinkVegi({
   type,
   level,
   alarm,

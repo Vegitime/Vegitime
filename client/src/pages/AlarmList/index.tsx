@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import AlarmList from './components/AlarmList';
+import { LinkVegi } from './components';
 import { Header, Title, Navigation } from 'components';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -26,7 +26,7 @@ const Container = styled.ul`
   padding: 1rem;
 `;
 
-export default function AlarmListComponent() {
+export default function AlarmList() {
   const [vegis, setVegis] = useState([]);
   useEffect(() => {
     async function fetchUserInfo() {
@@ -55,7 +55,7 @@ export default function AlarmListComponent() {
               : getAlarmFormat({ hour, minute, ampm });
           return (
             <li key={id}>
-              <AlarmList
+              <LinkVegi
                 isActive={level !== 5 && alarm === '' ? false : true}
                 alarm={alarm}
                 type={type}
