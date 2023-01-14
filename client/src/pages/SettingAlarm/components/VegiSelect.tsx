@@ -6,7 +6,7 @@ import { VEGETABLE_INFO } from 'utils';
 import { ReactComponent as Arrow } from '@/assets/polygon.svg';
 
 interface VegiSelectProps {
-  id: number;
+  id: string;
   type: 'avocado' | 'carrot' | 'eggplant' | 'onion' | 'radish' | 'tomato';
 }
 

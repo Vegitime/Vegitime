@@ -1,17 +1,17 @@
-import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
+import styled from 'styled-components';
+import axios from 'axios';
+import { Header, Title, Navigation } from 'components';
 import { flexContainer } from 'styles';
 import { makeChart } from 'utils';
-import { Header, Title, Navigation } from 'components';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
 
-interface Ivegi {
-  id: number;
-  type: string;
+interface Vegi {
+  id: string;
+  type: 'avocado' | 'carrot' | 'eggplant' | 'onion' | 'radish' | 'tomato';
   name: string;
   level: number;
-  alarm: string;
+  alarm: { ampm: '' | 'AM' | 'PM'; hour: number; minute: number };
   attendance: Array<boolean>;
 }
 
@@ -66,14 +66,14 @@ export default function MyPage() {
           withCredentials: true,
         });
         const { nickname, money, harvest, vegis } = res.data.body.data;
-        const categories = vegis.map((vegi) => vegi['name']);
-        const types = vegis.map((vegi) => vegi['type']);
+        const categories = vegis.map((vegi: Vegi) => vegi['name']);
+        const types = vegis.map((vegi: Vegi) => vegi['type']);
         const success = vegis.map(
-          (vegi: Ivegi) =>
+          (vegi: Vegi) =>
             vegi['attendance']?.filter((a: boolean) => a === true).length
         );
         const fail = vegis.map(
-          (vegi: Ivegi) =>
+          (vegi: Vegi) =>
             vegi['attendance']?.filter((a: boolean) => a === false).length
         );
 

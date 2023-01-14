@@ -1,8 +1,8 @@
-import styled from 'styled-components';
-import { LinkVegi } from './components';
-import { Header, Title, Navigation } from 'components';
 import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import axios from 'axios';
+import { Header, Title, Navigation } from 'components';
+import { LinkVegi } from './components';
 import { getAlarmFormat } from 'utils';
 
 interface Alarm {
@@ -28,6 +28,7 @@ const Container = styled.ul`
 
 export default function AlarmList() {
   const [vegis, setVegis] = useState([]);
+
   useEffect(() => {
     async function fetchUserInfo() {
       try {
@@ -42,6 +43,7 @@ export default function AlarmList() {
     }
     fetchUserInfo();
   }, []);
+
   return (
     <>
       <Header />
@@ -52,7 +54,7 @@ export default function AlarmList() {
           const alarm =
             ampm === '' && hour === 0 && minute === 0
               ? ''
-              : getAlarmFormat({ hour, minute, ampm });
+              : getAlarmFormat({ hour, minute, ampm: ampm as 'AM' | 'PM' });
           return (
             <li key={id}>
               <LinkVegi

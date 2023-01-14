@@ -1,14 +1,29 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { flexContainer } from 'styles';
-import { separateDefaultAlarmFormat } from 'utils';
+import axios from 'axios';
 import { Header, Title, Navigation, TextButton, ModalDialog } from 'components';
 import { TimePicker, VegiSelect } from './components';
-import axios from 'axios';
+import { flexContainer } from 'styles';
+import { separateDefaultAlarmFormat } from 'utils';
+
+interface Alarm {
+  ampm: 'AM' | 'PM' | '';
+  hour: number;
+  minute: number;
+}
+
+interface Vegi {
+  vegeId: string;
+  type: 'avocado' | 'carrot' | 'eggplant' | 'onion' | 'radish' | 'tomato';
+  name: string;
+  level: number;
+  alarm: Alarm;
+  attendance: Array<boolean>;
+}
 
 interface VegiSelectProps {
-  id: number;
+  id: string;
   type: 'avocado' | 'carrot' | 'eggplant' | 'onion' | 'radish' | 'tomato';
 }
 
@@ -39,13 +54,13 @@ const Question = styled.div`
 `;
 
 export default function SettingAlarm() {
-  const [activateModal, setActivateModal] = useState(false);
   const { id } = useParams();
-  const [types, setTypes] = useState();
+  const navigate = useNavigate();
+  const [activateModal, setActivateModal] = useState(false);
+  const [types, setTypes] = useState<VegiSelectProps[]>([]);
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
-  const [ampm, setAmpm] = useState('AM');
-  const navigate = useNavigate();
+  const [ampm, setAmpm] = useState<'AM' | 'PM'>('AM');
 
   useEffect(() => {
     async function fetchUserInfo() {
@@ -53,15 +68,17 @@ export default function SettingAlarm() {
         const res = await axios.get(`${process.env.URL}api/vegetables`, {
           withCredentials: true,
         });
-        const vegis = res.data.body.data;
+        const vegis = res.data.body.data as Array<Vegi>;
         const types = vegis.map(({ type, vegeId: id }) => ({ id, type }));
         setTypes(types);
         const vegi = vegis.find(({ vegeId }) => vegeId === id);
         const { hour, minute, ampm } =
-          vegi.alarm.ampm === '' ? separateDefaultAlarmFormat() : vegi.alarm;
+          vegi?.alarm.ampm === ''
+            ? separateDefaultAlarmFormat()
+            : (vegi as Vegi).alarm;
         setHour(hour);
         setMinute(minute);
-        setAmpm(ampm);
+        setAmpm(ampm as 'AM' | 'PM');
 
         console.log(vegi);
       } catch (err) {
@@ -86,7 +103,7 @@ export default function SettingAlarm() {
         />
         {types && (
           <StyledVegiSelect
-            types={types as Array<VegiSelectProps>}
+            types={types as VegiSelectProps[]}
             selectedId={id as string}
           />
         )}
