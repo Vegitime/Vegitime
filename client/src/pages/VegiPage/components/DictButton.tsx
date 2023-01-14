@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import styled from 'styled-components';
 import 'regenerator-runtime/runtime';
 import SpeechRecognition, {
@@ -6,11 +6,12 @@ import SpeechRecognition, {
 } from 'react-speech-recognition';
 import { getAsset } from 'utils';
 import { flexContainer } from 'styles';
-import praise from '../../../../../server/mock/praise';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 interface Text {
   children: string;
-  increaseLevel: () => void;
+  setLevel: Dispatch<SetStateAction<number>>;
 }
 
 const ButtonContainer = styled.div`
@@ -45,20 +46,25 @@ const Button = styled.button`
   })}
 `;
 
-export default function DictButton({ children, increaseLevel }: Text) {
-  const {
-    transcript,
-    listening,
-    // resetTranscript,
-    browserSupportsSpeechRecognition,
-  } = useSpeechRecognition();
-
-  const [sentimental] = praise;
+export default function DictButton({ children, setLevel }: Text) {
+  const { id } = useParams();
+  const { transcript, listening, browserSupportsSpeechRecognition } =
+    useSpeechRecognition();
 
   useEffect(() => {
-    if (!listening && sentimental) {
-      increaseLevel();
-    } // sentimental 조건에 따라, positive, negative, neutral을 판단할 수 있습니다! 그에 따라 캐릭터 레벨업 여부 판단 가능합니다!
+    async function analyzeSentiment(content: string) {
+      const res = await axios.patch(
+        `${process.env.URL}api/vegetables/${id}/praise`,
+        { content },
+        { withCredentials: true }
+      );
+      const { sentiment } = res.data.body.data;
+      if (sentiment === 'positive') setLevel((level) => level + 1);
+    }
+
+    if (!listening && transcript !== '') {
+      analyzeSentiment(transcript);
+    }
   }, [listening]);
 
   const handleButtonClick = () => {

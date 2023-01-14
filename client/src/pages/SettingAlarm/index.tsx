@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
-import { separateAlarmFormat, getAlarmFormat } from 'utils';
+import { separateDefaultAlarmFormat } from 'utils';
 import { Header, Title, Navigation, TextButton, ModalDialog } from 'components';
 import { TimePicker, VegiSelect } from './components';
-import users from '../../../../server/mock/users.js';
+import axios from 'axios';
 
 interface VegiSelectProps {
   id: number;
@@ -41,22 +41,34 @@ const Question = styled.div`
 export default function SettingAlarm() {
   const [activateModal, setActivateModal] = useState(false);
   const { id } = useParams();
-  const selectedId = +(id as string);
-  const [user] = users;
-  const { vegis } = user;
-  const [vegi] = vegis.filter(({ id: _id }) => _id === selectedId);
-  const { alarm } = vegi;
-  const types = vegis.map(({ type, id }) => ({ id, type }));
-  const { hour: _hour, minute: _minute, ampm } = separateAlarmFormat(alarm);
-  const [hour, setHour] = useState(+_hour);
-  const [minute, setMinute] = useState(+_minute);
-  const [isAm, setIsAm] = useState(ampm === 'AM');
+  const [types, setTypes] = useState();
+  const [hour, setHour] = useState(0);
+  const [minute, setMinute] = useState(0);
+  const [ampm, setAmpm] = useState('AM');
   const navigate = useNavigate();
 
   useEffect(() => {
-    setHour(+_hour);
-    setMinute(+_minute);
-    setIsAm(ampm === 'AM');
+    async function fetchUserInfo() {
+      try {
+        const res = await axios.get(`${process.env.URL}api/vegetables`, {
+          withCredentials: true,
+        });
+        const vegis = res.data.body.data;
+        const types = vegis.map(({ type, vegeId: id }) => ({ id, type }));
+        setTypes(types);
+        const vegi = vegis.find(({ vegeId }) => vegeId === id);
+        const { hour, minute, ampm } =
+          vegi.alarm.ampm === '' ? separateDefaultAlarmFormat() : vegi.alarm;
+        setHour(hour);
+        setMinute(minute);
+        setAmpm(ampm);
+
+        console.log(vegi);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchUserInfo();
   }, [id]);
 
   return (
@@ -67,15 +79,17 @@ export default function SettingAlarm() {
         <TimePicker
           hour={hour}
           minute={minute}
-          isAm={isAm}
+          ampm={ampm as 'AM' | 'PM'}
           setHour={setHour}
           setMinute={setMinute}
-          setIsAm={setIsAm}
+          setAmpm={setAmpm}
         />
-        <StyledVegiSelect
-          types={types as Array<VegiSelectProps>}
-          selectedId={selectedId}
-        />
+        {types && (
+          <StyledVegiSelect
+            types={types as Array<VegiSelectProps>}
+            selectedId={id as string}
+          />
+        )}
         <ButtonGroup
           d="column"
           g="var(--spacing-base)"
@@ -84,15 +98,19 @@ export default function SettingAlarm() {
           <TextButton
             width="11.5625rem"
             size="small"
-            onClick={() => {
-              const ampm = isAm ? 'AM' : 'PM';
-              console.log(
-                `${selectedId}에 ${getAlarmFormat({
+            onClick={async () => {
+              await axios.patch(
+                `${process.env.URL}api/vegetables/${id}/alarm`,
+                {
+                  ampm,
                   hour,
                   minute,
-                  ampm,
-                })} 저장하기`
+                },
+                {
+                  withCredentials: true,
+                }
               );
+
               navigate('/alarmlist');
             }}
           >
@@ -122,9 +140,19 @@ export default function SettingAlarm() {
               <TextButton
                 width="9.375rem"
                 size="small"
-                onClick={() => {
-                  console.log(`${selectedId} 알람 삭제하기`);
-                  navigate(`/myvegi/${selectedId}`);
+                onClick={async () => {
+                  await axios.patch(
+                    `${process.env.URL}api/vegetables/${id}/alarm`,
+                    {
+                      ampm: '',
+                      hour: 0,
+                      minute: 0,
+                    },
+                    {
+                      withCredentials: true,
+                    }
+                  );
+                  navigate(`/myvegi/${id}`);
                 }}
               >
                 확인

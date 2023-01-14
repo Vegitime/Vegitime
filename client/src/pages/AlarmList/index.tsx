@@ -3,11 +3,12 @@ import AlarmList from './components/AlarmList';
 import { Header, Title, Navigation } from 'components';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { getAlarmFormat } from 'utils';
 
-interface Users {
-  nickname: string;
-  money: number;
-  vegis: Array<Vegis>;
+interface Alarm {
+  ampm: 'AM' | 'PM' | '';
+  hour: number;
+  minute: number;
 }
 
 interface Vegis {
@@ -15,7 +16,7 @@ interface Vegis {
   type: 'avocado' | 'carrot' | 'eggplant' | 'onion' | 'radish' | 'tomato';
   name: string;
   level: number;
-  alarm: string;
+  alarm: Alarm;
   attendance: Array<boolean>;
 }
 
@@ -34,7 +35,6 @@ export default function AlarmListComponent() {
           withCredentials: true,
         });
         const { vegis } = res.data.body.data;
-        console.log(vegis);
         setVegis(vegis);
       } catch (err) {
         console.error(err);
@@ -47,18 +47,25 @@ export default function AlarmListComponent() {
       <Header />
       <Title>Alarm List</Title>
       <Container>
-        {vegis.map(({ id, type, alarm, level }: Vegis) => (
-          <li key={id}>
-            <AlarmList
-              isActive={alarm === '' ? false : true}
-              alarm={alarm}
-              type={type}
-              level={level}
-              disabled={alarm === '' ? true : false}
-              id={id}
-            />
-          </li>
-        ))}
+        {vegis.map(({ id, type, alarm: _alarm, level }: Vegis) => {
+          const { ampm, hour, minute } = _alarm;
+          const alarm =
+            ampm === '' && hour === 0 && minute === 0
+              ? ''
+              : getAlarmFormat({ hour, minute, ampm });
+          return (
+            <li key={id}>
+              <AlarmList
+                isActive={alarm === '' ? false : true}
+                alarm={alarm}
+                type={type}
+                level={level}
+                disabled={alarm === '' ? true : false}
+                id={id}
+              />
+            </li>
+          );
+        })}
       </Container>
       <Navigation />
     </>

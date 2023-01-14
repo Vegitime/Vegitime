@@ -36,7 +36,6 @@ export const makeChart = ({ categories, types, success, fail }: chartArgs) => ({
           $div.style.height = '12px';
           $div.style.borderRadius = '50%';
           $div.style.backgroundColor = vegiColors[type];
-          console.log($oldDiv);
           $oldDiv === null
             ? $marker?.appendChild($div)
             : $marker?.replaceChild($div, $oldDiv as Node);

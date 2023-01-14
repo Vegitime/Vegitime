@@ -3,8 +3,7 @@ import { Header, Title, Navigation, ModalDialog, TextButton } from 'components';
 import styled from 'styled-components';
 import { flexContainer } from 'styles';
 import { useEffect, useState } from 'react';
-import { VEGETABLE_INFO } from 'utils';
-import users from '../../../../server/mock/users';
+import { getAsset } from 'utils';
 import axios from 'axios';
 
 const StyledMain = styled.main`
@@ -26,34 +25,33 @@ const StyledUl = styled.ul`
   }
 `;
 
-type Vegis = 'avocado' | 'carrot' | 'eggplant' | 'onion' | 'radish' | 'tomato';
-
-const VEGETABLE_TYPES: Array<Vegis> = [
-  'avocado',
-  'carrot',
-  'eggplant',
-  'onion',
-  'radish',
-  'tomato',
-];
-
 export default function Market() {
   const [activateModal, setActivateModal] = useState(false);
   const [clickedType, setClickedType] = useState('tomato');
-  const [vegitables, setVegitables] = useState([]);
-  const { src, name, price, specialty } = VEGETABLE_INFO[clickedType];
-  const [user] = users;
-  const { money } = user;
+  const [money, setMoney] = useState(0);
+  const [vegetables, setVegetables] = useState([]);
+  const selectedVegi = vegetables.find(({ type }) => type === clickedType);
+  const { type, src, name, price, specialty } = selectedVegi ?? {
+    type: '',
+    src: '',
+    name: '',
+    price: 0,
+    specialty: '',
+  };
 
   useEffect(() => {
     async function fetchUserInfo() {
       try {
-        const res = await axios.get(`${process.env.URL}api/shop`, {
+        const resShop = await axios.get(`${process.env.URL}api/shop`, {
           withCredentials: true,
         });
-        const vegitables = res.data.body.data;
-        setVegitables(vegitables);
-        console.log(vegitables);
+        const vegetables = resShop.data.body.data;
+        setVegetables(vegetables);
+        const resUser = await axios.get(`${process.env.URL}api/users/info`, {
+          withCredentials: true,
+        });
+        const { money } = resUser.data.body.data;
+        setMoney(money);
       } catch (err) {
         console.error(err);
       }
@@ -67,7 +65,7 @@ export default function Market() {
       <StyledMain>
         <Title>Vegi Market</Title>
         <StyledUl>
-          {vegitables.map(({ src, name, price }) => (
+          {vegetables.map(({ src, name, price, type }) => (
             <li key={name}>
               <ButtonVegiInfo
                 onClick={() => {
@@ -89,7 +87,7 @@ export default function Market() {
               setActivateModal(false);
             }}
           >
-            <img src={src} alt={name} />
+            <img src={getAsset(src)} alt={name} />
             <ul>
               <li>
                 <span>이름 : {name}</span>
@@ -105,11 +103,20 @@ export default function Market() {
               width="9.375rem"
               size="small"
               disabled={money < price}
-              onClick={() => {
-                console.log(
-                  `${clickedType} 구매하고 남은 돈 ${money - price} `
-                );
+              onClick={async () => {
+                try {
+                  await axios.post(
+                    `${process.env.URL}api/shop/purchase`,
+                    { type },
+                    {
+                      withCredentials: true,
+                    }
+                  );
+                } catch (err) {
+                  console.error(err);
+                }
                 setActivateModal(false);
+                document.body.style.overflow = 'unset';
               }}
             >
               구매하기

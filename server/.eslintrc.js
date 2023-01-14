@@ -7,9 +7,10 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
   },
-  extends: ['eslint:recommended', 'plugin:prettier/recommended', 'airbnb-base'],
+  extends: ['eslint:recommended', 'airbnb-base', 'plugin:prettier/recommended'],
   plugins: ['prettier'],
   rules: {
     'prettier/prettier': 'error',
+    'linebreak-style': 0,
   },
 };
