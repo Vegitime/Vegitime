@@ -16,8 +16,8 @@ const ListContainer = styled.button<{ isActive: boolean }>`
   height: 5rem;
   border-radius: 6.25rem;
   border-color: var(
-    ${(props) =>
-      props.isActive ? '--color-normal-green' : '--color-light-green'}
+    ${({ isActive }) =>
+      isActive ? '--color-normal-green' : '--color-light-green'}
   );
   background: #fff;
   font-size: 3.75rem;
@@ -45,13 +45,13 @@ const Time = styled.p<{ isActive: boolean }>`
   width: 100%;
   text-align: center;
   font-size: var(--text-lg);
-  display: ${(props) => (props.isActive ? '' : 'none')};
+  display: ${({ isActive }) => (isActive ? '' : 'none')};
 `;
 
 const VegiInfo = styled.p<{ isActive: boolean }>`
   width: 100%;
   text-align: center;
-  font-size: var(${(props) => (props.isActive ? '--text-sm' : '--text-md')});
+  font-size: var(${({ isActive }) => (isActive ? '--text-sm' : '--text-md')});
 `;
 
 const VegiImage = styled.img`
@@ -74,7 +74,7 @@ export default function AlarmList({
       <ListContainer isActive={isActive} disabled={disabled}>
         <VegiImage src={getAsset(`${type}0${level}.svg`)} alt={name} />
         <InfoContainer>
-          <Time isActive={isActive}>{alarm}</Time>
+          <Time isActive={isActive}>{level === 5 ? '성장 완료!' : alarm}</Time>
           <VegiInfo isActive={isActive}>
             Lv.{level} {name}
           </VegiInfo>

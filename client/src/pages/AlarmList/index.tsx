@@ -56,11 +56,11 @@ export default function AlarmListComponent() {
           return (
             <li key={id}>
               <AlarmList
-                isActive={alarm === '' ? false : true}
+                isActive={level !== 5 && alarm === '' ? false : true}
                 alarm={alarm}
                 type={type}
                 level={level}
-                disabled={alarm === '' ? true : false}
+                disabled={level !== 5 && alarm === '' ? true : false}
                 id={id}
               />
             </li>
