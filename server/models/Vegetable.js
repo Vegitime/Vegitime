@@ -32,6 +32,10 @@ const vegetableSchema = mongoose.Schema(
       type: [Boolean], // 참여 정보
       default: [],
     },
+    isCompleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

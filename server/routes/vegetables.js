@@ -44,6 +44,7 @@ router.get('/:vegetableId', async (req, res) => {
       name: vegetableData.name,
       level: vegetableData.level,
       alarm: vegetableData.alarm,
+      isCompleted: vegetableData.isCompleted,
       src: shopData.image[vegetableData.level],
       sellingPrice: shopData.sellingPrice,
     };
@@ -110,6 +111,7 @@ router.patch('/:vegetableId/praise', async (req, res) => {
         { $push: { attendance: false } }
       ).exec();
     }
+    await Vegetable.update({ _id: vegetableId }, { isCompleted: true }).exec();
     const shopData = await Shop.findOne({ name: vegetableData.name }).exec();
     data.src = shopData.image[vegetableData.level + 1];
     data.sellingPrice = shopData.sellingPrice;

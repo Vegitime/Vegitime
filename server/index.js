@@ -4,6 +4,8 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 require('dotenv').config();
+// eslint-disable-next-line import/no-extraneous-dependencies
+const schedule = require('node-schedule');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -24,7 +26,7 @@ app.use(cors(corsOptions));
 // db 연결
 const mongoose = require('mongoose');
 
-const connect = mongoose
+mongoose
   .connect(process.env.MONGO_URI, { useNewUrlParser: true })
   .then(() => {
     console.log('MongoDB Connected...');
@@ -35,6 +37,12 @@ const connect = mongoose
 app.use('/api/users', require('./routes/users'));
 app.use('/api/vegetables', require('./routes/vegetables'));
 app.use('/api/shop', require('./routes/shop'));
+
+const { Vegetable } = require('./models/Vegetable');
+
+schedule.scheduleJob('0 0 * * *', async () => {
+  await Vegetable.updateMany({}, { isCompleted: false });
+});
 
 // use this to show the image you have in node js server to client (react js)
 app.use('/public', express.static('public'));
