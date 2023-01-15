@@ -48,7 +48,7 @@ export default function SignUp() {
   const { values, errors, touched, handleSubmit, getFieldProps, isValid } =
     useForm({
       initialValues: { id: '', nickname: '', password: '', pwcheck: '' },
-      validate: (values) => {
+      validate: (values, currentInput) => {
         const errors = {
           id: '',
           nickname: '',
@@ -67,7 +67,7 @@ export default function SignUp() {
         if (values.password !== values.pwcheck) {
           errors.pwcheck = '비밀번호가 일치하지 않아요.';
         }
-        setIsDuplicated(null);
+        if (currentInput === 'id') setIsDuplicated(null);
         return errors;
       },
       onSubmit: async (values) => {
@@ -106,7 +106,10 @@ export default function SignUp() {
   };
   const getSVGColor = (content: string) =>
     content === '' ? '#CDCDCD' : '#01192C'; // 유틸로
-  const isCompValid = () => isDuplicated === false && isValid();
+  const isCompValid = () => {
+    console.log('isDuplicated : ', isDuplicated);
+    return isDuplicated === false && isValid();
+  };
   return (
     <>
       <FormContainer>
