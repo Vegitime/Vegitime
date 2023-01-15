@@ -12,7 +12,8 @@ import { flexContainer } from 'styles';
 interface Text {
   children: string;
   setLevel: Dispatch<SetStateAction<number>>;
-  isDisabled?: boolean;
+  setIsCompleted: Dispatch<SetStateAction<boolean>>;
+  isDisabled: boolean;
 }
 
 const ButtonContainer = styled.div`
@@ -48,11 +49,16 @@ const Button = styled.button<{ disabled: boolean }>`
   })}
 `;
 
-export default function DictButton({ children, setLevel, isDisabled }: Text) {
+export default function DictButton({
+  children,
+  setLevel,
+  setIsCompleted,
+  isDisabled,
+}: Text) {
   const { id } = useParams();
   const { transcript, listening, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
-
+  console.log('listening ', listening);
   useEffect(() => {
     async function analyzeSentiment(content: string) {
       const res = await axios.patch(
@@ -65,7 +71,9 @@ export default function DictButton({ children, setLevel, isDisabled }: Text) {
     }
 
     if (!listening && transcript !== '') {
+      console.log('transcript ', transcript);
       analyzeSentiment(transcript);
+      setIsCompleted(true);
     }
   }, [listening]);
 
@@ -79,10 +87,7 @@ export default function DictButton({ children, setLevel, isDisabled }: Text) {
 
   return (
     <ButtonContainer>
-      <Button
-        onClick={handleButtonClick}
-        disabled={isDisabled ? true : listening ? true : false}
-      >
+      <Button onClick={handleButtonClick} disabled={isDisabled}>
         <Img src={listening ? getAsset('micon.svg') : getAsset('micoff.svg')} />
         {children}
       </Button>
