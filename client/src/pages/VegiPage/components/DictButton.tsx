@@ -12,6 +12,7 @@ import { flexContainer } from 'styles';
 interface Text {
   children: string;
   setLevel: Dispatch<SetStateAction<number>>;
+  isDisabled?: boolean;
 }
 
 const ButtonContainer = styled.div`
@@ -28,10 +29,11 @@ const Img = styled.img`
   height: auto;
 `;
 
-const Button = styled.button`
+const Button = styled.button<{ disabled: boolean }>`
   width: 100%;
   height: 3.75rem;
-  background: var(--color-normal-green);
+  background: ${({ disabled }) =>
+    disabled ? 'var(--color-light-green)' : 'var(--color-normal-green)'};
   border: none;
   border-radius: 3.125rem;
   font: inherit;
@@ -46,7 +48,7 @@ const Button = styled.button`
   })}
 `;
 
-export default function DictButton({ children, setLevel }: Text) {
+export default function DictButton({ children, setLevel, isDisabled }: Text) {
   const { id } = useParams();
   const { transcript, listening, browserSupportsSpeechRecognition } =
     useSpeechRecognition();
@@ -77,7 +79,10 @@ export default function DictButton({ children, setLevel }: Text) {
 
   return (
     <ButtonContainer>
-      <Button onClick={handleButtonClick}>
+      <Button
+        onClick={handleButtonClick}
+        disabled={isDisabled ? true : listening ? true : false}
+      >
         <Img src={listening ? getAsset('micon.svg') : getAsset('micoff.svg')} />
         {children}
       </Button>
