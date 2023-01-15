@@ -35,3 +35,8 @@ export const separateAlarmFormat = (datestr: string): Alarm => {
 export const getAlarmFormat = ({ hour, minute, ampm }: Alarm) => {
   return `${ampm} ${hour}:${minute}`;
 };
+
+export const getAlarmTime = ({ hour, minute, ampm }: Alarm) => ({
+  hour: hour === 12 && ampm === 'AM' ? 0 : ampm === 'PM' ? hour + 12 : hour,
+  minute,
+});
