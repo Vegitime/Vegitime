@@ -1,11 +1,16 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Header, Title, Navigation, TextButton, ModalDialog } from 'components';
 import { Time, ProgressBar, DictButton } from './components';
 import { flexContainer } from 'styles';
-import { getAsset, getAlarmFormat } from 'utils';
+import {
+  getAsset,
+  getAlarmFormat,
+  getAlarmTime,
+  executeFuncOnTime,
+} from 'utils';
 
 const Container = styled.div`
   position: relative;
@@ -38,6 +43,8 @@ export default function VegiPage() {
   const [alarm, setAlarm] = useState('');
   const [type, setType] = useState();
   const [money, setMoney] = useState<number>();
+  const [isTimeForAlarm, setIsTimeForAlarm] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
 
   useLayoutEffect(() => {
     async function fetchUserInfo() {
@@ -53,15 +60,28 @@ export default function VegiPage() {
         });
 
         const { money } = resUser.data.body.data;
-        const { name, level, alarm: _alarm, type } = resVegi.data.body.data;
+        const {
+          name,
+          level,
+          alarm: _alarm,
+          type,
+          isCompleted,
+        } = resVegi.data.body.data;
         const { ampm, hour, minute } = _alarm;
-        const alarm =
-          ampm === '' && hour === 0 && minute === 0
-            ? ''
-            : getAlarmFormat({ hour, minute, ampm });
 
+        if (ampm === '' && hour === 0 && minute === 0) {
+          setAlarm('');
+        } else {
+          setAlarm(getAlarmFormat({ hour, minute, ampm }));
+          executeFuncOnTime(() => {
+            setIsTimeForAlarm(true);
+          }, getAlarmTime({ hour, minute, ampm }));
+          executeFuncOnTime(() => {
+            setIsTimeForAlarm(false);
+          }, getAlarmTime({ hour, minute: minute + 1, ampm }));
+        }
+        setIsCompleted(isCompleted);
         setMoney(money);
-        setAlarm(alarm);
         setName(name);
         setLevel(level);
         setType(type);
@@ -115,6 +135,10 @@ export default function VegiPage() {
         ) : (
           <DictButton
             setLevel={setLevel as React.Dispatch<React.SetStateAction<number>>}
+            setIsCompleted={
+              setIsCompleted as React.Dispatch<React.SetStateAction<boolean>>
+            }
+            isDisabled={alarm === '' || isCompleted || !isTimeForAlarm}
           >
             칭찬하기
           </DictButton>

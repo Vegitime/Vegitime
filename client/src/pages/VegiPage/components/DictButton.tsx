@@ -87,7 +87,7 @@ export default function DictButton({
 
   return (
     <ButtonContainer>
-      <Button onClick={handleButtonClick} disabled={isDisabled}>
+      <Button onClick={handleButtonClick} disabled={isDisabled || listening}>
         <Img src={listening ? getAsset('micon.svg') : getAsset('micoff.svg')} />
         {children}
       </Button>
