@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // cors 설정
-const whitelist = ['http://localhost:3000'];
+const whitelist = ['http://localhost:3000', 'http://localhost:8081'];
 const corsOptions = {
   origin(origin, callback) {
     const issafesitelisted = whitelist.indexOf(origin) !== -1;
