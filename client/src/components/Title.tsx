@@ -5,7 +5,7 @@ interface ITitle {
 }
 
 const StyledH1 = styled.h1`
-  margin: var(--spacing-md) 0;
+  margin: var(--spacing-md) 0 var(--spacing-sm);
   font-size: var(--text-xl);
   text-align: center;
 `;
