@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { Header, Title, Navigation, ModalDialog, TextButton } from 'components';
+import {
+  Header,
+  Title,
+  Navigation,
+  Main,
+  ModalDialog,
+  TextButton,
+} from 'components';
 import { ButtonVegiInfo } from './components';
 import { flexContainer } from 'styles';
 import { getAsset } from 'utils';
-
-const StyledMain = styled.main`
-  ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center' })};
-  position: relative;
-  min-height: 100vh;
-  padding: 0 var(--spacing-xxs) var(--spacing-xs);
-`;
 
 const StyledUl = styled.ul`
   ${flexContainer({ d: 'row', w: 'wrap', g: 'var(--spacing-xxs)' })}
@@ -63,7 +63,7 @@ export default function Market() {
   return (
     <>
       <Header money={money} />
-      <StyledMain>
+      <Main>
         <Title>Vegi Market</Title>
         <StyledUl>
           {vegetables.map(({ src, name, price, type }) => (
@@ -125,7 +125,7 @@ export default function Market() {
             </TextButton>
           </ModalDialog>
         )}
-      </StyledMain>
+      </Main>
       <Navigation />
     </>
   );

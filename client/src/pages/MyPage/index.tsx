@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
 import styled from 'styled-components';
 import axios from 'axios';
-import { Header, Title, Navigation } from 'components';
+import { Header, Title, Navigation, Main } from 'components';
 import { flexContainer } from 'styles';
 import { makeChart } from 'utils';
 
@@ -14,13 +14,6 @@ interface Vegi {
   alarm: { ampm: '' | 'AM' | 'PM'; hour: number; minute: number };
   attendance: Array<boolean>;
 }
-
-const StyledMain = styled.main`
-  ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center' })};
-  position: relative;
-  min-height: 100vh;
-  padding: 0 var(--spacing-xxs) var(--spacing-xs);
-`;
 
 const StyledUl = styled.ul`
   ${flexContainer({ d: 'column', w: 'wrap', g: 'var(--spacing-xxs)' })}
@@ -93,25 +86,27 @@ export default function MyPage() {
   return (
     <>
       <Header money={money} />
-      <StyledMain>
+      <Main>
         <Title>My Page</Title>
         <StyledUl>
           <li>닉네임 : {nickname}</li>
           <li>자산 : {money}원 </li>
           <li>판매 작물 : {harvest}개</li>
           <li>보유 작물 : {vegis?.length}개</li>
-          <li>통계: </li>
-          <StyledDiv>
-            <Chart
-              options={chart.options}
-              series={chart.series}
-              width="100%"
-              height="100%"
-              type="bar"
-            />
-          </StyledDiv>
+          <li>
+            통계:
+            <StyledDiv>
+              <Chart
+                options={chart.options}
+                series={chart.series}
+                width="100%"
+                height="100%"
+                type="bar"
+              />
+            </StyledDiv>
+          </li>
         </StyledUl>
-      </StyledMain>
+      </Main>
       <Navigation />
     </>
   );
