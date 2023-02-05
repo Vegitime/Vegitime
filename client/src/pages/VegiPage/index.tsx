@@ -15,13 +15,14 @@ import {
 const Container = styled.div`
   position: relative;
   min-height: 100vh;
-  padding: 1rem;
-  background: var(--color-skyblue);
+  padding: 0 var(--spacing-xxs) var(--spacing-xxxl);
   text-align: center;
 `;
 
 const P = styled.p`
-  margin: 2rem 0;
+  position: relative;
+  top: -16px;
+  margin: var(--spacing-base) 0;
   font-size: var(--text-lg);
   text-align: center;
 `;
@@ -103,7 +104,6 @@ export default function VegiPage() {
             src={getAsset(`${type}0${level}.svg`)}
             width={300}
             height={300}
-            style={{ background: 'var(--color-skyblue)' }}
             alt={`${type}`}
           />
         ) : (

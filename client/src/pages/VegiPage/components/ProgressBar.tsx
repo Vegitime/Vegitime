@@ -7,7 +7,7 @@ interface LevelType {
 const Container = styled.div`
   position: relative;
   width: 100%;
-  margin: 0 auto 2rem;
+  margin: 0 auto;
   border-radius: 3.125rem;
   overflow: hidden;
 `;

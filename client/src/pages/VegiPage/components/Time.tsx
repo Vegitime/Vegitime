@@ -8,6 +8,8 @@ interface TimeType {
 }
 
 const TimeContainer = styled.div`
+  position: relative;
+  top: -16px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,7 +17,7 @@ const TimeContainer = styled.div`
 `;
 
 const P = styled.p`
-  margin: 2rem 0;
+  margin: var(--spacing-base) 0;
   font-size: var(--text-lg);
   text-align: center;
 `;
