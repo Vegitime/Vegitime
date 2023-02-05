@@ -2,7 +2,14 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
-import { Header, Title, Navigation, TextButton, ModalDialog } from 'components';
+import {
+  Header,
+  Title,
+  Navigation,
+  Main,
+  TextButton,
+  ModalDialog,
+} from 'components';
 import { TimePicker, VegiSelect } from './components';
 import { flexContainer } from 'styles';
 import { separateDefaultAlarmFormat } from 'utils';
@@ -32,13 +39,6 @@ interface ButtonGroupProps {
   d: 'row' | 'column';
   g: string;
 }
-
-const StyledMain = styled.main`
-  ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center' })};
-  position: relative;
-  min-height: 100vh;
-  padding: 0 var(--spacing-xxs) var(--spacing-xs);
-`;
 
 const StyledVegiSelect = styled(VegiSelect)`
   margin-top: var(--spacing-base);
@@ -97,7 +97,7 @@ export default function SettingAlarm() {
   return (
     <>
       <Header money={money} />
-      <StyledMain>
+      <Main>
         <Title>Setting Alarm</Title>
         <TimePicker
           hour={hour}
@@ -196,7 +196,7 @@ export default function SettingAlarm() {
             </ButtonGroup>
           </ModalDialog>
         )}
-      </StyledMain>
+      </Main>
       <Navigation />
     </>
   );
