@@ -8,7 +8,7 @@ const Img = styled.img<ImgProps>`
   position: fixed;
   left: 0;
   bottom: ${({ type }) =>
-    type === 'main' ? 'calc(-1 * var(--spacing - base))' : 0};
+    type === 'main' ? 'calc(-1 * var(--spacing-base))' : 0};
   z-index: -10000;
 `;
 
