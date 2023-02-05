@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { FooterImg } from 'components';
+import { FooterImg, Title } from 'components';
 import { getAsset } from 'utils';
 import { flexContainer } from 'styles';
 
@@ -47,7 +47,7 @@ const Button = styled(Link)`
 export default function StartPage() {
   return (
     <Container>
-      <h1 className="sr-only">Vegitime</h1>
+      <Title className="sr-only">시작 페이지</Title>
       <LogoImg src={getAsset('vegi_logo.png')} alt="vegitime 로고" />
       <H2>상쾌한 아침을 시작하세요!</H2>
       <ButtonContainer>

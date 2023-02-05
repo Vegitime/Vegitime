@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 interface ITitle {
   children: string;
+  [key: string]: unknown;
 }
 
 const StyledH1 = styled.h1`
@@ -10,6 +11,10 @@ const StyledH1 = styled.h1`
   text-align: center;
 `;
 
-export default function Title({ children }: ITitle) {
-  return <StyledH1 style={{ height: '40px' }}>{children}</StyledH1>;
+export default function Title({ children, ...props }: ITitle) {
+  return (
+    <StyledH1 style={{ height: '40px' }} {...props}>
+      {children}
+    </StyledH1>
+  );
 }
