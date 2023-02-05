@@ -12,6 +12,7 @@ import Form from './Form';
 import InputContainer from './InputContainer';
 import Input from './Input';
 import ErrorMessage from './ErrorMessage';
+import Main from './Main';
 
 export {
   MoneyInfo,
@@ -28,4 +29,5 @@ export {
   InputContainer,
   Input,
   ErrorMessage,
+  Main,
 };
