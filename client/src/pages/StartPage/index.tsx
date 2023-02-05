@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { FooterImg } from 'components';
+import { getAsset } from 'utils';
 
 const StartContainer = styled.div`
   /* margin: 0 auto; */
@@ -31,7 +32,7 @@ export default function StartPage() {
   return (
     <>
       <StartContainer>
-        <LogoImg src="/assets/vegi_logo.png" alt="vegitime 로고" />
+        <LogoImg src={getAsset('vegi_logo.png')} alt="vegitime 로고" />
         <ButtonContainer>
           <Button to="signin">로그인</Button>
           <Button to="signup">회원가입</Button>
