@@ -6,9 +6,10 @@ import { getAsset } from 'utils';
 
 const StyledNav = styled.nav`
   width: 100vw;
+  min-width: 330px;
   position: sticky;
   bottom: 0;
-  padding: var(--spacing-xs) var(--spacing-md);
+  padding: var(--spacing-base) var(--spacing-md);
   border-radius: var(--spacing-xxs) var(--spacing-xxs) 0 0;
   background: no-repeat bottom / cover
     url(${getAsset('nav_background_img_vegi.png')});
@@ -27,8 +28,8 @@ export default function Navigation() {
           <li>
             <Link to="/mypage">
               <img
-                width={40}
-                height={40}
+                width={36}
+                height={36}
                 src={getAsset('user.svg')}
                 alt="마이 페이지로 이동 "
               />
@@ -37,8 +38,8 @@ export default function Navigation() {
           <li>
             <Link to="/alarmlist">
               <img
-                width={40}
-                height={40}
+                width={36}
+                height={36}
                 src={getAsset('home.svg')}
                 alt="홈으로 이동"
               />
@@ -47,8 +48,8 @@ export default function Navigation() {
           <li>
             <Link to="/market">
               <img
-                width={40}
-                height={40}
+                width={36}
+                height={36}
                 src={getAsset('cart.svg')}
                 alt="야채 시장으로 이동"
               />

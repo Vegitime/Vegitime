@@ -45,7 +45,7 @@ schedule.scheduleJob('0 0 * * *', async () => {
 });
 
 // use this to show the image you have in node js server to client (react js)
-app.use('/public', express.static('public'));
+app.use('/', express.static('public'));
 
 const port = process.env.PORT || 8080;
 app.listen(port, function () {

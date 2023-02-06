@@ -36,8 +36,9 @@ export const GlobalStyle = createGlobalStyle/*css*/ `
     --spacing-lg: 3rem; /* 48px */
     --spacing-xl: 3.5rem; /* 56px */
     --spacing-xxl: 4rem; /* 64px */
-    --spacing-xxxl: 9.375rem; /* 150px */
+    --spacing-xxxl: 12rem; /* 192px */
   }
+
 
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,

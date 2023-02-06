@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { flexContainer } from 'styles';
 import { getAsset, VEGETABLE_INFO } from 'utils';
 
 interface VegiInfo {
@@ -12,8 +13,16 @@ interface VegiInfo {
 }
 
 const ListContainer = styled.button<{ isActive: boolean }>`
+  ${flexContainer({
+    d: 'row',
+    w: 'nowrap',
+    jc: 'space-between',
+    ai: 'center',
+  })};
   width: 100%;
   height: 5rem;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
   border-radius: 6.25rem;
   border-color: var(
     ${({ isActive }) =>
@@ -21,40 +30,33 @@ const ListContainer = styled.button<{ isActive: boolean }>`
   );
   background: #fff;
   font-size: 3.75rem;
-  margin: 0 auto var(--spacing-md);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 var(--spacing-md);
   :disabled {
     opacity: 0.5;
   }
 `;
 
 const InfoContainer = styled.div`
+  ${flexContainer({
+    d: 'column',
+    w: 'nowrap',
+    jc: 'center',
+    ai: 'center',
+    g: '0.5rem',
+  })};
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  justify-content: center;
-  align-items: center;
 `;
 
 const Time = styled.p<{ isActive: boolean }>`
+  display: ${({ isActive }) => (isActive ? '' : 'none')};
   width: 100%;
   text-align: center;
   font-size: var(--text-lg);
-  display: ${({ isActive }) => (isActive ? '' : 'none')};
 `;
 
 const VegiInfo = styled.p<{ isActive: boolean }>`
   width: 100%;
   text-align: center;
   font-size: var(${({ isActive }) => (isActive ? '--text-sm' : '--text-md')});
-`;
-
-const VegiImage = styled.img`
-  margin: 0.5rem 0;
 `;
 
 export default function LinkVegi({
@@ -69,7 +71,7 @@ export default function LinkVegi({
   return (
     <Link to={`/myvegi/${id}`}>
       <ListContainer isActive={isActive} disabled={disabled}>
-        <VegiImage
+        <img
           width={80}
           height={80}
           src={getAsset(`${type}0${level}.svg`)}

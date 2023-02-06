@@ -1,9 +1,10 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
-import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Header, Title, Navigation } from 'components';
+import { Header, Title, Navigation, Main } from 'components';
 import { LinkVegi } from './components';
 import { getAlarmFormat } from 'utils';
+import styled from 'styled-components';
+import { flexContainer } from 'styles';
 
 interface Alarm {
   ampm: 'AM' | 'PM' | '';
@@ -20,10 +21,14 @@ interface Vegis {
   attendance: Array<boolean>;
 }
 
-const Container = styled.ul`
-  position: relative;
-  min-height: 100vh;
-  padding: 1rem;
+const Ul = styled.ul`
+  ${flexContainer({
+    d: 'column',
+    w: 'nowrap',
+    ai: 'stretch',
+    g: 'var(--spacing-xxs)',
+  })};
+  align-self: stretch;
 `;
 
 export default function AlarmList() {
@@ -49,28 +54,30 @@ export default function AlarmList() {
   return (
     <>
       <Header money={money} />
-      <Title>Alarm List</Title>
-      <Container>
-        {vegis.map(({ id, type, alarm: _alarm, level }: Vegis) => {
-          const { ampm, hour, minute } = _alarm;
-          const alarm =
-            ampm === '' && hour === 0 && minute === 0
-              ? ''
-              : getAlarmFormat({ hour, minute, ampm: ampm as 'AM' | 'PM' });
-          return (
-            <li key={id}>
-              <LinkVegi
-                isActive={level !== 5 && alarm === '' ? false : true}
-                alarm={alarm}
-                type={type}
-                level={level}
-                disabled={level !== 5 && alarm === '' ? true : false}
-                id={id}
-              />
-            </li>
-          );
-        })}
-      </Container>
+      <Main>
+        <Title>Alarm List</Title>
+        <Ul>
+          {vegis.map(({ id, type, alarm: _alarm, level }: Vegis) => {
+            const { ampm, hour, minute } = _alarm;
+            const alarm =
+              ampm === '' && hour === 0 && minute === 0
+                ? ''
+                : getAlarmFormat({ hour, minute, ampm: ampm as 'AM' | 'PM' });
+            return (
+              <li key={id}>
+                <LinkVegi
+                  isActive={level !== 5 && alarm === '' ? false : true}
+                  alarm={alarm}
+                  type={type}
+                  level={level}
+                  disabled={level !== 5 && alarm === '' ? true : false}
+                  id={id}
+                />
+              </li>
+            );
+          })}
+        </Ul>
+      </Main>
       <Navigation />
     </>
   );
