@@ -6,9 +6,10 @@ import { flexContainer } from 'styles';
 import { getAsset } from 'utils';
 
 const StyledHeader = styled.header`
+  ${flexContainer({ d: 'row', w: 'nowrap', jc: 'space-between' })}
+  min-width: 330px;
   position: sticky;
   top: 0;
-  ${flexContainer({ d: 'row', w: 'nowrap', jc: 'space-between' })}
   padding: var(--spacing-sm) var(--spacing-md) var(--spacing-base);
   background-color: var(--color-skyblue);
   box-shadow: 0px 2px 16px 0px rgba(0, 0, 0, 0.1);

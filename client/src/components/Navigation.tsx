@@ -6,6 +6,7 @@ import { getAsset } from 'utils';
 
 const StyledNav = styled.nav`
   width: 100vw;
+  min-width: 330px;
   position: sticky;
   bottom: 0;
   padding: var(--spacing-base) var(--spacing-md);

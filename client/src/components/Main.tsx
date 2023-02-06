@@ -9,6 +9,7 @@ interface MainProps {
 const StyledMain = styled.main`
   ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center' })};
   position: relative;
+  min-width: 330px;
   min-height: 100vh;
   padding: 0 var(--spacing-xxs) var(--spacing-xxxl);
 `;

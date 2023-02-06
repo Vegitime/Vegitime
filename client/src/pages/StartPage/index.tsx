@@ -8,12 +8,10 @@ const Container = styled.div`
   ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center', jc: 'center' })};
   position: relative;
   min-height: 100vh;
-  padding: 0 var(--spacing-xxs) var(--spacing-xxxl);
+  padding: 0 var(--spacing-xxs) 80px;
 `;
 
 const LogoImg = styled.img`
-  width: 300px;
-  height: 300px;
   display: block;
   margin: 0 auto;
 `;
@@ -22,6 +20,7 @@ const H2 = styled.h2`
   font-size: var(--text-lg);
   font-weight: 400;
   text-align: center;
+  word-break: keep-all;
 `;
 
 const ButtonContainer = styled.div`
@@ -36,6 +35,8 @@ const ButtonContainer = styled.div`
 
 const Button = styled(Link)`
   flex: 1;
+  min-width: 120px;
+  max-width: 170px;
   line-height: 60px;
   font-size: var(--text-md);
   text-align: center;
@@ -48,7 +49,12 @@ export default function StartPage() {
   return (
     <Container>
       <Title className="sr-only">시작 페이지</Title>
-      <LogoImg src={getAsset('vegi_logo.png')} alt="vegitime 로고" />
+      <LogoImg
+        width={300}
+        height={300}
+        src={getAsset('vegi_logo.png')}
+        alt="vegitime 로고"
+      />
       <H2>상쾌한 아침을 시작하세요!</H2>
       <ButtonContainer>
         <Button to="signin">로그인</Button>
