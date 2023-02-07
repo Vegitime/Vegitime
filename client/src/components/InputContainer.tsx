@@ -5,13 +5,13 @@ const FormInputContainer = styled.div`
   background: var(--color-white);
   border-radius: var(--text-xxl); // 50px
   position: relative;
-  width: 100%;
-  min-width: 24.375rem; // 390px
+  width: calc(100% - 80px);
+  min-width: 20rem; // 320px
   height: 3.75rem; // 60px;
 
   svg {
     position: absolute;
-    left: var(--spacing-sm);
+    left: var(--spacing-xs);
     top: 0.75rem; // 12px;
     width: 35px;
     height: 35px;
