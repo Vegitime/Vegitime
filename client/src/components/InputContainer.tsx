@@ -5,8 +5,7 @@ const FormInputContainer = styled.div`
   background: var(--color-white);
   border-radius: var(--text-xxl); // 50px
   position: relative;
-  width: calc(100% - 80px);
-  min-width: 20rem; // 320px
+  width: calc(100% - 40px);
   height: 3.75rem; // 60px;
 
   svg {
