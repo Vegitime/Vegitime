@@ -20,8 +20,7 @@ const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 24.375rem; // 390px
-  min-width: 24.375rem; // 390px
+  min-width: 20rem; // 320px
   margin: 8.75rem auto 0; // 140px
 
   h2 {
@@ -134,7 +133,7 @@ export default function SignIn() {
             ></ErrorMessage>
             <TextButton
               type="submit"
-              width="24.375rem"
+              width="calc(100% - 40px)"
               size="large"
               backgroundColor={'var(--color-normal-green)'}
               disabledBackgroundColor={'var(--color-light-green)'}

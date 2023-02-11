@@ -12,14 +12,14 @@ interface IInput {
   type: string;
   placeholder?: string;
   autoComplete?: string;
-  phSize?: 'sm' | 'md';
+  phSize?: 'xs' | 'md';
   getFieldProps: (name: string) => IFieldProps;
 }
 
 const FormInput = styled.input<{ phSize?: string }>`
   width: 74%;
   height: 100%;
-  margin-left: 5.188rem; // 83px
+  margin-left: 4.5rem; // 83px
   border: none;
   padding: 0;
   outline: none;
@@ -27,7 +27,7 @@ const FormInput = styled.input<{ phSize?: string }>`
   border-radius: 0px var(--text-xxl) var(--text-xxl) 0px; // 50px
   &::placeholder {
     font-size: ${(props) =>
-      props.phSize === 'sm' ? 'var(--text-sm)' : 'var(--text-md)'};
+      props.phSize === 'xs' ? 'var(--text-xs)' : 'var(--text-sm)'};
     color: var(--color-grey);
   }
 `;
