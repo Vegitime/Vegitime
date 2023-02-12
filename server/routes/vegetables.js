@@ -2,6 +2,8 @@ const express = require('express');
 
 const router = express.Router();
 const axios = require('axios');
+const schedule = require('node-schedule');
+const webpush = require('web-push');
 const { User } = require('../models/User');
 const { Vegetable } = require('../models/Vegetable');
 const { Shop } = require('../models/Shop');
@@ -9,6 +11,8 @@ const { auth } = require('../middleware/auth');
 const { generateResponse } = require('../utils/generateResponse');
 
 require('dotenv').config();
+
+const store = { data: [] };
 
 router.get('/', auth, async (req, res) => {
   try {
@@ -59,9 +63,38 @@ router.get('/:vegetableId', async (req, res) => {
 router.patch('/:vegetableId/alarm', async (req, res) => {
   try {
     const { vegetableId } = req.params;
+    const { ampm, hour, minute, subscription } = req.body;
+    store.data[vegetableId]?.cancel();
+
+    if (ampm === '') {
+      // 삭제
+      store.data[vegetableId] = null;
+    } else {
+      let hour24;
+      if (hour === 12) hour24 = ampm === 'AM' ? 0 : hour;
+      else hour24 = ampm === 'PM' ? hour + 12 : hour;
+      store.data[vegetableId] = schedule.scheduleJob(
+        `${minute} ${hour24} * * *`,
+        async () => {
+          const messageData = {
+            title: '야채타임',
+            body: '칭찬해줘',
+            link: `${process.env.URL}/myvegi/${vegetableId}`,
+          };
+          webpush
+            .sendNotification(subscription, JSON.stringify(messageData))
+            .then((pushServiceRes) =>
+              res.status(pushServiceRes.statusCode).end()
+            )
+            .catch((error) => {
+              res.status(error?.statusCode ?? 500).end();
+            });
+        }
+      );
+    }
     await Vegetable.findOneAndUpdate(
       { _id: vegetableId },
-      { alarm: req.body }
+      { alarm: { ampm, hour, minute } }
     ).exec();
     return res.status(200).json(generateResponse(200, true));
   } catch (err) {
