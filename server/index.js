@@ -6,6 +6,7 @@ const cors = require('cors');
 require('dotenv').config();
 // eslint-disable-next-line import/no-extraneous-dependencies
 const schedule = require('node-schedule');
+const webpush = require('web-push');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -44,8 +45,16 @@ schedule.scheduleJob('0 0 * * *', async () => {
   await Vegetable.updateMany({}, { isCompleted: false });
 });
 
-// use this to show the image you have in node js server to client (react js)
-app.use('/', express.static('public'));
+webpush.setGCMAPIKey(process.env.GCM_KEY);
+webpush.setVapidDetails(
+  process.env.SUBJECT,
+  process.env.VAPID_PUBLIC,
+  process.env.VAPID_PRIVATE
+);
+
+app.get('/vapid-public-key', (_req, res) => {
+  res.send(process.env.VAPID_PUBLIC);
+});
 
 const port = process.env.PORT || 8080;
 app.listen(port, function () {

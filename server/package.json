@@ -28,6 +28,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^4.13.0",
     "mongoose": "^6.8.3",
-    "node-schedule": "^2.1.1"
+    "node-schedule": "^2.1.1",
+    "web-push": "^3.5.0"
   }
 }
