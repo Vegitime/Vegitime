@@ -1,2 +1,2 @@
 export const getAsset = (filePath: string) =>
-  `${process.env.ASSET_PATH}/${filePath}`;
+  `${process.env.REACT_APP_ASSET_PATH}/${filePath}`;

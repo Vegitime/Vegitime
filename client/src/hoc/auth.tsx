@@ -13,7 +13,7 @@ export default function Auth(
     const navigate = useNavigate();
     useEffect(() => {
       axios
-        .get(`${process.env.URL}api/users/auth`, { withCredentials: true })
+        .get(`${process.env.REACT_APP_URL}api/users/auth`, { withCredentials: true })
         .then((response) => {
           if (!response.data.isAuth) {
             if (option) {
