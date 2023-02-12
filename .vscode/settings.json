@@ -1,8 +1,0 @@
-{
-  "typescript.suggest.paths": false,
-  "javascript.suggest.paths": false,
-  "path-intellisense.extensionOnImport": true,
-  "path-intellisense.mappings": {
-    "@": "${workspaceFolder}/src"
-  }
-}
