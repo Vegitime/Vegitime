@@ -62,7 +62,7 @@ export default function DictButton({
   useEffect(() => {
     async function analyzeSentiment(content: string) {
       const res = await axios.patch(
-        `${process.env.URL}api/vegetables/${id}/praise`,
+        `${process.env.REACT_APP_URL}api/vegetables/${id}/praise`,
         { content },
         { withCredentials: true }
       );

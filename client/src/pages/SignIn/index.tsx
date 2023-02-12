@@ -63,11 +63,12 @@ export default function SignIn() {
         try {
           const result = await axios
             .post(
-              `${process.env.URL}api/users/login`,
+              `${process.env.REACT_APP_URL}api/users/login`,
               { id: values.id, password: values.password },
               { withCredentials: true }
             )
             .then((response) => response.data);
+          console.log(result)
           if (result.body.success) navigate('/alarmlist');
           else {
             // 메시지
@@ -149,58 +150,3 @@ export default function SignIn() {
     </>
   );
 }
-
-// {formType === 'signIn' ? (
-//   <FormErrorMessage formType="signin">
-//     일치하는 회원 정보가 없어요. 다시 시도해주세요.
-//   </FormErrorMessage>
-// ) : null}
-// <FormButton isActive={true} type="submit">
-//   {/* <Link to={formType === 'signIn' ? '/alarmList' : '/signin'}> */}
-//     {formType === 'signIn' ? '로그인' : '회원가입'}
-//   {/* </Link> */}
-// </FormButton>
-
-// /* eslint-disable prettier/prettier */
-// import styled from 'styled-components';
-// import FooterImg from '../StartPage/components/FooterImg';
-// import { SignForm, SignTip } from '../SignUp/components';
-
-// const FormContainer = styled.div`
-//   position: relative;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   max-width: 24.375rem; // 390px
-//   min-width: 24.375rem; // 390px
-//   margin: 8.75rem auto 0; // 140px
-
-//   h2 {
-//     font-size: var(--text-xxl);
-//     margin-bottom: var(--spacing-md);
-//   }
-
-//   .sr-only {
-//     position: absolute;
-//     width: 1px;
-//     height: 1px;
-//     margin: -1px;
-//     overflow: hidden;
-//     clip: rect(0, 0, 0, 0);
-//     clip-path: inset(50%);
-//   }
-// `;
-
-// export default function SignIn() {
-//   return (
-//     <></>
-//     //     <>
-//     //       <FormContainer>
-//     //         <h2>Sign in</h2>
-//     //         <SignForm formType="signIn" />
-//     //         <SignTip formType="signIn" />
-//     //       </FormContainer>
-//     //       <FooterImg type="start" />
-//     //     </>
-//   );
-// }

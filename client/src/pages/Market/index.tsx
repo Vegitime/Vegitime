@@ -43,12 +43,12 @@ export default function Market() {
   useEffect(() => {
     async function fetchUserInfo() {
       try {
-        const resShop = await axios.get(`${process.env.URL}api/shop`, {
+        const resShop = await axios.get(`${process.env.REACT_APP_URL}api/shop`, {
           withCredentials: true,
         });
         const vegetables = resShop.data.body.data;
         setVegetables(vegetables);
-        const resUser = await axios.get(`${process.env.URL}api/users/info`, {
+        const resUser = await axios.get(`${process.env.REACT_APP_URL}api/users/info`, {
           withCredentials: true,
         });
         const { money } = resUser.data.body.data;
@@ -107,7 +107,7 @@ export default function Market() {
               onClick={async () => {
                 try {
                   await axios.post(
-                    `${process.env.URL}api/shop/purchase`,
+                    `${process.env.REACT_APP_URL}api/shop/purchase`,
                     { type },
                     {
                       withCredentials: true,

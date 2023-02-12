@@ -38,7 +38,7 @@ export default function AlarmList() {
   useEffect(() => {
     async function fetchUserInfo() {
       try {
-        const res = await axios.get(`${process.env.URL}api/users/info`, {
+        const res = await axios.get(`${process.env.REACT_APP_URL}api/users/info`, {
           withCredentials: true,
         });
         const { vegis, money } = res.data.body.data;

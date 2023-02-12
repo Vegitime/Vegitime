@@ -13,8 +13,8 @@ const Img = styled.img<ImgProps>`
 
 export default function FooterImg({ type }: { type: string }) {
   const typeInfo: { [key: string]: string } = {
-    start: `${process.env.ASSET_PATH}/background_img.png`,
-    main: `${process.env.ASSET_PATH}/background_img_vegi.png`,
+    start: `${process.env.REACT_APP_ASSET_PATH}/background_img.png`,
+    main: `${process.env.REACT_APP_ASSET_PATH}/background_img_vegi.png`,
   };
   return <Img type={type} src={typeInfo[type]} alt="푸터 이미지" />;
 }

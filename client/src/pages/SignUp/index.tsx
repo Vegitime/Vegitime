@@ -73,7 +73,7 @@ export default function SignUp() {
         try {
           const result = await axios
             .post(
-              `${process.env.URL}api/users/register`,
+              `${process.env.REACT_APP_URL}api/users/register`,
               {
                 id: values.id,
                 nickname: values.nickname,
@@ -93,7 +93,7 @@ export default function SignUp() {
     try {
       const result = await axios
         .post(
-          `${process.env.URL}api/users/duplication`,
+          `${process.env.REACT_APP_URL}api/users/duplication`,
           { id: values.id },
           { withCredentials: true }
         )

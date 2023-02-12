@@ -26,7 +26,7 @@ export default function Header({ money }: { money?: number }) {
   const logout = async () => {
     try {
       await axios
-        .get(`${process.env.URL}api/users/logout`, { withCredentials: true })
+        .get(`${process.env.REACT_APP_URL}api/users/logout`, { withCredentials: true })
         .then((response) => response.data);
       navigate('/');
     } catch (err) {

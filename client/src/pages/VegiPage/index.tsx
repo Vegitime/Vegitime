@@ -51,12 +51,12 @@ export default function VegiPage() {
     async function fetchUserInfo() {
       try {
         const resVegi = await axios.get(
-          `${process.env.URL}api/vegetables/${id}`,
+          `${process.env.REACT_APP_URL}api/vegetables/${id}`,
           {
             withCredentials: true,
           }
         );
-        const resUser = await axios.get(`${process.env.URL}api/users/info`, {
+        const resUser = await axios.get(`${process.env.REACT_APP_URL}api/users/info`, {
           withCredentials: true,
         });
 
@@ -157,7 +157,7 @@ export default function VegiPage() {
                 size="small"
                 onClick={async () => {
                   await axios.delete(
-                    `${process.env.URL}api/vegetables/${id}/sale`,
+                    `${process.env.REACT_APP_URL}api/vegetables/${id}/sale`,
                     {
                       withCredentials: true,
                     }
