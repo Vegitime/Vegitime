@@ -1,15 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
-import {
-  Header,
-  Title,
-  Navigation,
-  Main,
-  TextButton,
-  ModalDialog,
-} from 'components';
+import { Header, Title, Navigation, TextButton, ModalDialog } from 'components';
 import { TimePicker, VegiSelect } from './components';
 import { flexContainer } from 'styles';
 import { separateDefaultAlarmFormat } from 'utils';
@@ -40,6 +33,13 @@ interface ButtonGroupProps {
   g: string;
 }
 
+const StyledMain = styled.main`
+  ${flexContainer({ d: 'column', w: 'nowrap', ai: 'center' })};
+  position: relative;
+  min-height: 100vh;
+  padding: 0 var(--spacing-xxs) var(--spacing-xs);
+`;
+
 const StyledVegiSelect = styled(VegiSelect)`
   margin-top: var(--spacing-base);
 `;
@@ -66,10 +66,10 @@ export default function SettingAlarm() {
   useEffect(() => {
     async function fetchUserInfo() {
       try {
-        const resVegis = await axios.get(`${process.env.URL}api/vegetables`, {
+        const resVegis = await axios.get(`${process.env.REACT_APP_URL}api/vegetables`, {
           withCredentials: true,
         });
-        const resUser = await axios.get(`${process.env.URL}api/users/info`, {
+        const resUser = await axios.get(`${process.env.REACT_APP_URL}api/users/info`, {
           withCredentials: true,
         });
 
@@ -94,10 +94,67 @@ export default function SettingAlarm() {
     fetchUserInfo();
   }, [id]);
 
+  type Store = {
+    pushSupport: boolean;
+    serviceWorkerRegistration: ServiceWorkerRegistration | null;
+    pushSubscription: PushSubscription | null;
+  }
+  const store = useRef<Store>({
+    pushSupport: false,
+    serviceWorkerRegistration: null,  // 서비스워커 등록 정보
+    pushSubscription: null, // 구독 정보
+  });
+  // 서비스 워커 등록 및 구독 정보 가져오기
+  async function registerServiceWorker () {
+    if (!('serviceWorker' in navigator)) return;
+
+    // 이미 등록되어있는 정보 가져오기
+    let registration = await navigator.serviceWorker.getRegistration();
+    if (!registration) {
+      // 없으면 서비스 워커 등록
+      registration = await navigator.serviceWorker.register('/service-worker.js');
+    }
+
+    store.current.serviceWorkerRegistration = registration ?? null;
+    store.current.pushSupport = !!registration?.pushManager;  // pushManager가 있는지 유무
+    store.current.pushSubscription = await registration?.pushManager?.getSubscription();  // 구독정보
+  }
+  // 구독
+  async function subscribe () {
+    if (store.current.pushSubscription) { // 구독 유무 판단해서 이미 구독되어 있으면 리턴
+      return;
+    }
+
+    try {
+      const vapidPublicKey = await axios
+      .get(`${process.env.REACT_APP_URL}vapid-public-key`)
+      .then((response) => response.data);
+
+      const registration = store.current.serviceWorkerRegistration;
+
+      if (!registration) {  // 서비스워커 등록 안되어 있으면 쳐냄
+        return;
+      }
+
+      // 1. 구독 : 구독할 때, vapidPublicKey 보냄. 
+      // 2. 구독정보 받음
+      const subscription = await registration.pushManager.subscribe({
+        applicationServerKey: vapidPublicKey,
+        userVisibleOnly: true,
+      });
+      store.current.pushSubscription = subscription;
+    } catch (error) {
+      console.error('subscribe', { error });
+    }
+  }
+  useEffect(() => {
+    registerServiceWorker()
+  }, [])
+
   return (
     <>
       <Header money={money} />
-      <Main>
+      <StyledMain>
         <Title>Setting Alarm</Title>
         <TimePicker
           hour={hour}
@@ -124,18 +181,19 @@ export default function SettingAlarm() {
             width="11.5625rem"
             size="small"
             onClick={async () => {
+              await subscribe();
               await axios.patch(
-                `${process.env.URL}api/vegetables/${id}/alarm`,
+                `${process.env.REACT_APP_URL}api/vegetables/${id}/alarm`,
                 {
                   ampm,
                   hour,
                   minute,
+                  subscription: store.current.pushSubscription
                 },
                 {
                   withCredentials: true,
                 }
               );
-
               navigate('/alarmlist');
             }}
           >
@@ -167,7 +225,7 @@ export default function SettingAlarm() {
                 size="small"
                 onClick={async () => {
                   await axios.patch(
-                    `${process.env.URL}api/vegetables/${id}/alarm`,
+                    `${process.env.REACT_APP_URL}api/vegetables/${id}/alarm`,
                     {
                       ampm: '',
                       hour: 0,
@@ -196,7 +254,7 @@ export default function SettingAlarm() {
             </ButtonGroup>
           </ModalDialog>
         )}
-      </Main>
+      </StyledMain>
       <Navigation />
     </>
   );
