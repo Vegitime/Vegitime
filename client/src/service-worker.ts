@@ -14,6 +14,12 @@ import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
+type PushMessage = {
+  title: string;
+  body: string;
+  link: string;
+}
+
 declare const self: ServiceWorkerGlobalScope;
 
 clientsClaim();
@@ -78,3 +84,19 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
+self.addEventListener('install', (event: ExtendableEvent) => {
+  event.waitUntil(self.skipWaiting());
+});
+
+self.addEventListener("push", (event:PushEvent) => {
+  const message = event.data?.json() as PushMessage;
+  event.waitUntil(
+    self.registration.showNotification(message.title, {
+      body: message.body,
+      data: { link: message.link },
+    })
+  );
+});
+self.addEventListener("notificationclick", (event:NotificationEvent) => {
+  self.clients.openWindow(event.notification.data.link);
+});
