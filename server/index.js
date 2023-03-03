@@ -13,7 +13,11 @@ app.use(express.json());
 app.use(cookieParser());
 
 // cors 설정
-const whitelist = ['http://localhost:3000', 'http://localhost:8081'];
+const whitelist = [
+  'http://localhost:3000',
+  'http://localhost:8081',
+  'https://vegitime-379420.du.r.appspot.com',
+];
 const corsOptions = {
   origin(origin, callback) {
     const issafesitelisted = whitelist.indexOf(origin) !== -1;
@@ -39,9 +43,15 @@ app.use('/api/users', require('./routes/users'));
 app.use('/api/vegetables', require('./routes/vegetables'));
 app.use('/api/shop', require('./routes/shop'));
 
+app.use('/', express.static('build')); // /public 위치에 접속했을 때 나는 static 파일을 보관하기 위해 public 폴더를 쓰겠다"라는 뜻입니다.
+
 const { Vegetable } = require('./models/Vegetable');
 
-schedule.scheduleJob('0 0 * * *', async () => {
+const rule = new schedule.RecurrenceRule();
+rule.hour = 15;
+rule.minute = 0;
+rule.tz = 'Etc/UTC';
+schedule.scheduleJob(rule, async () => {
   await Vegetable.updateMany({}, { isCompleted: false });
 });
 
