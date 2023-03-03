@@ -64,7 +64,9 @@ router.patch('/:vegetableId/alarm', async (req, res) => {
   try {
     const { vegetableId } = req.params;
     const { ampm, hour, minute, subscription } = req.body;
-    store.data[vegetableId]?.cancel();
+    if (store.data[vegetableId] && store.data[vegetableId].cancel) {
+      store.data[vegetableId].cancel();
+    }
 
     if (ampm === '') {
       // 삭제
@@ -73,24 +75,30 @@ router.patch('/:vegetableId/alarm', async (req, res) => {
       let hour24;
       if (hour === 12) hour24 = ampm === 'AM' ? 0 : hour;
       else hour24 = ampm === 'PM' ? hour + 12 : hour;
-      store.data[vegetableId] = schedule.scheduleJob(
-        `${minute} ${hour24} * * *`,
-        async () => {
-          const messageData = {
-            title: '야채타임',
-            body: '칭찬해줘',
-            link: `${process.env.URL}/myvegi/${vegetableId}`,
-          };
-          webpush
-            .sendNotification(subscription, JSON.stringify(messageData))
-            .then((pushServiceRes) =>
-              res.status(pushServiceRes.statusCode).end()
-            )
-            .catch((error) => {
-              res.status(error?.statusCode ?? 500).end();
-            });
-        }
-      );
+
+      const utcHour = (hour24 - 9 + 24) % 24;
+      const rule = new schedule.RecurrenceRule();
+      rule.hour = utcHour;
+      rule.minute = minute;
+      rule.tz = 'Etc/UTC';
+
+      store.data[vegetableId] = schedule.scheduleJob(rule, async () => {
+        const messageData = {
+          title: '야채타임',
+          body: '칭찬해줘',
+          link: `${process.env.URL}/myvegi/${vegetableId}`,
+        };
+        webpush
+          .sendNotification(subscription, JSON.stringify(messageData))
+          .then((pushServiceRes) => res.status(pushServiceRes.statusCode).end())
+          .catch((error) => {
+            if (error && error.statusCode) {
+              res.status(error.statusCode).end();
+            } else {
+              res.status(500).end();
+            }
+          });
+      });
     }
     await Vegetable.findOneAndUpdate(
       { _id: vegetableId },
