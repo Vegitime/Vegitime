@@ -122,16 +122,10 @@ export default function SignIn() {
                 name="password"
                 touched={touched}
                 errors={errors}
+                serverError={serverError}
                 style={{ color: '--color-red' }}
               ></ErrorMessage>
             </InputContainer>
-            <ErrorMessage
-              name="password"
-              touched={touched}
-              errors={errors}
-              serverError={serverError}
-              style={{ color: '--color-red', bottom: '7rem' }}
-            ></ErrorMessage>
             <TextButton
               type="submit"
               width="calc(100% - 40px)"
