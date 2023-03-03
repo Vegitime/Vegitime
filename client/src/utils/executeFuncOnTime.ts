@@ -6,8 +6,7 @@ export function executeFuncOnTime(
   const year = date.getFullYear(); // 2021
   const month = date.getMonth();
   const day = date.getDate(); // 10
-  date.getHours();
-  date.getMinutes();
+
   const oprDate = new Date(year, month, day, hour, minute);
   const nowDate = new Date();
 
